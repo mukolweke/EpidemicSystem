@@ -1,6 +1,6 @@
 <%-- 
     Document   : AdminDash
-    Created on : Apr 6, 2017, 9:45:28 PM
+    Created on : Jun 6, 2017, 12:17:02 AM
     Author     : Michael Mukolwe
 --%>
 
@@ -8,19 +8,30 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>        
 <%@taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 <%@page import="sys.classes.*" %>
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>FEWS &CenterDot; ADMIN DASHBOARD</title>
-        <!--css links-->
-        <link href="../../assets/css/material.css" rel="stylesheet" type="text/css"/>
-        <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        <link href="../../assets/css/main.css" rel="stylesheet" type="text/css"/>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>FEWS ADMIN &CenterDot; DASHBOARD</title>
+
+
+        <!-- Bootstrap Core CSS -->
+        <link href="../../assets/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link href="../../assets/css/plugins/sb-admin.css" rel="stylesheet">
+        <link href="../../assets/css/plugins/morris.css" rel="stylesheet">
+        <link href="../../assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
         <link rel="icon" href="../../assets/img/favicon.png" type="image/x-icon">
     </head>
+
     <body>
         <%
 
@@ -59,208 +70,357 @@
         </sql:query>
 
 
-        <header>
-            <!--navbar one-->
-            <nav class="navbar navbar-primary " role="navigation">
-                <div class="container">
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="../../index.jsp"><span style="color:#5cb85c;">FEWS</span> LOGO</a>
-                    </div>
+        <div id="wrapper">
 
-                    <div class="collapse navbar-collapse" id="">
-                        <div class="dropdown navbar-right">
-                            <ul class="nav navbar-nav">
-                                <li class="" ><a href="#" class="popover-dismiss" id="not"><span style="padding-top: 5px;" class="glyphicon glyphicon-bell"></span></a></li>
-                                <li class="" ><a href="#" class="popover-dismiss" id="not"><span style="padding-top: 5px;" class="glyphicon glyphicon-envelope"></span></a></li>
+            <!-- Navigation -->
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index../../index.jsp">FEWS Admin</a>
+                </div>
+                <!-- Top Menu Items -->
+                <ul class="nav navbar-right top-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
+                        <ul class="dropdown-menu message-dropdown">
+                            <li class="message-preview">
+                                <a href="#">
+                                    <div class="media">
+                                        <span class="pull-left">
+                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
+                                        </span>
+                                        <div class="media-body">
+                                            <h5 class="media-heading"><strong>John Smith</strong>
+                                            </h5>
+                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="message-preview">
+                                <a href="#">
+                                    <div class="media">
+                                        <span class="pull-left">
+                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
+                                        </span>
+                                        <div class="media-body">
+                                            <h5 class="media-heading"><strong>John Smith</strong>
+                                            </h5>
+                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="message-preview">
+                                <a href="#">
+                                    <div class="media">
+                                        <span class="pull-left">
+                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
+                                        </span>
+                                        <div class="media-body">
+                                            <h5 class="media-heading"><strong>John Smith</strong>
+                                            </h5>
+                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="message-footer">
+                                <a href="#">Read All New Messages</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
+                        <ul class="dropdown-menu alert-dropdown">
+                            <li>
+                                <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
+                            </li>
+                            <li>
+                                <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
+                            </li>
+                            <li>
+                                <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
+                            </li>
+                            <li>
+                                <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
+                            </li>
+                            <li>
+                                <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
+                            </li>
+                            <li>
+                                <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#">View All</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%= user_.getUserEmail()%> <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="Profile.jsp?prf_id=<%=DB.getUserId(user_email)%>"><i class="fa fa-fw fa-user"></i> Profile</a>
+                            </li>
+                            <li>
+                                <a href="Settings.jsp"><i class="fa fa-fw fa-gear"></i> Settings</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="Logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <ul class="nav navbar-nav side-nav">
+                        <li class="active">
+                            <a href="AdminDash.jsp"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" data-toggle="collapse" data-target="#experts"><i class="fa fa-fw fa-users"></i> Experts <i class="fa fa-fw fa-caret-down"></i></a>
+                            <ul id="experts" class="collapse">
+                                <li>
+                                    <a href="AddExpert.jsp"><i class="fa fa-fw fa-plus"></i>  Add Experts</a>
+                                </li>
+                                <li>
+                                    <a href="ViewExpert.jsp"><i class="fa fa-fw fa-table"></i>  View Experts</a>
+                                </li>
                             </ul>
-                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-                                <%= user_.getUserEmail()%>
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="AdminDash.jsp"><span class="glyphicon glyphicon-dashboard" style="margin-right: 20px;"></span>DASHBOARD</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="profile.jsp?prf_id=<%=DB.getUserId(user_email)%>"><span class="glyphicon glyphicon-user" style="margin-right:  20px;"></span>PROFILE</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="messages.jsp"><span class="glyphicon glyphicon-envelope" style="margin-right: 20px;"></span>MESSAGES</a></li>
-                                <li role="presentation" class="divider"></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="Logout"><span class="glyphicon glyphicon-log-out" style="margin-right: 20px;"></span> LOGOUT</a></li>
+                        </li>
+                        <li>
+                            <a href="ViewFarmer.jsp"><i class="fa fa-fw fa-users"></i>  Farmers</a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" data-toggle="collapse" data-target="#mapping"><i class="fa fa-fw fa-map-marker"></i>  Mapping <i class="fa fa-fw fa-caret-down"></i></a>
+                            <ul id="mapping" class="collapse">
+                                <li>
+                                    <a href="ViewTables.jsp"><i class="fa fa-fw fa-table"></i>  Tables</a>
+                                </li>
+                                <li>
+                                    <a href="ViewCharts.jsp"><i class="fa fa-fw fa-bar-chart-o"></i>  Charts</a>
+                                </li>
                             </ul>
+                        </li>
+                        <li>
+                            <div style="margin-top: 300px;padding-left: 10px;"><p><a href="#">Copyright &copy; 2017</a></p>
+                                <p style="color: #3c3c3c;">Terms of Services Applied</p></div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </nav>
+
+            <div id="page-wrapper">
+
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h1 class="page-header">
+                                Dashboard <small>System Overview</small>
+                            </h1>
+                            <ol class="breadcrumb">
+                                <li class="active">
+                                    <i class="fa fa-dashboard"></i> Dashboard
+                                </li>
+                            </ol>
                         </div>
                     </div>
-                </div><!-- /.container-fluid -->
-            </nav>
-            <!--end navbar one-->
-            <!--nav two-->
-            <div class="nav-two navbar">
-                <div class="container">
-                    <ul class="nav navbar-nav">
-                        <li class="active" ><a href="AdminDash.jsp"  class="mdl-shadow--6dp" style="border: 1px solid #ddd;border-bottom-color: transparent;">System Dashboard</a></li>
-                        <li><a href="ExpertPage.jsp">System Experts</a></li>
-                        <li><a href="FarmerPage.jsp">System Farmers</a></li>
-                        <li><a href="Mapping.jsp">System Mapping</a></li>
-                    </ul>
+                    <!-- /.row -->
 
-                </div>
-            </div>
-            <!--end navbar TWO-->
-        </header>
-
-        <!--middle section-->
-        <div class="tab-content"style="background-color: #f9f9f9;font-family:'Oxygen-Regular';">
-            <div class="tab-pane fade in active" id="main-page">
-                <div class="container" >
                     <div class="row">
-                        <div class="col-md-9">
-                            <div class="main-content">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <div class="panel-heading"><header><h4>Latest Epidemic Posts</h4></header>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <i class="fa fa-users fa-5x"></i>
                                         </div>
-                                        <%
-                                            if (postCount != 0) {
-                                        %>
-                                        <c:forEach var="post" items="${reqPost.rows}">
-                                            <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--4dp item" style="border-top: 1px solid rgba(0, 0, 0, 0.1);">
-                                                <header class="section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100 mdl-color-text--white">
-                                                    <a class="" href="#">
-                                                        <img class="media-object well well-sm" src="../../assets/img/index.svg" alt="epidemic photo">
-                                                    </a>
-                                                </header>
-                                                <div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
-                                                    <div class="mdl-card__supporting-text">
-                                                        <h3>${post.post_title} <span class="h3_span glyphicon glyphicon-calendar"> <c:out value="${post.post_timestamp}"/></span></h3>
-
-                                                        <p><c:out value="${post.post_desc}"/> </p>
-                                                    </div>
-                                                    <div class="mdl-card__actions">
-                                                        <a href="ViewPost.jsp?post_id=${post.post_id}" class="mdl-button">View More >>> </a>
-                                                    </div>
-                                                </div>
-                                            </section>
-                                        </c:forEach>
-
-                                        <hr>
-                                        <div class="paginate mdl-shadow--2dp"></div>
-
-                                        <%} else {%>
-                                        <section class="section--center alert alert-info mdl-grid mdl-grid--no-spacing mdl-shadow--2dp" style="border-top: 1px solid rgba(0, 0, 0, 0.1);height: 100px;">
-                                            <p style="margin-left: 50px;margin-top: 40px;">There are no Epidemic Posts Posted as yet...</p>
-                                        </section>
-
-                                        <%}%>
-
-                                        <br>
-                                        <div class="panel-heading"><header><h4>Latest Epidemic Blogs</h4></header>
+                                        <div class="col-xs-9 text-right">
+                                            <div class="huge"><%=exCount%></div>
+                                            <div>Current Experts</div>
                                         </div>
-                                        <%
-                                            if (blogCount != 0) {
-                                        %>
-                                        <c:forEach var="post" items="${reqBlogs.rows}">
-                                            <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp item" style="border-top: 1px solid rgba(0, 0, 0, 0.1);">
-                                                <header class="section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100 mdl-color-text--white">
-                                                    <a class="" href="#">
-                                                        <img class="media-object well well-sm" src="../../assets/img/index.svg" alt="epidemic photo">
-                                                    </a>
-                                                </header>
-                                                <div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
-                                                    <div class="mdl-card__supporting-text">
-                                                        <h3>${post.post_title} <span class="h3_span glyphicon glyphicon-calendar"> <c:out value="${post.post_timestamp}"/></span></h3>
-
-                                                        <p><c:out value="${post.post_desc}"/> 
-                                                    </div>
-                                                    <div class="mdl-card__actions">
-                                                        <a href="#" class="mdl-button">View More >>> </a>
-                                                    </div>
-                                                </div>
-                                            </section>
-                                        </c:forEach>
-
-                                        <hr>
-                                        <div class="paginate"></div>
-
-                                        <%} else {%>
-                                        <section class="section--center alert alert-info mdl-grid mdl-grid--no-spacing mdl-shadow--2dp" style="border-top: 1px solid rgba(0, 0, 0, 0.1);height: 100px;">
-                                            <p style="margin-left: 50px;margin-top: 40px;">There are no Epidemic Blogs Posted as yet...</p>
-                                        </section>
-
-                                        <%}%>
-
-                                        <br>
                                     </div>
                                 </div>
+                                <a href="ViewExpert.jsp">
+                                    <div class="panel-footer">
+                                        <span class="pull-left">View Details</span>
+                                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>
                             </div>
-
                         </div>
-                        <div class="col-md-3">
-                            <div class="panel-heading" style="margin-top: 40px;"><header><h4>Current System Statistics</h4></header>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="panel panel-yellow">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <i class="fa fa-file fa-5x"></i>
+                                        </div>
+                                        <div class="col-xs-9 text-right">
+                                            <div class="huge"><%=postCount%></div>
+                                            <div>Total Posts!</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a class="disabled" href="#">
+                                    <div class="panel-footer">
+                                        <span class="pull-left">View Details</span>
+                                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>
                             </div>
-                            <div class="panel-body panel-stats">
-                                <div class="" style="">
-                                    <section class="section--center section--center--stats mdl-grid mdl-grid--no-spacing mdl-shadow--6dp" style="background-color: #3e8f3e;border-top: 1px solid rgba(0, 0, 0, 0.1);">
-                                        <h4>Current Experts</h4>
-                                        <p class="overview_count text-right"><b><%=exCount%></b></p>
-                                    </section>
-                                    <br/>
-                                    <section class="section--center section--center--stats mdl-grid mdl-grid--no-spacing mdl-shadow--6dp" style="background-color: #66afe9;border-top: 1px solid rgba(0, 0, 0, 0.1);">
-                                        <h4>Current Farmers</h4>
-                                        <p class="overview_count text-right"><b><%=farmCount%></b></p>
-                                    </section>
-                                    <br/>
-                                    <section class="section--center section--center--stats mdl-grid mdl-grid--no-spacing mdl-shadow--6dp" style="background-color: #ff0;border-top: 1px solid rgba(0, 0, 0, 0.1);">
-                                        <h4>Current Epidemic Post</h4>
-                                        <p class="overview_count text-right"><b><%=postCount%></b></p>
-                                    </section>
-                                    <br/>
-                                    <section class="section--center section--center--stats mdl-grid mdl-grid--no-spacing mdl-shadow--6dp" style="background-color: #b2DBa1;border-top: 1px solid rgba(0, 0, 0, 0.1);">
-                                        <h4>Current Expert Blogs</h4>
-                                        <p class="overview_count text-right"><b><%=blogCount%></b></p>
-                                    </section>
-                                    <br/>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="panel panel-green">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <i class="fa fa-users fa-5x"></i>
+                                        </div>
+                                        <div class="col-xs-9 text-right">
+                                            <div class="huge"><%=farmCount%></div>
+                                            <div>Current Farmers</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="ViewFarmer.jsp">
+                                    <div class="panel-footer">
+                                        <span class="pull-left">View Details</span>
+                                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="panel panel-red">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <i class="fa fa-file fa-5x"></i>
+                                        </div>
+                                        <div class="col-xs-9 text-right">
+                                            <div class="huge"><%=blogCount%></div>
+                                            <div>Total Blogs!</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a class="disabled"href="#">
+                                    <div class="panel-footer">
+                                        <span class="pull-left">View Details</span>
+                                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Latest Epidemic Post</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <%
+                                        if (postCount != 0) {
+                                    %>
+                                    <c:forEach var="post" items="${reqPost.rows}">
+                                        <div class="item" style="border-top: 1px solid rgba(0, 0, 0, 0.1);">
+                                            <div class="col-md-9 col-sm-6 col-xm-4">
+                                                <div class="mdl-card__supporting-text">
+                                                    <h3>${post.post_title} <span class="h3_span fa fa-calendar"> <c:out value="${post.post_timestamp}"/></span></h3>
+
+                                                    <p><c:out value="${post.post_desc}"/> </p>
+                                                </div>
+                                                <div class="mdl-card__actions">
+                                                    <a href="ViewPost.jsp?post_id=${post.post_id}" class="mdl-button">View More >>> </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+
+                                    <div class="paginate"></div>
+
+                                    <%} else {%>
+                                    <div class="alert alert-info alert-dismissable">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                        <i class="fa fa-info-circle"></i>  No Post yet to be posted !!!
+                                    </div>
+
+                                    <%}%>
+
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <!-- /.row -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Latest Epidemic Blogs</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <%
+                                        if (blogCount != 0) {
+                                    %>
+                                    <c:forEach var="post" items="${reqBlogs.rows}">
+                                        <div class="item" style="border-top: 1px solid rgba(0, 0, 0, 0.1);">
+                                            <div class="col-md-9 col-sm-6 col-xm-4">
+                                                <div class="mdl-card__supporting-text">
+                                                    <h3>${post.post_title} <span class="h3_span fa fa-calendar"> <c:out value="${post.post_timestamp}"/></span></h3>
 
-                </div><!-- /.container -->
+                                                    <p><c:out value="${post.post_desc}"/> 
+                                                </div>
+                                                <div class="mdl-card__actions">
+                                                    <a href="#" class="mdl-button">View More >>> </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+                                    <div class="paginate"></div>
+                                    <%} else {%>
+                                    <div class="alert alert-info alert-dismissable">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                        <i class="fa fa-info-circle"></i>  No latest Blogs yet to be posted !!!
+                                    </div>
+                                    <%}%>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.container-fluid -->
             </div>
+            <!-- /#page-wrapper -->
         </div>
-        <!--end middle section-->
+        <!-- /#wrapper -->
 
-        <!-- Footer -->
-        <footer class="">
-            <div class="container text-center">
-                <p><a href="#">Copyright &copy; kukuSoft.co.ke 2017</a></p>
-                <p>Terms of Services Applied</p>
-            </div>
-        </footer>
-
-        <!-- Placed at the end of the document so the pages load faster -->
-        <script type="text/javascript">
-            function notify() {
-                if (document.getElementById("not").value !== "0") {
-                    document.getElementById("not").style.color = "#FF6666";
-                } else if (document.getElementById("not").value === "0") {
-                    document.getElementById("not").style.color = "yellow";
-                }
-
-                //check if account is confirmed
-                if (document.getElementById("acc").value === "0") {
-                    document.getElementById("alert_status").style.display = "block";
-                } else if (document.getElementById("acc").value === "1") {
-                    document.getElementById("alert_status").style.display = "none";
-                }
-            }
-        </script>
-        <script type="text/javascript" src="../../assets/js/jquery.js"></script>
-        <script type="text/javascript" src="../../assets/js/custom.js"></script>
-        <script type="text/javascript" src="../../assets/js/paginate.js"></script>
-        <script type="text/javascript" src="../../assets/js/bootstrap.js"></script>
+        <!--javascript files-->
+        <script src="../../assets/js/jquery.js"></script>
+        <script src="../../assets/js/bootstrap.min.js"></script>
 
     </body>
+
 </html>

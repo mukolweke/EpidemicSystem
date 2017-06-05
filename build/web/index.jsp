@@ -6,6 +6,8 @@
 
 <%@page import="sys.classes.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>        
+<%@taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,12 +20,10 @@
         <link href="assets/css/main.css" rel="stylesheet" type="text/css"/>
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
         <link rel="icon" href="assets/img/favicon.png" type="image/x-icon">
-        <!-- Demo styles -->
-        <style type="text/css">
-            #map{
-                height: 40%;
-            }
-        </style>
+
+        <!--javascript mapwork-->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdFsAprSk3Bpi5i59sD3KtMEs_Jp_V4z4&libraries=places&callback=initAutocomplete" async defer></script>
+
     </head>
     <body>
         <%
@@ -33,6 +33,86 @@
                 user = new Login_class();
             }
         %>
+        <sql:setDataSource var='bgGet' driver='<%= DB.jstlDriver()%>' url='<%= DB.jstlUrl()%>' user='<%= DB.jstlUser()%>'  password='<%= DB.jstlPassword()%>'/>
+
+        <sql:query dataSource="${bgGet}" var="reqCoordsF">
+            <%= DB.coordsF()%>
+        </sql:query>
+        
+        <sql:query dataSource="${bgGet}" var="reqCoordsE">
+            <%= DB.coordsE()%>
+        </sql:query>
+        <script type="text/javascript">
+//            farmer location details
+            function initAutocomplete() {
+                var locationFarmer = [
+            <c:forEach items="${reqCoordsF.rows}" var="coordsF" varStatus="status">
+                    ['${coordsF.addr}',${coordsF.lat},${coordsF.lng}]
+                <c:if test="${!status.last}">
+                    ,
+                </c:if>
+            </c:forEach>
+                ];
+//                expert location details
+                var locationExpert = [
+            <c:forEach items="${reqCoordsE.rows}" var="coordsE" varStatus="status">
+                    ['${coordsE.addr}',${coordsE.lat},${coordsE.lng}]
+                <c:if test="${!status.last}">
+                    ,
+                </c:if>
+            </c:forEach>
+                ];
+                
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    center: {lat: -0.3031, lng: 36.08},
+                    zoom: 6,
+                    mapTypeId: 'satellite'
+                });
+
+                var contentString = "Hi You!!!";
+                var infowindow = new google.maps.InfoWindow({
+                    content: contentString
+                });
+                var i;
+                //farmer
+                for (i = 0; i < locationFarmer.length; i++) {
+                    marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(locationFarmer[i][1], locationFarmer[i][2]),
+                        label: "F",
+                        draggable: true,
+                        map: map
+                    });
+                    google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                        return function () {
+                            infowindow.setContent(locationFarmer[i][0] + ", Farmer");
+                            infowindow.open(map, marker);
+                        };
+                    })(marker, i));
+                }
+                //expert
+                for (i = 0; i < locationExpert.length; i++) {
+                    marker2 = new google.maps.Marker({
+                        position: new google.maps.LatLng(locationExpert[i][1], locationExpert[i][2]),
+                        label: "E",
+                        draggable: true,
+                        map: map
+                    });
+                    google.maps.event.addListener(marker2, 'click', (function (marker, i) {
+                        return function () {
+                            infowindow.setContent(locationExpert[i][0] + ", Expert");
+                            infowindow.open(map, marker);
+                        };
+                    })(marker2, i));
+                }
+                marker.addListener('click', function () {
+                    infowindow.open(map, marker);
+                });
+                marker2.addListener('click', function () {
+                    infowindow.open(map, marker2);
+                });
+            }
+        </script>
+
         <nav class="navbar navbar-primary navbar-fixed-top" role="navigation">
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -143,7 +223,6 @@
         </nav>
         <div class="main-section">
             <!-- Swiper -->
-
             <div class="swiper-container" style="min-height: 450px;color: black;">
                 <div class="swiper-wrapper" style="">
                     <div class="swiper-slide" style="background: url('assets/img/jumbo/farmers-jumbotron.jpg');background-repeat: no-repeat;min-height: 450px;">
@@ -191,10 +270,13 @@
 
             <!--service-->
             <div class="services" id=services" style="margin-top: 30px;">
+                <div class="service-top">
+                    <h3>Current Users</h3>
+                </div>
+                <div style="margin-top:20px;width: 100%;height: 400px;">
+                    <div id="map" style="height: 100%;width: 100%;"></div>
+                </div>
                 <div class="container">
-                    <div class="service-top">
-                        <h3>Current Users</h3>
-                    </div>
                     <div class="services-grid">
                         <div class="row"></div>
                     </div>
@@ -259,11 +341,11 @@
                 <p>Terms of Services Applied</p>
             </div>
         </footer>    
-
         <script type="text/javascript" src="assets/js/jquery.js"></script>
         <script type="text/javascript" src="assets/js/swiper.jquery.min.js"></script>
         <script type="text/javascript" src="assets/js/bootstrap.js"></script>
         <!-- Initialize Swiper -->
+
 
         <script>
             var swiper = new Swiper('.swiper-container', {

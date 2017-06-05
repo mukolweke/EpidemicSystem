@@ -551,4 +551,15 @@ public class DB_class implements Serializable {
         rs.next();
         return rs.getDouble("lng");
     }
+
+    //farmers coordinates
+    public String coordsF() {
+        return "SELECT * FROM farmer";
+    }
+
+    //experts cooordinates
+    public String coordsE() {
+        return "SELECT * FROM expert";
+    }
+    
 }
