@@ -1,6 +1,6 @@
 <%-- 
-    Document   : search-page
-    Created on : Apr 7, 2017, 1:08:31 AM
+    Document   : FarmerDash
+    Created on : Apr 6, 2017, 9:46:11 PM
     Author     : Michael Mukolwe
 --%>
 
@@ -10,14 +10,25 @@
 <%@page import="sys.classes.*,java.util.Date" %>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>FEWS &CenterDot; FARMER DASHBOARD</title>
-        <!--css links-->
-        <link href="../../assets/css/material.css" rel="stylesheet" type="text/css"/>
-        <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        <link href="../../assets/css/main.css" rel="stylesheet" type="text/css"/>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>FEWS ADMIN &CenterDot; DASHBOARD</title>
+
+
+        <!-- Bootstrap Core CSS -->
+        <link href="../../assets/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link href="../../assets/css/plugins/sb-admin.css" rel="stylesheet">
+        <link href="../../assets/css/plugins/morris.css" rel="stylesheet">
+        <link href="../../assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
         <link rel="icon" href="../../assets/img/favicon.png" type="image/x-icon">
         <script>
@@ -40,7 +51,7 @@
             }
         </script>
     </head>
-    <body style="background-color: #f9f9f9;">
+    <body>
         <%
 
             Login_class user_ = (Login_class) session.getAttribute("user");
@@ -63,6 +74,10 @@
             int countNotification = 1;
             //DB.countNotifications(user_name);
             //check if session is active
+            //get map coordinates
+            double lat = DB.getLat(user_email, "farmer");
+            double lng = DB.getLng(user_email, "farmer");
+            String addr = DB.getAddr(user_email, "farmer");
 
         %>
         <sql:setDataSource var='bgGet' driver='<%= DB.jstlDriver()%>' url='<%= DB.jstlUrl()%>' user='<%= DB.jstlUser()%>'  password='<%= DB.jstlPassword()%>'/>
@@ -77,145 +92,246 @@
         </sql:query>
 
 
-        <header>
-            <!--navbar one-->
-            <nav class="navbar navbar-primary" style="background-color: #fff;" role="navigation">
-                <div class="container">
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="../../index.jsp"><span style="color:#5cb85c;">FEWS</span> LOGO</a>
-                    </div>
 
-                    <div class="collapse navbar-collapse" id="">
-                        <div class="dropdown navbar-right">
-                            <ul class="nav navbar-nav">
-                                <li class="" ><a href="#" class="popover-dismiss" id="not"><span style="padding-top: 5px;" class="glyphicon glyphicon-bell"><%=countNotification%></span></a></li>
-                                <li class="" ><a href="messages.jsp" class="popover-dismiss" id="not"><span style="padding-top: 5px;" class="glyphicon glyphicon-envelope"></span> <%=msgCount%></a></li>
-                            </ul>
-                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-                                <%= user_.getUserEmail()%>
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="AdminDash.jsp"><span class="glyphicon glyphicon-dashboard" style="margin-right: 20px;"></span>DASHBOARD</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="profile.jsp?prf_id=<%=DB.getUserId(user_email)%>"><span class="glyphicon glyphicon-user" style="margin-right:  20px;"></span>PROFILE</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="messages.jsp"><span class="glyphicon glyphicon-envelope" style="margin-right: 20px;"></span>MESSAGES</a></li>
-                                <li role="presentation" class="divider"></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="Logout"><span class="glyphicon glyphicon-log-out" style="margin-right: 20px;"></span> LOGOUT</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div><!-- /.container-fluid -->
-            </nav>
-            <!--end navbar one-->
-            <!--nav two-->
-            <div class="nav-two navbar">
-                <div class="container">
-                    <ul class="nav navbar-nav">
-                        <li><a href="FarmerDash.jsp"  >System Dashboard</a></li>
-                        <li class="active" ><a href="SearchPage.jsp" class="mdl-shadow--6dp" style="border: 1px solid #ddd;border-bottom-color: transparent;">Search Epidemic</a></li>
-                    </ul>
-
+        <div id="wrapper">
+            <!-- Navigation -->
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../../index.jsp"><span style="color:#5cb85c;">FEWS</span> Admin</a>
                 </div>
-            </div>
-            <!--end navbar TWO-->
-        </header>
-
-
-        <div class="container">
-            <div class="row" style="font-family:'Oxygen-Regular'">
-                <div class="col-md-3">
-                    <section class="section--center prof--center mdl-grid mdl-grid--no-spacing" style="margin-top: 10px;width: 100%;">
-                        <div class="" style="margin-top: 10px;height: 200px;width: 250px;padding-left: 20px;">
-                            <img id="blah" src="../../assets/img/1.jpg" style="height: 200px;width: 200px;" class="img-thumbnail" alt="Profile image" />
-                        </div>
-                        <c:forEach var="user" items="${reqUsers.rows}">
-                            <div class="panel panel-default" style="padding-left: 20px;">
-                                <div class="panel-body">
-                                    <header><h4>${user.name}</h4></header>
-                                    <p><span class="glyphicon glyphicon-calendar"></span> : ${user.reg_date}</p>
-                                    <p><span class="glyphicon glyphicon-map-marker"></span> : ${user.addr}</p>
-                                    <hr>
-                                    <p><span class="glyphicon glyphicon-phone"></span> : ${user.phone}</p>
-                                    <p><span class="glyphicon glyphicon-envelope"></span> :${user.email}</p>
-                                    <form action="" method="">
-                                        <!--submit user id-->
-                                        <div class="form-group">
-                                            <a class="btn btn-primary" style="border-radius: 0px; width: 100%;"href="settings.jsp?user_email=<%=user_.getUserEmail()%>">EDIT PROFILE</a>
+                <!-- Top Menu Items -->
+                <ul class="nav navbar-right top-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
+                        <ul class="dropdown-menu message-dropdown">
+                            <li class="message-preview">
+                                <a href="#">
+                                    <div class="media">
+                                        <span class="pull-left">
+                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
+                                        </span>
+                                        <div class="media-body">
+                                            <h5 class="media-heading"><strong>John Smith</strong>
+                                            </h5>
+                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
                                         </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </c:forEach>
-                    </section>
-                </div>
-                <!--<div class="col-md-1 clearfix"></div>-->
-                <div class="col-md-9" style="margin-top: 10px;">
-                    <!--check if account is confirmed to view message or not-->
-                    <input type="number" class="hidden" value="<%=accStatus%>" id='acc'/>
-                    <!--confirmation message-->
-                    <div class=" alert alert-warning mdl-shadow--2dp" id="alert_status" >A confirmation email was sent to <strong><%=user_.getUserEmail()%></strong>. Please verify your account!</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="message-preview">
+                                <a href="#">
+                                    <div class="media">
+                                        <span class="pull-left">
+                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
+                                        </span>
+                                        <div class="media-body">
+                                            <h5 class="media-heading"><strong>John Smith</strong>
+                                            </h5>
+                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="message-preview">
+                                <a href="#">
+                                    <div class="media">
+                                        <span class="pull-left">
+                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
+                                        </span>
+                                        <div class="media-body">
+                                            <h5 class="media-heading"><strong>John Smith</strong>
+                                            </h5>
+                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="message-footer">
+                                <a href="#">Read All New Messages</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
+                        <ul class="dropdown-menu alert-dropdown">
+                            <li>
+                                <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
+                            </li>
+                            <li>
+                                <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
+                            </li>
+                            <li>
+                                <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
+                            </li>
+                            <li>
+                                <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
+                            </li>
+                            <li>
+                                <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
+                            </li>
+                            <li>
+                                <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#">View All</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%= user_.getUserEmail()%> <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="Profile.jsp?prf_id=<%=DB.getUserId(user_email)%>"><i class="fa fa-fw fa-user"></i> Profile</a>
+                            </li>
+                            <li>
+                                <a href="Settings.jsp"><i class="fa fa-fw fa-gear"></i> Settings</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="Logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <ul class="nav navbar-nav side-nav">
+                        <li>
+                            <a href="FarmerDash.jsp"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                        </li>
+                        <li class="active">
+                            <a href="SearchPage.jsp"><i class="fa fa-fw fa-search"></i> Search Epidemic</a>
 
-                    <div class="panel panel-default" style="margin-top: 20px;border-radius: 0px;box-shadow: 20px;">
-                        <div class="panel-heading" style="background-color: transparent;">
-                            <h2 class="panel-title" style="font-size: 20px;">Search for Epidemic Details</h2>
+                        </li>
+                        <li>
+                            <div style="margin-top: 300px;padding-left: 10px;"><p><a href="#">Copyright &copy; 2017</a></p>
+                                <p style="color: #3c3c3c;">Terms of Services Applied</p></div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </nav>
+
+            <div id="page-wrapper">
+
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h1 class="page-header">
+                                Dashboard <small>Farmer</small>
+                            </h1>
+                            <ol class="breadcrumb">
+                                <li>
+                                    <i class="fa fa-dashboard"></i>  <a href="ExpertDash.jsp">Dashboard</a>
+                                </li>
+                                <li class="active">
+                                    <i class="fa fa-bar-search"></i> Search Epidemic
+                                </li>
+                            </ol>
                         </div>
-                        <div class="panel-body">
-                            <form class="form account-form" name="vinform">
-                                <input type="hidden" name="searchFrom" value="farmSearch"/>
-                                <div class="row">
-                                    <div class="col-md-11">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" name="name" style="width: 100%;border-radius: 0px;height: 48px;" placeholder="SEARCH EPIDEMIC" onkeyup="searchInfo()" required>
+                    </div>
+                    <!-- /.row -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!--check if account is confirmed to view message or not-->
+                            <input type="number" class="hidden" value="<%=accStatus%>" id='acc'/>
+                            <!--confirmation message-->
+                            <div class=" alert alert-warning mdl-shadow--2dp" id="alert_status" >A confirmation email was sent to <strong><%=user_.getUserEmail()%></strong>. Please verify your account!</div>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel-body" style="height: 250px;">
+                                <div id="map" style="height: 100%;width: 100%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel-body">
+                                <div class="col-md-12" style="margin-top: 10px;">
+                                    <div class="panel panel-default" style="margin-top: 20px;border-radius: 0px;box-shadow: 20px;">
+                                        <div class="panel-heading" style="background-color: transparent;">
+                                            <h2 class="panel-title" style="font-size: 20px;">Search for Epidemic Details</h2>
+                                        </div>
+                                        <div class="panel-body">
+                                            <form class="form account-form" name="vinform">
+                                                <input type="hidden" name="searchFrom" value="farmSearch"/>
+                                                <div class="row">
+                                                    <div class="col-md-11">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" name="name" style="width: 100%;border-radius: 0px;height: 48px;" placeholder="SEARCH EPIDEMIC" onkeyup="searchInfo()" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form> 
+                                            <div style="margin-top: 50px;">
+                                                <span id="mylocation"></span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </form> 
-                            <div style="margin-top: 50px;">
-                                <span id="mylocation"></span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!--<div class="col-md-1 clearfix"></div>-->
             </div>
+            <!-- /.row -->
         </div>
-
-        <!-- Footer -->
-        <footer class="">
-            <div class="container text-center">
-                <p><a href="#">Copyright &copy; kukuSoft.co.ke 2017</a></p>
-                <p>Terms of Services Applied</p>
-            </div>
-        </footer>
+        <!-- /.container-fluid -->
 
         <!-- Placed at the end of the document so the pages load faster -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdFsAprSk3Bpi5i59sD3KtMEs_Jp_V4z4&libraries=places&callback=initAutocomplete"
+        async defer></script>
         <script type="text/javascript">
-            function notify() {
-                if (document.getElementById("not").value !== "0") {
-                    document.getElementById("not").style.color = "#FF6666";
-                } else if (document.getElementById("not").value === "0") {
-                    document.getElementById("not").style.color = "yellow";
-                }
+                                                                function initAutocomplete() {
+                                                                    var map = new google.maps.Map(document.getElementById('map'), {
+                                                                        center: {lat:<%=lat%>, lng:<%=lng%>},
+                                                                        zoom: 13,
+                                                                        mapTypeId: 'roadmap'
+                                                                    });
 
-                //check if account is confirmed
-                if (document.getElementById("acc").value === "0") {
-                    document.getElementById("alert_status").style.display = "block";
-                } else if (document.getElementById("acc").value === "1") {
-                    document.getElementById("alert_status").style.display = "none";
-                }
-            }
+                                                                    var marker = new google.maps.Marker({
+                                                                        position: {
+                                                                            lat: <%=lat%>, lng: <%=lng%>
+                                                                        },
+                                                                        label: "F",
+                                                                        map: map
+                                                                    });
+                                                                }
+                                                                function notify() {
+                                                                    if (document.getElementById("not").value !== "0") {
+                                                                        document.getElementById("not").style.color = "#FF6666";
+                                                                    } else if (document.getElementById("not").value === "0") {
+                                                                        document.getElementById("not").style.color = "yellow";
+                                                                    }
+
+                                                                    //check if account is confirmed
+                                                                    if (document.getElementById("acc").value === "0") {
+                                                                        document.getElementById("alert_status").style.display = "block";
+                                                                    } else if (document.getElementById("acc").value === "1") {
+                                                                        document.getElementById("alert_status").style.display = "none";
+                                                                    }
+                                                                }
         </script>
+        <!--javascript files-->
         <script type="text/javascript" src="../../assets/js/jquery.js"></script>
+        <script type="text/javascript" src="../../assets/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../../assets/js/custom.js"></script>
         <script type="text/javascript" src="../../assets/js/paginate.js"></script>
-        <script type="text/javascript" src="../../assets/js/bootstrap.js"></script>
-
     </body>
 </html>

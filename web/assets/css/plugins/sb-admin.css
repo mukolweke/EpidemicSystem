@@ -226,6 +226,7 @@ ul.alert-dropdown {
     color: #df8a13;
 }
 
-a:hover,a:active,a:focus{
+
+li > a:hover{
     color: #3d8b3d;
 }
