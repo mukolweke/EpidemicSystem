@@ -73,6 +73,10 @@ a:hover{
     font-family: 'Montserrat-Regular';
     background-color: transparent;
 }
+.navbar-ex1-collapse{
+    font-family: 'Montserrat-Regular';
+    background-color: transparent;
+}
 #not{
     border: none;width: auto;
     font-size: 1.1em;

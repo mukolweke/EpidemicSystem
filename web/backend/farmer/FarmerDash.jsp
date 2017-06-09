@@ -29,8 +29,9 @@
         <link href="../../assets/css/plugins/sb-admin.css" rel="stylesheet">
         <link href="../../assets/css/plugins/morris.css" rel="stylesheet">
         <link href="../../assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-        <link rel="icon" href="../../assets/img/favicon.png" type="image/x-icon">
+        <link href="../../assets/css/custom.css" rel="stylesheet" type="text/css"/>
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+        <link rel="icon" href="../../assets/img/favicon.png" type="image/x-icon"/>
     </head>
 
     <body>
@@ -43,7 +44,7 @@
                 user_ = new Login_class();
             }
             String user_email = user_.getUserEmail();
-            int accStatus = DB.getAccountStatus(user_email, DB.getAuthKey(user_email));
+//            int accStatus = DB.getAccountStatus(user_email, DB.getAuthKey(user_email));
 
             Sign_class user_details = (Sign_class) request.getSession().getAttribute("user_details");
             if (user_details == null) {
@@ -78,7 +79,7 @@
             int farmCount = DB.countFarmer();
             int postCount = DB.countPost();
             int blogCount = DB.countBlogs();
-            int msgCount = DB.countMsg(user_email);
+//            int msgCount = DB.countMsg(user_email);
 
             //get map coordinates
             double lat = DB.getLat(user_email, "farmer");
@@ -103,7 +104,7 @@
 
         <div id="wrapper">
             <!-- Navigation -->
-            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -215,15 +216,15 @@
                 <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav side-nav">
-                        <li class="active">
-                            <a href="FarmerDash.jsp"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                        <li id="side-link" class="active">
+                            <a href="FarmerDash.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                         </li>
-                        <li>
-                            <a href="SearchPage.jsp"><i class="fa fa-fw fa-search"></i> Search Epidemic</a>
+                        <li id="side-link">
+                            <a href="SearchPage.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-search"></i> Search Epidemic</a>
 
                         </li>
                         <li>
-                            <div style="margin-top: 300px;padding-left: 10px;"><p><a href="#">Copyright &copy; 2017</a></p>
+                            <div style="margin-top: 380px;padding-left: 10px;"><p><a href="#">Copyright &copy; 2017</a></p>
                                 <p style="color: #3c3c3c;">Terms of Services Applied</p></div>
                         </li>
                     </ul>
@@ -252,7 +253,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <!--check if account is confirmed to view message or not-->
-                            <input type="number" class="hidden" value="<%=accStatus%>" id='acc'/>
+                            <input type="number" class="hidden" value="" id='acc'/>
                             <!--confirmation message-->
                             <div class=" alert alert-warning mdl-shadow--2dp" id="alert_status" >A confirmation email was sent to <strong><%=user_.getUserEmail()%></strong>. Please verify your account!</div>
                         </div>
@@ -384,19 +385,19 @@
                                             if (postCount != 0) {
                                         %>
                                         <c:forEach var="post" items="${reqPost.rows}">
-                                            <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--4dp item" style="border-top: 1px solid rgba(0, 0, 0, 0.1);">
+                                            <div class="container-fluid item" style="border-top: 1px solid rgba(0, 0, 0, 0.1);">
 
                                                 <div class="mdl-card mdl-cell mdl-cell--12-col-desktop mdl-cell--9-col-tablet mdl-cell--4-col-phone">
                                                     <div class="mdl-card__supporting-text">
-                                                        <h3><a href="ViewPost.jsp?post_id=${post.post_id}" style="color: #000;">${post.post_title} </a><span class="h3_span glyphicon glyphicon-calendar"> <c:out value="${post.post_timestamp}"/></span></h3>
+                                                    <h4>${post.blog_title} <span class="h3_span fa fa-calendar"> <c:out value="${post.blog_date}"/></span></h4>
 
-                                                        <p><c:out value="${post.post_desc}"/> </p>
+                                                        <p><c:out value="${post.blog_desc}"/> </p>
                                                     </div>
                                                     <div class="mdl-card__actions">
-                                                        <a href="ViewPost.jsp?post_id=${post.post_id}" class="mdl-button">View More >>> </a>
+                                                        <a href="ViewPost.jsp?post_id=${post.post_id}" style="margin-left: 50px;" class="mdl-button">View More >>> </a>
                                                     </div>
                                                 </div>
-                                            </section>
+                                            </div>
                                         </c:forEach>
                                         <hr>
                                         <%} else {%>

@@ -28,6 +28,7 @@
         <link href="../../assets/css/plugins/sb-admin.css" rel="stylesheet">
         <link href="../../assets/css/plugins/morris.css" rel="stylesheet">
         <link href="../../assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="../../assets/css/custom.css" rel="stylesheet" type="text/css"/>
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
         <link rel="icon" href="../../assets/img/favicon.png" type="image/x-icon">
     </head>
@@ -73,7 +74,7 @@
         <div id="wrapper">
 
             <!-- Navigation -->
-            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -186,35 +187,35 @@
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav side-nav">
                         <li class="active">
-                            <a href="AdminDash.jsp"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                            <a href="AdminDash.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                         </li>
                         <li>
-                            <a href="javascript:;" data-toggle="collapse" data-target="#experts"><i class="fa fa-fw fa-users"></i> Experts <i class="fa fa-fw fa-caret-down"></i></a>
+                            <a href="javascript:;" data-toggle="collapse" style="color:#5cb85c;" data-target="#experts"><i class="fa fa-fw fa-users"></i> Experts <i class="fa fa-fw fa-caret-down"></i></a>
                             <ul id="experts" class="collapse">
                                 <li>
-                                    <a href="AddExpert.jsp"><i class="fa fa-fw fa-plus"></i>  Add Experts</a>
+                                    <a href="AddExpert.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-plus"></i>  Add Experts</a>
                                 </li>
                                 <li>
-                                    <a href="ViewExpert.jsp"><i class="fa fa-fw fa-table"></i>  View Experts</a>
+                                    <a href="ViewExpert.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-table"></i>  View Experts</a>
                                 </li>
                             </ul>
                         </li>
                         <li>
-                            <a href="ViewFarmer.jsp"><i class="fa fa-fw fa-users"></i>  Farmers</a>
+                            <a href="ViewFarmer.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-users"></i>  Farmers</a>
                         </li>
                         <li>
-                            <a href="javascript:;" data-toggle="collapse" data-target="#mapping"><i class="fa fa-fw fa-map-marker"></i>  Mapping <i class="fa fa-fw fa-caret-down"></i></a>
+                            <a href="javascript:;" data-toggle="collapse" style="color:#5cb85c;" data-target="#mapping"><i class="fa fa-fw fa-map-marker"></i>  Mapping <i class="fa fa-fw fa-caret-down"></i></a>
                             <ul id="mapping" class="collapse">
                                 <li>
-                                    <a href="ViewTables.jsp"><i class="fa fa-fw fa-table"></i>  Tables</a>
+                                    <a href="ViewTables.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-table"></i>  Tables</a>
                                 </li>
                                 <li>
-                                    <a href="ViewCharts.jsp"><i class="fa fa-fw fa-bar-chart-o"></i>  Charts</a>
+                                    <a href="ViewCharts.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-bar-chart-o"></i>  Charts</a>
                                 </li>
                             </ul>
                         </li>
                         <li>
-                            <div style="margin-top: 300px;padding-left: 10px;"><p><a href="#">Copyright &copy; 2017</a></p>
+                            <div style="margin-top: 280px;padding-left: 10px;"><p><a href="#">Copyright &copy; 2017</a></p>
                                 <p style="color: #3c3c3c;">Terms of Services Applied</p></div>
                         </li>
                     </ul>
@@ -344,10 +345,10 @@
                                         if (postCount != 0) {
                                     %>
                                     <c:forEach var="post" items="${reqPost.rows}">
-                                        <div class="item" style="border-top: 1px solid rgba(0, 0, 0, 0.1);">
+                                        <div class="container-fluid item" style="border-top: 1px solid rgba(0, 0, 0, 0.1);">
                                             <div class="col-md-9 col-sm-6 col-xm-4">
                                                 <div class="mdl-card__supporting-text">
-                                                    <h3>${post.post_title} <span class="h3_span fa fa-calendar"> <c:out value="${post.post_timestamp}"/></span></h3>
+                                                    <h4>${post.post_title} <span class="h3_span fa fa-calendar"> <c:out value="${post.reg_date}"/></span></h4>
 
                                                     <p><c:out value="${post.post_desc}"/> </p>
                                                 </div>
@@ -384,12 +385,12 @@
                                         if (blogCount != 0) {
                                     %>
                                     <c:forEach var="post" items="${reqBlogs.rows}">
-                                        <div class="item" style="border-top: 1px solid rgba(0, 0, 0, 0.1);">
+                                        <div class="container-fluid item" style="border-top: 1px solid rgba(0, 0, 0, 0.1);">
                                             <div class="col-md-9 col-sm-6 col-xm-4">
                                                 <div class="mdl-card__supporting-text">
-                                                    <h3>${post.post_title} <span class="h3_span fa fa-calendar"> <c:out value="${post.post_timestamp}"/></span></h3>
+                                                    <h4>${post.blog_title} <span class="h3_span fa fa-calendar"> <c:out value="${post.blog_date}"/></span></h4>
 
-                                                    <p><c:out value="${post.post_desc}"/> 
+                                                    <p><c:out value="${post.blog_desc}"/> 
                                                 </div>
                                                 <div class="mdl-card__actions">
                                                     <a href="#" class="mdl-button">View More >>> </a>
@@ -418,8 +419,10 @@
         <!-- /#wrapper -->
 
         <!--javascript files-->
-        <script src="../../assets/js/jquery.js"></script>
-        <script src="../../assets/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../../assets/js/jquery.js"></script>
+        <script type="text/javascript" src="../../assets/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../../assets/js/custom.js"></script>
+        <script type="text/javascript" src="../../assets/js/paginate.js"></script>
 
     </body>
 

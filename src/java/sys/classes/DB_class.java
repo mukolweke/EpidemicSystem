@@ -168,7 +168,7 @@ public class DB_class implements Serializable {
     public int getQuestion(int user_id, String notf_type, String blog_date) throws SQLException, Exception {
         newConn();
         Statement stmt = connection.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT post_id FROM post_epidemic WHERE user_id = " + user_id + " AND post_title ='" + notf_type + "' AND post_timestamp ='" + blog_date + "';");
+        ResultSet rs = stmt.executeQuery("SELECT post_id FROM post_epidemic WHERE user_id = " + user_id + " AND post_title ='" + notf_type + "' AND reg_date ='" + blog_date + "';");
         rs.next();
         return rs.getInt("post_id");
     }
@@ -178,7 +178,7 @@ public class DB_class implements Serializable {
         int postid = Integer.parseInt(postId);
         newConn();
         Statement stmt = connection.createStatement();
-        return stmt.executeUpdate("INSERT INTO comment_epidemic VALUES(null,'" + postid + "','" + userId + "','" + comm_desc + "','" + blog_date + "')");
+        return stmt.executeUpdate("INSERT INTO comment_epidemic VALUES(null,'" + userId + "','" + postid + "','" + comm_desc + "','" + blog_date + "')");
 
     }
 
@@ -309,16 +309,16 @@ public class DB_class implements Serializable {
         return stmt.executeUpdate("UPDATE user SET auth_key = 4 WHERE email = '" + email + "'");
     }
 
-    public int countNotifications(String user_email) throws SQLException, Exception {
-        newConn();
-
-        int user_id = getUserId(user_email);
-
-        Statement stmt = connection.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT COUNT(notification_id) AS totalNotification FROM notification WHERE notification_status= 1 AND user_id ='" + user_id + "'");
-        rs.next();
-        return rs.getInt("totalNotification");
-    }
+//    public int countNotifications(String user_email) throws SQLException, Exception {
+//        newConn();
+//
+//        int user_id = getUserId(user_email);
+//
+//        Statement stmt = connection.createStatement();
+//        ResultSet rs = stmt.executeQuery("SELECT COUNT(notification_id) AS totalNotification FROM notification WHERE notification_status= 1 AND user_id ='" + user_id + "'");
+//        rs.next();
+//        return rs.getInt("totalNotification");
+//    }
 
     public int countFarmer() throws SQLException, Exception {
         int auth_key = 3;
@@ -375,11 +375,11 @@ public class DB_class implements Serializable {
     }
 
     public String getPost(int postId) {
-        return "SELECT * from post_epidemic WHERE post_id = '" + postId + "'";
+        return "SELECT * from post_epidemic WHERE post_id = " + postId;
     }
 
     public String getComment(int postId) {
-        return "SELECT * from comment_epidemic WHERE post_id = '" + postId + "'";
+        return "SELECT * from comment_epidemic WHERE post_id = " + postId;
     }
 
     public String getTitle(int postId) throws SQLException, Exception {
@@ -411,7 +411,7 @@ public class DB_class implements Serializable {
     public int countComment(int postId) throws SQLException, Exception {
         newConn();
         Statement stmt = connection.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT COUNT(comment_id) AS commentCount FROM comment_epidemic WHERE post_id = '" + postId + "'");
+        ResultSet rs = stmt.executeQuery("SELECT COUNT(comment_id) AS commentCount FROM comment_epidemic WHERE post_id = " + postId );
         rs.next();
         return rs.getInt("commentCount");
     }
@@ -452,7 +452,7 @@ public class DB_class implements Serializable {
         int rec_id = getUserId(email);
         newConn();
         Statement stmt = connection.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT COUNT(msg_id) AS msgCount FROM message WHERE to_id = '" + rec_id + " AND msg_status = 0'");
+        ResultSet rs = stmt.executeQuery("SELECT COUNT(msg_id) AS msgCount FROM message WHERE to_id = " + rec_id + " AND msg_status = 0postNotf");
         rs.next();
         return rs.getInt("msgCount");
     }

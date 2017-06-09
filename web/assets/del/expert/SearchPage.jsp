@@ -17,6 +17,7 @@
         <link href="../../assets/css/material.css" rel="stylesheet" type="text/css"/>
         <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="../../assets/css/main.css" rel="stylesheet" type="text/css"/>
+        <link href="../../assets/css/custom.css" rel="stylesheet"/>
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
         <link rel="icon" href="../../assets/img/favicon.png" type="image/x-icon">
         <script>
@@ -85,7 +86,7 @@
 
         <header>
             <!--navbar one-->
-            <nav class="navbar navbar-primary " role="navigation">
+            <nav class="navbar navbar-default navbar-fixed-top " role="navigation">
                 <div class="container">
                     <!-- Brand and toggle get grouped for better mobile display -->
                     <div class="navbar-header">

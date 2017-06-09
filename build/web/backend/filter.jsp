@@ -19,7 +19,7 @@
             ResultSet rs = ps.executeQuery();
 
             if (!rs.isBeforeFirst()) {
-                out.println("<p>No Record Found!</p>");
+                out.println("<p>No Record Found!!! try <a href=\"_blank\">google.com</a></p>");
             } else {
                 out.print("<table class=\"table table-hover\">");
                 out.print("<tr><th>#</th><th>Post Title</th><th>Posting</th><th>Action</th></tr>");

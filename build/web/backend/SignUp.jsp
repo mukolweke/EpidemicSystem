@@ -51,7 +51,6 @@
                     var place = autocomplete.getPlace();
                     document.getElementById("lat").value = place.geometry.location.lat();
                     document.getElementById("lng").value = place.geometry.location.lng();
-
                 });
             };
         </script>

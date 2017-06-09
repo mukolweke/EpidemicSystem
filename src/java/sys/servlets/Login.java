@@ -107,7 +107,7 @@ public class Login extends HttpServlet {
                 request.getSession().invalidate();
 
                 String ErrorMessage = "/backend/Login.jsp";
-                String login_error = "Wrong email or password";
+                String login_error = "Wrong email or password" + e;
                 System.out.println(e);
                 Error_class user_error = new Error_class(login_error);
                 request.setAttribute("ErrorMessage", user_error);

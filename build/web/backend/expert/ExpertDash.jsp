@@ -28,6 +28,7 @@
         <link href="../../assets/css/plugins/sb-admin.css" rel="stylesheet">
         <link href="../../assets/css/plugins/morris.css" rel="stylesheet">
         <link href="../../assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="../../assets/css/custom.css" rel="stylesheet" type="text/css"/>
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
         <link rel="icon" href="../../assets/img/favicon.png" type="image/x-icon">
     </head>
@@ -73,7 +74,7 @@
         <div id="wrapper">
 
             <!-- Navigation -->
-            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -186,20 +187,20 @@
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav side-nav">
                         <li class="active">
-                            <a href="ExpertDash.jsp"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                            <a href="ExpertDash.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                         </li>
                         <li>
-                            <a href="SearchPage.jsp"><i class="fa fa-fw fa-search"></i> Search Epidemic</a>
-                            
+                            <a href="SearchPage.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-search"></i> Search Epidemic</a>
+
                         </li>
                         <li>
-                            <a href="BlogPage.jsp"><i class="fa fa-fw fa-book"></i>  Blogs</a>
+                            <a href="BlogPage.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-book"></i>  Blogs</a>
                         </li>
                         <li>
-                            <a href="Mapping.jsp"><i class="fa fa-fw fa-map-marker"></i>  Mapping</a>
+                            <a href="Mapping.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-map-marker"></i>  Mapping</a>
                         </li>
                         <li>
-                            <div style="margin-top: 300px;padding-left: 10px;"><p><a href="#">Copyright &copy; 2017</a></p>
+                            <div style="margin-top: 280px;padding-left: 10px;"><p><a href="#">Copyright &copy; 2017</a></p>
                                 <p style="color: #3c3c3c;">Terms of Services Applied</p></div>
                         </li>
                     </ul>
@@ -301,10 +302,10 @@
                                         if (postCount != 0) {
                                     %>
                                     <c:forEach var="post" items="${reqPost.rows}">
-                                        <div class="item" style="border-top: 1px solid rgba(0, 0, 0, 0.1);">
+                                        <div class=" container-fluid item" style="border-top: 1px solid rgba(0, 0, 0, 0.1);">
                                             <div class="col-md-9 col-sm-6 col-xm-4">
                                                 <div class="mdl-card__supporting-text">
-                                                    <h3>${post.post_title} <span class="h3_span fa fa-calendar"> <c:out value="${post.post_timestamp}"/></span></h3>
+                                                    <h4>${post.post_title} <span style="margin-left: 50px;" class="fa fa-calendar"> <c:out value="${post.reg_date}"/></span></h4>
 
                                                     <p><c:out value="${post.post_desc}"/> </p>
                                                 </div>
@@ -341,12 +342,12 @@
                                         if (blogCount != 0) {
                                     %>
                                     <c:forEach var="post" items="${reqBlogs.rows}">
-                                        <div class="item" style="border-top: 1px solid rgba(0, 0, 0, 0.1);">
+                                        <div class="container-fluid item" style="border-top: 1px solid rgba(0, 0, 0, 0.1);">
                                             <div class="col-md-9 col-sm-6 col-xm-4">
                                                 <div class="mdl-card__supporting-text">
-                                                    <h3>${post.post_title} <span class="h3_span fa fa-calendar"> <c:out value="${post.post_timestamp}"/></span></h3>
+                                                    <h4>${post.blog_title} <span class="h3_span fa fa-calendar"> <c:out value="${post.blog_date}"/></span></h4>
 
-                                                    <p><c:out value="${post.post_desc}"/> 
+                                                    <p><c:out value="${post.blog_desc}"/> 
                                                 </div>
                                                 <div class="mdl-card__actions">
                                                     <a href="#" class="mdl-button">View More >>> </a>
@@ -374,8 +375,9 @@
         </div>
         <!-- /#wrapper -->
 
-        <!--javascript files-->
-        <script src="../../assets/js/jquery.js"></script>
-        <script src="../../assets/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../../assets/js/jquery.js"></script>
+        <script type="text/javascript" src="../../assets/js/custom.js"></script>
+        <script type="text/javascript" src="../../assets/js/paginate.js"></script>
+        <script type="text/javascript" src="../../assets/js/bootstrap.js"></script>
     </body>
 </html>

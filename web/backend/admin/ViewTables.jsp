@@ -3,6 +3,10 @@
     Created on : Jun 6, 2017, 12:42:32 AM
     Author     : Michael Mukolwe
 --%>
+<%@page import="sys.classes.Success_class"%>
+<%@page import="sys.classes.Error_class"%>
+<%@page import="sys.classes.Login_class"%>
+<%@page import="sys.classes.DB_class"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,15 +28,46 @@
         <link href="../../assets/css/plugins/sb-admin.css" rel="stylesheet">
         <link href="../../assets/css/plugins/morris.css" rel="stylesheet">
         <link href="../../assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="../../assets/css/custom.css" rel="stylesheet" type="text/css"/>
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="../../assets/img/favicon.png" type="image/x-icon">
 
     </head>
 
     <body>
+<%
 
+            //create database object
+            DB_class DB = new DB_class();
+
+            //            int countNotification = DB.countNotifications(user_name);
+            //check if session is active
+            if (session.getAttribute("user") == null) {
+                response.sendRedirect("../Login.jsp");
+            }
+            if (request.getParameter("upd") != null) {
+                DB.deactivateAccount(request.getParameter("upd"));
+            }
+            Login_class user_ = (Login_class) session.getAttribute("user");
+            if (user_ == null) {
+                user_ = new Login_class();
+            }
+
+            //get the error / success msg
+            Error_class user_error = (Error_class) request.getAttribute("addUserErr");
+            if (user_error == null) {
+                user_error = new Error_class();
+            }
+            Success_class user_sucess = (Success_class) request.getAttribute("addSuccess");
+            if (user_sucess == null) {
+                user_sucess = new Success_class();
+            }
+
+        %>
         <div id="wrapper">
 
             <!-- Navigation -->
-            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -126,7 +161,7 @@
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i><%= user_.getUserEmail()%> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
@@ -144,33 +179,37 @@
                 <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav side-nav">
-                        <li>
-                            <a href="AdminDash.jsp"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                        <li >
+                            <a href="AdminDash.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                         </li>
                         <li>
-                            <a href="javascript:;" data-toggle="collapse" data-target="#experts"><i class="fa fa-fw fa-users"></i> Experts <i class="fa fa-fw fa-caret-down"></i></a>
+                            <a href="javascript:;" data-toggle="collapse" style="color:#5cb85c;" data-target="#experts"><i class="fa fa-fw fa-users"></i> Experts <i class="fa fa-fw fa-caret-down"></i></a>
                             <ul id="experts" class="collapse">
                                 <li>
-                                    <a href="AddExpert.jsp"><i class="fa fa-fw fa-plus"></i>  Add Experts</a>
+                                    <a href="AddExpert.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-plus"></i>  Add Experts</a>
                                 </li>
                                 <li>
-                                    <a href="ViewExpert.jsp"><i class="fa fa-fw fa-table"></i>  View Experts</a>
+                                    <a href="ViewExpert.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-table"></i>  View Experts</a>
                                 </li>
                             </ul>
                         </li>
                         <li>
-                            <a href="ViewFarmer.jsp"><i class="fa fa-fw fa-users"></i>  Farmers</a>
+                            <a href="ViewFarmer.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-users"></i>  Farmers</a>
                         </li>
                         <li class="active">
-                            <a href="javascript:;" data-toggle="collapse" data-target="#mapping"><i class="fa fa-fw fa-map-marker"></i>  Mapping <i class="fa fa-fw fa-caret-down"></i></a>
+                            <a href="javascript:;" data-toggle="collapse" style="color:#5cb85c;" data-target="#mapping"><i class="fa fa-fw fa-map-marker"></i>  Mapping <i class="fa fa-fw fa-caret-down"></i></a>
                             <ul id="mapping" class="collapse">
-                                <li class="active">
-                                    <a href="ViewTables.jsp"><i class="fa fa-fw fa-table"></i>  Tables</a>
+                                <li>
+                                    <a href="ViewTables.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-table"></i>  Tables</a>
                                 </li>
-                                <li >
-                                    <a href="ViewCharts.jsp"><i class="fa fa-fw fa-bar-chart-o"></i>  Charts</a>
+                                <li>
+                                    <a href="ViewCharts.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-bar-chart-o"></i>  Charts</a>
                                 </li>
                             </ul>
+                        </li>
+                        <li>
+                            <div style="margin-top: 280px;padding-left: 10px;"><p><a href="#">Copyright &copy; 2017</a></p>
+                                <p style="color: #3c3c3c;">Terms of Services Applied</p></div>
                         </li>
                     </ul>
                 </div>
