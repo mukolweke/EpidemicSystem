@@ -15,9 +15,9 @@
         <title>FEWS &centerdot; Index Page</title>
 
         <!--css links-->
+        <link href="assets/css/material.css" rel="stylesheet" type="text/css"/>
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="assets/css/swiper.min.css" rel="stylesheet" type="text/css"/>
-        <link href="assets/css/main.css" rel="stylesheet" type="text/css"/>
         <link href="assets/css/main.css" rel="stylesheet" type="text/css"/>
         <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
         <link rel="icon" href="assets/img/favicon.png" type="image/x-icon">

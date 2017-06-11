@@ -67,8 +67,6 @@
             if (user == null) {
                 user = new Login_class();
             }
-            int countNotification = 1;
-            //DB.countNotifications(user_name);
             //check if session is active
             if (session.getAttribute("user") == null) {
                 response.sendRedirect("../Login.jsp");
@@ -175,21 +173,6 @@
                         <ul class="dropdown-menu alert-dropdown">
                             <li>
                                 <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
                             </li>
                             <li class="divider"></li>
                             <li>
@@ -389,17 +372,15 @@
 
                                                 <div class="mdl-card mdl-cell mdl-cell--12-col-desktop mdl-cell--9-col-tablet mdl-cell--4-col-phone">
                                                     <div class="mdl-card__supporting-text">
-                                                    <h4>${post.blog_title} <span class="h3_span fa fa-calendar"> <c:out value="${post.blog_date}"/></span></h4>
+                                                    <h4>${post.post_title} <span style="margin-left: 70px;"class="h3_span fa fa-calendar"> <c:out value="${post.reg_date}"/></span></h4>
 
-                                                        <p><c:out value="${post.blog_desc}"/> </p>
-                                                    </div>
-                                                    <div class="mdl-card__actions">
-                                                        <a href="ViewPost.jsp?post_id=${post.post_id}" style="margin-left: 50px;" class="mdl-button">View More >>> </a>
+                                                        <p><c:out value="${post.post_desc}"/> <a href="ViewPost.jsp?post_id=${post.post_id}" class="mdl-button">[Read more...] </a></p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </c:forEach>
                                         <hr>
+                                        <div class="paginate"></div>
                                         <%} else {%>
                                         <section class="section--center alert alert-info mdl-grid mdl-grid--no-spacing mdl-shadow--2dp" style="border-top: 1px solid rgba(0, 0, 0, 0.1);height: 100px;">
                                             <p style="margin-left: 50px;margin-top: 40px;">There are no Epidemic Posts Posted as yet...</p>
@@ -455,5 +436,6 @@
         <script type="text/javascript" src="../../assets/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../../assets/js/custom.js"></script>
         <script type="text/javascript" src="../../assets/js/paginate.js"></script>
+        
     </body>
 </html>

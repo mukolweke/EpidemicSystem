@@ -3,14 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/A:/www/4th%20project/MyProject/FarmersEpidemicSystem/web/assets/del/expert/profile.jsp</file>
-            <file>file:/A:/www/4th%20project/MyProject/FarmersEpidemicSystem/web/backend/farmer/Farmer_Dash.jsp</file>
-            <file>file:/A:/www/4th%20project/MyProject/FarmersEpidemicSystem/web/backend/farmer/Settings.jsp</file>
+            <file>file:/A:/www/4th%20project/MyProject/FarmersEpidemicSystem/web/backend/admin/AdminDash.jsp</file>
             <file>file:/A:/www/4th%20project/MyProject/FarmersEpidemicSystem/web/backend/farmer/FarmerDash.jsp</file>
             <file>file:/A:/www/4th%20project/MyProject/FarmersEpidemicSystem/web/backend/farmer/ViewPost.jsp</file>
-            <file>file:/A:/www/4th%20project/MyProject/FarmersEpidemicSystem/web/assets/del/farm/settings.jsp</file>
-            <file>file:/A:/www/4th%20project/MyProject/FarmersEpidemicSystem/web/backend/farmer/Profile.jsp</file>
-            <file>file:/A:/www/4th%20project/MyProject/FarmersEpidemicSystem/web/backend/farmer/Settings__.jsp</file>
+            <file>file:/A:/www/4th%20project/MyProject/FarmersEpidemicSystem/src/java/sys/classes/DB_class.java</file>
         </group>
     </open-files>
 </project-private>

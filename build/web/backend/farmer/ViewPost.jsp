@@ -287,7 +287,7 @@
                                                             <c:forEach var="post" items="${getPost.rows}">
                                                                 <section class="section--center mdl-grid mdl-grid--no-spacing" style="border-top: 1px solid rgba(0, 0, 0, 0.1);">
                                                                     <h2>${post.post_title} </h2>
-                                                                    <h4><span class="fa fa-calendar"> <c:out value="${post.reg_date}"/></span></h4>
+                                                                    <h4> <span class="fa fa-calendar"> <c:out value="${post.reg_date}"/></span></h4>
                                                                     <header class=" ">
                                                                         <div class="panel-body" style="height: 200px;">
                                                                             <div id="map" style="width: 100%;height: 100%;"></div>
@@ -296,7 +296,8 @@
                                                                     <hr>
                                                                     <div class="mdl-card mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
                                                                         <div class="mdl-card__supporting-text">
-                                                                            <p style="line-height: 2.5;"><c:out value="${post.post_desc}"/> </p>
+                                                                            <p style="line-height: 2.5;"><c:out value="${post.post_desc}"/> <a href="Profile.jsp?prf_id=${post.user_id}">[ View User Profile ]</a></p>
+                                                                            
                                                                         </div>
                                                                     </div>
                                                                 </section>

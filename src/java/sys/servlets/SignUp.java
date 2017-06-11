@@ -45,7 +45,7 @@ public class SignUp extends HttpServlet {
         if (full_name.isEmpty() | email.isEmpty() | phone.isEmpty()
                 | pass.isEmpty() | cpass.isEmpty() | userLoc.isEmpty()) {
             String signuperr = "/backend/SignUp.jsp";
-            String sign_error = "Fill the Empty Fields Please...";
+            String sign_error = "Fill the Details correctly Please...";
             Error_class user_error = new Error_class(sign_error);
             request.setAttribute("signupErr", user_error);
 

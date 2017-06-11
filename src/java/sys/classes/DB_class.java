@@ -230,9 +230,20 @@ public class DB_class implements Serializable {
         newConn();
 
         Statement stmt = connection.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT email FROM user WHERE user_id='" + user_id + "'");
+        ResultSet rs = stmt.executeQuery("SELECT email FROM user WHERE user_id=" + user_id);
         rs.next();
         return rs.getString("email");
+    }
+
+    public String getUserName(int post_id) throws SQLException, Exception {
+        newConn();
+        Statement stmt = connection.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT user_id FROM post_epidemic WHERE post_id=" + post_id);
+        rs.next();
+        int user_id =  rs.getInt("user_id");
+        ResultSet rs1 = stmt.executeQuery("SELECT name FROM farmer WHERE farmer_id="+user_id);
+        rs1.next();
+        return rs1.getString("name");
     }
 
     public int updateProfile(String update, String type, String email) throws SQLException, Exception {
@@ -319,7 +330,6 @@ public class DB_class implements Serializable {
 //        rs.next();
 //        return rs.getInt("totalNotification");
 //    }
-
     public int countFarmer() throws SQLException, Exception {
         int auth_key = 3;
         return countUser(auth_key);
@@ -411,7 +421,7 @@ public class DB_class implements Serializable {
     public int countComment(int postId) throws SQLException, Exception {
         newConn();
         Statement stmt = connection.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT COUNT(comment_id) AS commentCount FROM comment_epidemic WHERE post_id = " + postId );
+        ResultSet rs = stmt.executeQuery("SELECT COUNT(comment_id) AS commentCount FROM comment_epidemic WHERE post_id = " + postId);
         rs.next();
         return rs.getInt("commentCount");
     }
@@ -561,5 +571,5 @@ public class DB_class implements Serializable {
     public String coordsE() {
         return "SELECT * FROM expert";
     }
-    
+
 }

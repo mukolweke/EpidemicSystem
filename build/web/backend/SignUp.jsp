@@ -27,10 +27,20 @@
         async defer></script>
         <script language="javascript" type="text/javascript">
 
+            function checkNumber() {
+                //PHONE REGEX 
+                var phoneno = /^\+\d{12}$/;
+                if ((document.getElementById('user-phone').value.match(phoneno))) {
+                    document.getElementById('help2').innerHTML = "";
+                } else {
+                    document.getElementById('help2').innerHTML = "Incorrect Phone: start +254";
+                }
+            }
+
             function checkLength() {
                 //password length
                 if ((document.getElementById('user-password').value).length < 6) {
-                    document.getElementById('help2').innerHTML = "Short Password";
+                    document.getElementById('help2').innerHTML = "Password too short";
                 } else {
                     document.getElementById('help2').innerHTML = "";
                 }
@@ -52,7 +62,8 @@
                     document.getElementById("lat").value = place.geometry.location.lat();
                     document.getElementById("lng").value = place.geometry.location.lng();
                 });
-            };
+            }
+            ;
         </script>
     </head>
     <body>
@@ -101,7 +112,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input type="text" name="user-phone" class="form-control" id="user-email" placeholder="Phone Contact" oninput="checkNumber(this)"tabindex="1">
+                                        <input type="text" name="user-phone" class="form-control" id="user-phone" placeholder="Phone Contact (+254)" oninput="checkNumber(this)"tabindex="1">
                                     </div> <!-- /.form-group -->
                                 </div>
                             </div> <!-- /.row -->
@@ -127,15 +138,17 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group" >
-                                        <span class="pull-right">Already have an Account <a class="btn-sign1" id="btn"href="Login.jsp"><strong>LOG IN</strong></a></span>
-                                        <span class="text-danger" id="help2"></span>
+                                        <span class="pull-right">Already have an Account? <a class="btn-sign1" id="btn"href="Login.jsp"><strong>LOG IN</strong></a></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <p class="text-danger text-right" id="help2"></p>
                                     </div>
                                 </div>
                             </div>
                             <input type="hidden" name="lat" id="lat"/>
                             <input type="hidden" name="lng" id="lng"/>
                             <input type="hidden" name="reg_date" value="<%= (new java.util.Date().toLocaleString())%>"/>
-                            
+
                             <div class="form-group" style="margin-top: 10px;">
                                 <button type="submit" class="btn btn-success btn-block btn-lg" tabindex="4">
                                     Sign Up <span class="glyphicon glyphicon-check" style="margin-left: 10px;"></span></i>
@@ -161,12 +174,10 @@
             function readURL(input) {
                 if (input.files && input.files[0]) {
                     var reader = new FileReader();
-
                     reader.onload = function (e) {
                         $('#blah')
                                 .attr('src', e.target.result);
                     };
-
                     reader.readAsDataURL(input.files[0]);
                 }
             }
