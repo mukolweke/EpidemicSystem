@@ -34,7 +34,7 @@
         <link rel="icon" href="../../assets/img/favicon.png" type="image/x-icon"/>
     </head>
 
-    <body>
+    <body onload="notify()">
         <%
 
             //create database object
@@ -77,7 +77,7 @@
             int farmCount = DB.countFarmer();
             int postCount = DB.countPost();
             int blogCount = DB.countBlogs();
-//            int msgCount = DB.countMsg(user_email);
+            int msgCount = DB.countMsg(user_email);
 
             //get map coordinates
             double lat = DB.getLat(user_email, "farmer");
@@ -95,10 +95,9 @@
             <%= DB.postPosted()%>
         </sql:query> 
 
-        <sql:query dataSource="${bgGet}" var="reqUsers">
-            <%= DB.user_Details(user_email)%>
+        <sql:query dataSource="${bgGet}" var="reqMsg">
+            <%= DB.getAllMsg(user_email)%>
         </sql:query>
-
 
         <div id="wrapper">
             <!-- Navigation -->
@@ -116,70 +115,31 @@
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"> <%=msgCount%></i> <b class="caret"></b></a>
                         <ul class="dropdown-menu message-dropdown">
-                            <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>John Smith</strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                            <c:forEach var="msg" items="${reqMsg.rows}">
+                                <li class="message-preview">
+                                    <a href="../Message.jsp?msg=${msg.msg_id}">
+                                        <div class="media">
+                                            <span class="pull-left">
+                                                <i class="fa fa-envelope fa-2x"></i>
+                                            </span>
+                                            <div class="media-body">
+                                                <h5 class="media-heading"><strong></strong>
+                                                </h5>
+                                                <p>${msg.message}...</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>John Smith</strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>John Smith</strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
+                                    </a>
+                                </li>
+                            </c:forEach>
+
                             <li class="message-footer">
-                                <a href="#">Read All New Messages</a>
+                                <a href="../Message.jsp?msg=all">Read All New Messages</a>
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
-                        <ul class="dropdown-menu alert-dropdown">
-                            <li>
-                                <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#">View All</a>
-                            </li>
-                        </ul>
-                    </li>
+                    <li class="clearfix"></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%= user_.getUserEmail()%> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -372,7 +332,7 @@
 
                                                 <div class="mdl-card mdl-cell mdl-cell--12-col-desktop mdl-cell--9-col-tablet mdl-cell--4-col-phone">
                                                     <div class="mdl-card__supporting-text">
-                                                    <h4>${post.post_title} <span style="margin-left: 70px;"class="h3_span fa fa-calendar"> <c:out value="${post.reg_date}"/></span></h4>
+                                                        <h4>${post.post_title} <span style="margin-left: 70px;"class="h3_span fa fa-calendar"> <c:out value="${post.reg_date}"/></span></h4>
 
                                                         <p><c:out value="${post.post_desc}"/> <a href="ViewPost.jsp?post_id=${post.post_id}" class="mdl-button">[Read more...] </a></p>
                                                     </div>
@@ -417,6 +377,30 @@
                 });
             }
             function notify() {
+                if (!window.Notification) {
+                    alert('Sorry, not supported');
+                } else {
+                    Notification.requestPermission(function (p) {
+                        if (p === 'denied') {
+                            document.getElementById("response").innerHTML = "Denied Notification";
+                        } else if (p === 'granted') {
+                            if (Notification.permission === 'default') {
+                                alert('allow notifications');
+                            } else {
+                                notify = new Notification('Notification', {
+                                    body: 'You Have Messages...',
+                                    icon: '../assets/img/1.jpg',
+                                    tag: 'all'
+                                });
+
+                                notify.onclick = function () {
+                                    window.location = '../Message.jsp?msg=' + this.tag;
+                                };
+                            }
+                        }
+                    });
+                }
+                
                 if (document.getElementById("not").value !== "0") {
                     document.getElementById("not").style.color = "#FF6666";
                 } else if (document.getElementById("not").value === "0") {
@@ -436,6 +420,6 @@
         <script type="text/javascript" src="../../assets/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../../assets/js/custom.js"></script>
         <script type="text/javascript" src="../../assets/js/paginate.js"></script>
-        
+
     </body>
 </html>

@@ -240,8 +240,8 @@ public class DB_class implements Serializable {
         Statement stmt = connection.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT user_id FROM post_epidemic WHERE post_id=" + post_id);
         rs.next();
-        int user_id =  rs.getInt("user_id");
-        ResultSet rs1 = stmt.executeQuery("SELECT name FROM farmer WHERE farmer_id="+user_id);
+        int user_id = rs.getInt("user_id");
+        ResultSet rs1 = stmt.executeQuery("SELECT name FROM farmer WHERE farmer_id=" + user_id);
         rs1.next();
         return rs1.getString("name");
     }
@@ -441,20 +441,18 @@ public class DB_class implements Serializable {
     }
 
     //get a message
-    public String getMsg(String email) throws Exception, SQLException {
+    public String getMsg(String email, int msgid) throws Exception, SQLException {
         int rec_id = getUserId(email);
         newConn();
-        Statement stmt = connection.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT msg FROM message WHERE to_id = '" + rec_id + "'");
-        rs.next();
-        return rs.getString("msg");
+        return ("SELECT * FROM message WHERE msg_id = " + msgid + " AND to_id = " + rec_id);
+
     }
 
     //get all
     public String getAllMsg(String email) throws SQLException, Exception {
         int rec_id = getUserId(email);
-        String posts = ("SELECT * FROM message WHERE to_id = '" + rec_id + "'");
-        return posts;
+        newConn();
+        return ("SELECT * FROM message WHERE to_id = " + rec_id);
     }
 
     //count unread
@@ -462,7 +460,7 @@ public class DB_class implements Serializable {
         int rec_id = getUserId(email);
         newConn();
         Statement stmt = connection.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT COUNT(msg_id) AS msgCount FROM message WHERE to_id = " + rec_id + " AND msg_status = 0postNotf");
+        ResultSet rs = stmt.executeQuery("SELECT COUNT(msg_id) AS msgCount FROM message WHERE to_id = " + rec_id + " AND msg_status = 0");
         rs.next();
         return rs.getInt("msgCount");
     }

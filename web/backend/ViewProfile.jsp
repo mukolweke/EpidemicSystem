@@ -212,7 +212,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Profile <small>Farmer</small>
+                            Profile <small>User</small>
                         </h1>
                     </div>
                 </div><!-- /.row -->
