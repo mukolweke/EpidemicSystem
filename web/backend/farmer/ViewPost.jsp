@@ -216,7 +216,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%= user_.getUserEmail()%> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="Profile.jsp?prf_id=<%=DB.getUserId(user_email)%>"><i class="fa fa-fw fa-user"></i> Profile</a>
+                                <a href="../ViewProfile.jsp?prf_id=<%=DB.getUserId(user_email)%>"><i class="fa fa-fw fa-user"></i> Profile</a>
                             </li>
                             <li>
                                 <a href="Settings.jsp"><i class="fa fa-fw fa-gear"></i> Settings</a>
@@ -296,7 +296,7 @@
                                                                     <hr>
                                                                     <div class="mdl-card mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
                                                                         <div class="mdl-card__supporting-text">
-                                                                            <p style="line-height: 2.5;"><c:out value="${post.post_desc}"/> <a href="Profile.jsp?prf_id=${post.user_id}">[ View User Profile ]</a></p>
+                                                                            <p style="line-height: 2.5;"><c:out value="${post.post_desc}"/> <a href="../ViewProfile.jsp?prf_id=${post.user_id}">[ View User Profile ]</a></p>
                                                                             
                                                                         </div>
                                                                     </div>
