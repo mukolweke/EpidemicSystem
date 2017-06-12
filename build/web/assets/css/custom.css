@@ -1,0 +1,65 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jun 9, 2017, 11:28:35 AM
+    Author     : Michael Mukolwe
+*/
+
+@font-face {
+    font-family: 'Montserrat-Regular';
+    src:url(../fonts/Montserrat-Regular.ttf) format('truetype');
+}
+@font-face {
+    font-family: 'Oxygen-Regular';
+    src:url(../fonts/Oxygen-Regular.ttf) format('truetype');
+}
+a{
+    color:#5cb85c;
+}
+a:hover{
+    color: #67b168;
+    text-decoration: none;
+}
+.side-nav{
+    background: #f9f9f9;
+}
+side-link:hover,
+side-link:active,
+side-link:focus{
+    background: #5cb85c;
+}
+.mdl-button{
+    color: #3e8f3e;
+    margin-left: 350px;
+}
+.mdl-button:hover,
+.mdl-button:active,
+.mdl-button:focus{
+    background-color: transparent;
+    color:#398439;
+    font-size: 15px;
+}
+/*pagination*/
+.paginate li{
+    list-style: none;
+    float: left;
+    width: 30px;
+    height: 30px;
+    font-style: bold;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    color: #fff;
+    padding-top: 4px;
+    padding-left: 10px;
+    background-color: #337ab7;
+}
+
+.paginate ul{
+    border: 0px;
+    padding: 0px;
+    margin-left: 450px;
+}
+/*end*/
