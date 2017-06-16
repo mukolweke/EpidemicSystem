@@ -25,24 +25,43 @@
         <!-- Bootstrap Core CSS -->
         <link href="../../assets/css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom CSS -->
-        <link href="../../assets/css/plugins/sb-admin.css" rel="stylesheet">
-        <link href="../../assets/css/plugins/morris.css" rel="stylesheet">
         <link href="../../assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="../../assets/css/plugins/morris.css" rel="stylesheet">
+        <link href="../../assets/css/plugins/sb-admin.css" rel="stylesheet">
         <link href="../../assets/css/custom.css" rel="stylesheet" type="text/css"/>
-        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="../../assets/img/favicon.png" type="image/x-icon">
         <link rel="icon" href="../../assets/img/favicon.png" type="image/x-icon">
+        <style type="text/css">
+            .top-nav>li>a:hover,
+            .top-nav>li>a:focus,
+            .top-nav>li>a:active,
+            .top-nav>.open>a,
+            .top-nav>.open>a:hover,
+            .top-nav>.open>a:active,
+            .top-nav>.open>a:focus {
+                color: #3d8b3d;
+                background-color: transparent;
+            }
+            .side-nav li a:hover,
+            .side-nav li a:active,
+            .side-nav li a:focus {
+                color: #f9f9f9;
+                outline: none;
+                background-color: #3d8b3d !important;
+            }
+        </style>
     </head>
 
     <body>
         <%
-
-            //create database object
-            DB_class DB = new DB_class();
-//            int countNotification = DB.countNotifications(user_name);
             //check if session is active
             if (session.getAttribute("user") == null) {
                 response.sendRedirect("../Login.jsp");
             }
+            //create database object
+            DB_class DB = new DB_class();
+//            int countNotification = DB.countNotifications(user_name);
+
             Login_class user_ = (Login_class) session.getAttribute("user");
             if (user_ == null) {
                 user_ = new Login_class();
@@ -83,108 +102,21 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="../../index.jsp"><span style="color:#5cb85c;">FEWS</span> Admin</a>
+                    <a class="navbar-brand" href="../../index.jsp"><span><img src="../../assets/img/favicon.png" style="height: 40px;width: 50px;"></span>FARMERS &CenterDot; EPIDEMIC &CenterDot; SYSTEM </a>
                 </div>
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
-                        <ul class="dropdown-menu message-dropdown">
-                            <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>John Smith</strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>John Smith</strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>John Smith</strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="message-footer">
-                                <a href="#">Read All New Messages</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
-                        <ul class="dropdown-menu alert-dropdown">
+                        <a href="#" class="dropdown-toggle" style="color: #3d8b3d;background-color: transparent;" data-toggle="dropdown"><i class="fa fa-user"></i> <%= user_.getUserEmail()%> <b class="caret"></b></a>
+                        <ul class="dropdown-menu" style="width: 180px;">
                             <li>
-                                <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#">View All</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%= user_.getUserEmail()%> <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="Profile.jsp?prf_id=<%=DB.getUserId(user_email)%>"><i class="fa fa-fw fa-user"></i> Profile</a>
-                            </li>
-                            <li>
-                                <a href="Settings.jsp"><i class="fa fa-fw fa-gear"></i> Settings</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="Logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                                <a style="background-color: transparent;" href="Logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                             </li>
                         </ul>
                     </li>
                 </ul>
                 <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <div class="collapse navbar-collapse navbar-ex1-collapse" style="background-color: transparent;">
                     <ul class="nav navbar-nav side-nav">
                         <li class="active">
                             <a href="AdminDash.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>

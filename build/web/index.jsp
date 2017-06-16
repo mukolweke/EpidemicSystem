@@ -24,7 +24,7 @@
         <link rel="icon" href="assets/img/favicon.png" type="image/x-icon">
 
         <!--javascript mapwork-->
-        <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdFsAprSk3Bpi5i59sD3KtMEs_Jp_V4z4&libraries=places&callback=initAutocomplete" async defer></script>-->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdFsAprSk3Bpi5i59sD3KtMEs_Jp_V4z4&libraries=places&callback=initAutocomplete" async defer></script>
 
     </head>
     <body>
@@ -346,7 +346,7 @@
                             <i class="fa fa-3x fa-users"></i>                                
                         </div>
                         <h3>Who</h3>
-                        <p>Farmers get in contact with other farmers near them and experts who are far, help fight off an Epidemic.</p>
+                        <p>Farmers get in contact with other farmers near them and experts who are far, help them fight off an Epidemic.</p>
                     </div>
 
                     <div class="col-md-4" style="padding-top: 60px;padding-bottom: 60px;text-align: center;">

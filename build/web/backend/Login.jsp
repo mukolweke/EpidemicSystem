@@ -108,7 +108,7 @@
                                 </button>
                             </div> <!-- /.form-group -->
                         </form>                    
-                        <p>Don't Have an account (FARMER) ? <a class="btn-sign1" id="btn"href="SignUp.jsp">Create an Account</a>||<span class="pull-right"><a href="Forget.jsp" class="btn" id="btn">Forgot Password ?</a></span></p>
+                        <p>Don't Have account (FARMER) ? <a class="btn-sign1" id="btn"href="SignUp.jsp">Create an Account</a> <a href="Forget.jsp" class="btn" id="btn">Forgot Password ?</a></p>
                     </div>
                 </div>
                 <%

@@ -23,6 +23,9 @@ a:hover{
     color: #67b168;
     text-decoration: none;
 }
+.side-nav{
+    background: #f9f9f9;
+}
 .side-nav-in{
     background: #f9f9f9;
 }

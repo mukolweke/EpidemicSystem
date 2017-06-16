@@ -32,9 +32,9 @@
                 //PHONE REGEX 
                 var phoneno = /^\+\d{12}$/;
                 if ((document.getElementById('user-phone').value.match(phoneno))) {
-                    document.getElementById('help2').innerHTML = "";
+                    document.getElementById('help3').innerHTML = "";
                 } else {
-                    document.getElementById('help2').innerHTML = "Incorrect Phone: start +254";
+                    document.getElementById('help3').innerHTML = "Incorrect Phone: start +254";
                 }
             }
 
