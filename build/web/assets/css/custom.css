@@ -23,7 +23,7 @@ a:hover{
     color: #67b168;
     text-decoration: none;
 }
-.side-nav{
+.side-nav-in{
     background: #f9f9f9;
 }
 side-link:hover,
@@ -48,7 +48,7 @@ side-link:focus{
     float: left;
     width: 30px;
     height: 30px;
-    font-style: bold;
+    font-style: inherit;
     border: 1px solid #ddd;
     cursor: pointer;
     color: #fff;
@@ -62,4 +62,9 @@ side-link:focus{
     padding: 0px;
     margin-left: 450px;
 }
+
+
+/* Side Navigation */
+
+
 /*end*/
