@@ -272,7 +272,6 @@
                                         </div>
                                         <div class="panel-body">
                                             <form class="form account-form" name="vinform">
-                                                <input type="hidden" name="searchFrom" value="farmSearch"/>
                                                 <div class="row">
                                                     <div class="col-md-11">
                                                         <div class="form-group">

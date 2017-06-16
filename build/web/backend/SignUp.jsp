@@ -15,8 +15,9 @@
         <title>Farmers Epidemic System Sign Up</title>
         <!--css links-->
         <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link href="../assets/css/main.css" rel="stylesheet" type="text/css"/>
-        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+        <link rel="shortcut icon" href="../assets/img/favicon.png" type="image/x-icon"/>
         <link rel="icon" href="../assets/img/favicon.png" type="image/x-icon"/>
         <style type="text/css">
             input[type=file]{
@@ -40,7 +41,8 @@
             function checkLength() {
                 //password length
                 if ((document.getElementById('user-password').value).length < 6) {
-                    document.getElementById('help2').innerHTML = "Password too short";
+                    var pass = "Password must be at least 6 characters long and mixxed characters.";
+                    document.getElementById('help2').innerHTML = pass;
                 } else {
                     document.getElementById('help2').innerHTML = "";
                 }
@@ -48,10 +50,10 @@
             function checkMatch(inputPass) {
                 // pass dont match error
                 if (inputPass.value !== document.getElementById('user-password').value) {
-                    document.getElementById('help2').innerHTML = "Password Don't Match";
+                    document.getElementById('help3').innerHTML = "Password Don't Match";
                 } else {
                     //valid match
-                    document.getElementById('help2').innerHTML = "";
+                    document.getElementById('help3').innerHTML = "";
                 }
             }
 
@@ -73,6 +75,7 @@
                 user_error = new Error_class();
             }
         %>
+
         <nav class="navbar navbar-primary navbar-fixed-top" role="navigation">
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -83,14 +86,14 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="../index.jsp"><span style="color:#5cb85c;">FEWS</span> LOGO</a>
+                    <a class="navbar-brand" href="../index.jsp"><span><img src="../assets/img/favicon.png" style="height: 40px;width: 50px;"></span>FARMERS EPIDEMIC SYSTEM </a>
                 </div>
             </div><!-- /.container-fluid -->
         </nav>
         <div class="main-panel">
             <div class="container">
                 <div class="login-brand">
-                    <h2 class="text-center">Farmer Sign Up</h2>
+                    <h2 class="text-center">Farmer Sign Up <i style="margin-left: 10px;font-size: 30px;" class="fa fa-edit"></i></h2>
                     <p class="text-center">Please fill in your Details Correctly:
                     </p>
                     <p class="text-center"><span class="text-danger"><%= user_error.getErrorMessage()%></span></p>
@@ -141,7 +144,7 @@
                                         <span class="pull-right">Already have an Account? <a class="btn-sign1" id="btn"href="Login.jsp"><strong>LOG IN</strong></a></span>
                                     </div>
                                     <div class="form-group">
-                                        <p class="text-danger text-right" id="help2"></p>
+                                        <p class="text-danger text-left" id="help2"></p><p class="text-danger text-right" id="help3"></p>
                                     </div>
                                 </div>
                             </div>
@@ -163,7 +166,7 @@
         <!--end form-->
 
         <!-- Footer -->
-        <footer class="">
+        <footer class="navbar-fixed-bottom">
             <div class="container text-center">
                 <p><a href="#">Copyright &copy; kukuSoft.co.ke 2017</a></p>
                 <p>Terms of Services Applied</p>

@@ -150,36 +150,7 @@
                                     </div>
                                 </a>
                             </li>
-                            <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>John Smith</strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>John Smith</strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
+                            
                             <li class="message-footer">
                                 <a href="#">Read All New Messages</a>
                             </li>
@@ -191,21 +162,7 @@
                             <li>
                                 <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
                             </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
-                            </li>
+                            
                             <li class="divider"></li>
                             <li>
                                 <a href="#">View All</a>
@@ -420,6 +377,5 @@
         <script type="text/javascript" src="../../assets/js/jquery.js"></script>
         <script type="text/javascript" src="../../assets/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../../assets/js/custom.js"></script>
-        <script type="text/javascript" src="../../assets/js/paginate.js"></script>
     </body>
 </html>

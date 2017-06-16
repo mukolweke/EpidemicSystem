@@ -6,7 +6,8 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="sys.classes.*" %>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,13 +16,31 @@
 
         <!--css links-->
         <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        <link href="../assets/css/swiper.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link href="../assets/css/main.css" rel="stylesheet" type="text/css"/>
-        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="../assets/img/favicon.png" type="image/x-icon">
         <link rel="icon" href="../assets/img/favicon.png" type="image/x-icon">
+        <script>
+            var request = new XMLHttpRequest();
+            function searchInfo() {
+                var name = document.vinform.inputSearch.value;
+                var url = "filter.jsp?val=" + name;
+                try {
+                    request.onreadystatechange = function () {
+                        if (request.readyState === 4) {
+                            var val = request.responseText;
+                            document.getElementById('mylocation').innerHTML = val;
+                        }
+                    };//end of function
+                    request.open("GET", url, true);
+                    request.send();
+                } catch (e) {
+                    alert("Unable to connect to server");
+                }
+            }
+        </script>
     </head>
-    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <%@taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
+
     <%
         //database object
         DB_class DB = new DB_class();
@@ -29,6 +48,11 @@
         String search_filter = (String) request.getAttribute("search_filter");
         if (search_filter == null) {
             search_filter = "";
+        }
+
+        Login_class user = (Login_class) session.getAttribute("user");
+        if (user == null) {
+            user = new Login_class();
         }
     %>
     <sql:setDataSource var='bgGet' driver='<%= DB.jstlDriver()%>' url='<%= DB.jstlUrl()%>' user='<%= DB.jstlUser()%>'  password='<%= DB.jstlPassword()%>'/>
@@ -48,7 +72,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="../index.jsp"><span style="color:#5cb85c;">FEWS</span> LOGO</a>
+                    <a class="navbar-brand" href="../index.jsp"><span><img src="../assets/img/favicon.png" style="height: 40px;width: 50px;"></span>FARMERS EPIDEMIC SYSTEM </a>
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -67,26 +91,76 @@
                         %>
 
                         <ul class="nav navbar-nav ">
-                            <li><a href="SignUp.jsp"><span class="glyphicon glyphicon-pencil" style="margin-right: 5px;"></span> SIGN UP</a></li>
+                            <li><a href="SignUp.jsp"><span class="glyphicon glyphicon-pencil" style="margin-right: 5px;"></span>FARMER SIGN UP</a></li>
                             <li><a href="Login.jsp"><span class="glyphicon glyphicon-log-in" style="margin-right: 5px;"></span> LOGIN</a></li>
                         </ul>
                         <%
                         } else {
+                            if (DB.getAuthKey(user.getUserEmail().toString()) == 1) {
                         %>
+
                         <div class="dropdown navbar-right">
+                            <ul class="nav navbar-nav">
+                                <li class="" ><a href="#" class="popover-dismiss" id="not"><span style="padding-top: 5px;" class="glyphicon glyphicon-bell"></span></a></li>
+                                <li class="" ><a href="#" class="popover-dismiss" id="not"><span style="padding-top: 5px;" class="glyphicon glyphicon-envelope"></span></a></li>
+
+                            </ul>
                             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-                                User Action
+                                <%= user.getUserEmail()%>
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="FarmerDash.jsp"><span class="glyphicon glyphicon-dashboard" style="margin-right: 20px;"></span>DASHBOARD</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="profile.jsp"><span class="glyphicon glyphicon-user" style="margin-right:  20px;"></span>PROFILE</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="messages.jsp"><span class="glyphicon glyphicon-envelope" style="margin-right: 20px;"></span>MESSAGES</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="admin/AdminDash.jsp"><span class="glyphicon glyphicon-dashboard" style="margin-right: 20px;"></span>DASHBOARD</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="admin/profile.jsp"><span class="glyphicon glyphicon-user" style="margin-right:  20px;"></span>PROFILE</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="admin/messages.jsp"><span class="glyphicon glyphicon-envelope" style="margin-right: 20px;"></span>MESSAGES</a></li>
                                 <li role="presentation" class="divider"></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="Logout"><span class="glyphicon glyphicon-log-out" style="margin-right: 20px;"></span> LOGOUT</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="admin/Logout"><span class="glyphicon glyphicon-log-out" style="margin-right: 20px;"></span> LOGOUT</a></li>
                             </ul>
                         </div>
                         <%
+                        } else if (DB.getAuthKey(user.getUserEmail().toString()) == 2) {
+                        %>
+                        <div class="dropdown navbar-right">
+                            <ul class="nav navbar-nav">
+                                <li class="" ><a href="#" class="popover-dismiss" id="not"><span style="padding-top: 5px;" class="glyphicon glyphicon-bell"></span></a></li>
+                                <li class="" ><a href="#" class="popover-dismiss" id="not"><span style="padding-top: 5px;" class="glyphicon glyphicon-envelope"></span></a></li>
+
+                            </ul>
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                                <%= user.getUserEmail()%>
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="expert/ExpertDash.jsp"><span class="glyphicon glyphicon-dashboard" style="margin-right: 20px;"></span>DASHBOARD</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="expert/profile.jsp"><span class="glyphicon glyphicon-user" style="margin-right:  20px;"></span>PROFILE</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="expert/messages.jsp"><span class="glyphicon glyphicon-envelope" style="margin-right: 20px;"></span>MESSAGES</a></li>
+                                <li role="presentation" class="divider"></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="expert/Logout"><span class="glyphicon glyphicon-log-out" style="margin-right: 20px;"></span> LOGOUT</a></li>
+                            </ul>
+                        </div>
+                        <%
+                        } else if (DB.getAuthKey(user.getUserEmail().toString()) == 3) {
+                        %>
+                        <div class="dropdown navbar-right">
+                            <ul class="nav navbar-nav">
+                                <li class="" ><a href="#" class="popover-dismiss" id="not"><span style="padding-top: 5px;" class="glyphicon glyphicon-bell"></span></a></li>
+                                <li class="" ><a href="#" class="popover-dismiss" id="not"><span style="padding-top: 5px;" class="glyphicon glyphicon-envelope"></span></a></li>
+
+                            </ul>
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                                <%= user.getUserEmail()%>
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="farmer/FarmerDash.jsp"><span class="glyphicon glyphicon-dashboard" style="margin-right: 20px;"></span>DASHBOARD</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="farmer/profile.jsp"><span class="glyphicon glyphicon-user" style="margin-right:  20px;"></span>PROFILE</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="farmer/messages.jsp"><span class="glyphicon glyphicon-envelope" style="margin-right: 20px;"></span>MESSAGES</a></li>
+                                <li role="presentation" class="divider"></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="farmer/Logout"><span class="glyphicon glyphicon-log-out" style="margin-right: 20px;"></span> LOGOUT</a></li>
+                            </ul>
+                        </div>
+                        <%
+                                }
                             }
                         %>
                     </ul>
@@ -99,23 +173,23 @@
             <div class="row">
                 <div class="col-md-3 hidden-sm hidden-xs">
                     <div class="" style="background-color: transparent;">
-                        <h2 class="panel-title" style="font-size: 30px;margin-top: 20px;">Search </h2>
+                        <h2 class="panel-title" style="font-size: 30px;margin-top: 20px;"><i style="margin-right: 10px;font-size: 40px;" class="fa fa-search"></i>Search ...</h2>
                     </div>
                 </div>
                 <div class="col-md-9">
                     <div class="panel">
                         <div class="panel-body">
-                            <form action="Search" method="post" class="form">
+                            <form action="Search" name="vinform" class="form">
                                 <input type="hidden" name="searchFrom" value="mainSearch"/>
                                 <div class='row'>
                                     <div class="col-md-8">
                                         <div class="form-group">
-                                            <input type="text" class="form-control input-search" name="inputSearch" placeholder="Search what?" required>
+                                            <input type="text" class="form-control input-search" name="inputSearch" placeholder="Search Epidemic?" onkeyup="searchInfo()" required>
                                         </div><!-- /input-group -->
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-success btn-search" style="font-size: 20px;"><span class="glyphicon glyphicon-search"></span></button>
+                                            <button type="submit" class="btn disabled btn-success btn-search" style="font-size: 20px;"><span class="glyphicon glyphicon-search"></span></button>
                                         </div><!-- /input-group -->
                                     </div>
                                 </div>
@@ -123,41 +197,8 @@
                         </div>
                     </div>
                     <hr>
-                    <div class="panel">
-                        <div class="">
-                            <p class="panel-title" style="font-size: 15px;padding-left: 15px;"><%=DB.searchZero(search_filter)%> articles found </p>
-                        </div>
-                        <hr>
-                        <div class="panel-body">
-                            <%
-                                if (request.getAttribute("search_filter") == null | DB.searchZero(search_filter)== 0) {
-                            %>
-                            <div class="alert alert-info" role="alert">zero search result on the topic...<span><a href="http://www.google.com/" target="_blank"> try google.com</a></span> </div>
-                            <%
-                            } else {
-                            %>
-                            <c:forEach var="search" items="${reqSearch.rows}">
-
-                                <div class="">
-                                    <div class="media">
-                                        <a class="pull-left" href="#">
-                                            <img class="media-object well well-sm" src="..." alt="epidemic photo" style="width: 80px;height: 100px;margin-right: 20px;">
-                                        </a>
-                                        <div class="media-body">
-                                            <h4 class="media-heading"><c:out value="${search.post_title}"/></h4>
-                                            <p><c:out value="${search.post_timestamp}"/></p>
-                                            <p><c:out value="${search.post_desc}"/> 
-                                                <a href="#">Read Profile</a></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr>
-                            </c:forEach>
-                            <%
-                                }
-                            %>
-                        </div>
-
+                    <div style="margin-top: 50px;">
+                        <span id="mylocation"></span>
                     </div>
                 </div>
             </div>
@@ -172,6 +213,8 @@
         </footer>    
 
         <script type="text/javascript" src="../assets/js/jquery.js"></script>
-        <script type="text/javascript" src="../assets/js/bootstrap.js"></script>
+        <script type="text/javascript" src="../assets/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../assets/js/custom.js"></script>
+        <script type="text/javascript" src="../assets/js/paginate.js"></script>
     </body>
 </html>

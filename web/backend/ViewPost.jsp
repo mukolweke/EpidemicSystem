@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="sys.classes.*" %>
+<%@page import="sys.classes.*,java.util.Date" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 <!DOCTYPE html>
@@ -20,48 +20,66 @@
         <link href="../assets/css/main.css" rel="stylesheet" type="text/css"/>
         <link rel="shortcut icon" href="../assets/img/favicon.png" type="image/x-icon">
         <link rel="icon" href="../assets/img/favicon.png" type="image/x-icon">
-        <script>
-            var request = new XMLHttpRequest();
-            function searchInfo() {
-                var name = document.vinform.inputSearch.value;
-                var url = "filter.jsp?val=" + name;
-                try {
-                    request.onreadystatechange = function () {
-                        if (request.readyState === 4) {
-                            var val = request.responseText;
-                            document.getElementById('mylocation').innerHTML = val;
-                        }
-                    };//end of function
-                    request.open("GET", url, true);
-                    request.send();
-                } catch (e) {
-                    alert("Unable to connect to server");
-                }
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdFsAprSk3Bpi5i59sD3KtMEs_Jp_V4z4&libraries=places&callback=initAutocomplete"
+        async defer></script>
+        <style type="text/css">
+            #map {
+                height: 50%;
             }
-        </script>
+        </style>
     </head>
 
     <%
         //database object
         DB_class DB = new DB_class();
-        //get the search filter value
-        String search_filter = (String) request.getAttribute("search_filter");
-        if (search_filter == null) {
-            search_filter = "";
-        }
-
         Login_class user = (Login_class) session.getAttribute("user");
         if (user == null) {
             user = new Login_class();
         }
+        String post_id = request.getParameter("post_id");
+
+        int postid = Integer.parseInt(post_id);
+        //doesnt go below count zero or beyond
+        if (postid <= 0) {
+            postid = 1;
+        } else if (postid > DB.countPost()) {
+            postid = 1;
+        }
+
+//MAPP WORK
+        double lat = DB.postLat(postid);
+        double lng = DB.postLng(postid);
+
     %>
     <sql:setDataSource var='bgGet' driver='<%= DB.jstlDriver()%>' url='<%= DB.jstlUrl()%>' user='<%= DB.jstlUser()%>'  password='<%= DB.jstlPassword()%>'/>
 
-    <sql:query dataSource="${bgGet}" var="reqSearch">
-        <%= DB.searchEpidemic(search_filter)%>
+    <sql:query dataSource="${bgGet}" var="getPost">
+        <%= DB.getPost(postid)%>
     </sql:query>
+    <sql:query dataSource="${bgGet}" var="allPost">
+        <%= DB.allTitle()%>
+    </sql:query>
+    <sql:query dataSource="${bgGet}" var="getComment">
+        <%= DB.getComment(postid)%>
+    </sql:query>
+    <script type="text/javascript">
+        function initAutocomplete() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat:<%=lat%>, lng:<%=lng%>},
+                zoom: 13,
+                mapTypeId: 'roadmap'
+            });
 
-    <body style="font-family: 'Oxygen-Regular';">
+            var marker = new google.maps.Marker({
+                position: {
+                    lat: <%=lat%>, lng: <%=lng%>
+                },
+                label: "P",
+                map: map
+            });
+        }
+    </script>
+    <body style="font-family: 'Oxygen-Regular';background: #f9f9f9;">
         <nav class="navbar navbar-primary navbar-fixed-top" role="navigation">
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -169,40 +187,75 @@
             </div><!-- /.container-fluid -->
         </nav>
         <!--main section-->
-        <div class="container" style="margin-top: 50px;">
-            <div class="row">
-                <div class="col-md-3 hidden-sm hidden-xs">
-                    <div class="" style="background-color: transparent;">
-                        <h2 class="panel-title" style="font-size: 30px;margin-top: 20px;"><i style="margin-right: 10px;font-size: 40px;" class="fa fa-search"></i>Search ...</h2>
-                    </div>
-                </div>
-                <div class="col-md-9">
-                    <div class="panel">
-                        <div class="panel-body">
-                            <form action="Search" name="vinform" class="form">
-                                <input type="hidden" name="searchFrom" value="mainSearch"/>
-                                <div class='row'>
-                                    <div class="col-md-8">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control input-search" name="inputSearch" placeholder="Search Epidemic?" onkeyup="searchInfo()" required>
-                                        </div><!-- /input-group -->
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <button type="submit" class="btn disabled btn-success btn-search" style="font-size: 20px;"><span class="glyphicon glyphicon-search"></span></button>
-                                        </div><!-- /input-group -->
+        <div class="container" style="margin-top: 50px;font-family:'Oxygen-Regular';">
+
+            <div>
+                <h2 class="panel-title" style="font-size: 30px;margin-top: 20px;"><i style="margin-right: 10px;font-size: 40px;" class="fa fa-bars"></i>Post ...</h2>
+            </div>
+
+            <div class="panel" style="background: #f9f9f9;">
+                <div class="panel-body">
+                    <!--middle section-->
+                    <div class="container" >
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="main-content">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <c:forEach var="post" items="${getPost.rows}">
+                                                <section class="section--center mdl-grid mdl-grid--no-spacing" style="border-top: 1px solid rgba(0, 0, 0, 0.1);">
+                                                    <h2>${post.post_title} </h2>
+                                                    <h4> <span class="fa fa-calendar"> <c:out value="${post.reg_date}"/></span></h4>
+                                                    <header class=" ">
+                                                        <div class="panel-body" style="height: 200px;">
+                                                            <div id="map" style="width: 100%;height: 100%;"></div>
+                                                        </div>
+                                                    </header>
+                                                    <hr>
+                                                    <div class="mdl-card mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
+                                                        <div class="mdl-card__supporting-text">
+                                                            <p style="line-height: 2.5;"><c:out value="${post.post_desc}"/> </p>
+
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <p class="text-center"><a href="ViewPost.jsp?post_id=${post.post_id - 1}"><<< <%=DB.getTitle(postid - 1)%></a></p>
+                                                    </div>
+                                                    <div class="col-md-4 clearfix"></div>
+                                                    <div class="col-md-4">
+                                                        <p class="text-center"><a href="ViewPost.jsp?post_id=${post.post_id + 1}"><%=DB.getTitle(postid + 1)%> >>></a></p>
+                                                    </div>
+                                                </div>
+
+                                                <hr>
+
+                                            </c:forEach>
+                                        </div>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
+                            <div class="col-md-3 clearfix">
+                                <div class="panel" style="margin-top: 50px;background: #f9f9f9;">
+                                    <div class="panel-body">
+                                        <h4 style="margin-bottom: 30px;text-decoration: underline;">Other Latest Posts</h4>
+                                        <c:forEach var="title" items="${allPost.rows}">
+                                            <p><a href="ViewPost.jsp?post_id=${title.post_id}">${title.post_title}</a></p>
+                                            <hr>
+                                        </c:forEach>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <hr>
-                    <div style="margin-top: 50px;">
-                        <span id="mylocation"></span>
+                        <!--end middle section-->
                     </div>
                 </div>
             </div>
+            <hr>
         </div>
+
         <!--end content-->
         <!-- Footer -->
         <footer class="navbar-fixed-bottom">

@@ -17,13 +17,14 @@
         <!--css links-->
         <link href="assets/css/material.css" rel="stylesheet" type="text/css"/>
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link href="assets/css/swiper.min.css" rel="stylesheet" type="text/css"/>
         <link href="assets/css/main.css" rel="stylesheet" type="text/css"/>
         <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
         <link rel="icon" href="assets/img/favicon.png" type="image/x-icon">
 
         <!--javascript mapwork-->
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdFsAprSk3Bpi5i59sD3KtMEs_Jp_V4z4&libraries=places&callback=initAutocomplete" async defer></script>
+        <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdFsAprSk3Bpi5i59sD3KtMEs_Jp_V4z4&libraries=places&callback=initAutocomplete" async defer></script>-->
 
     </head>
     <body>
@@ -39,7 +40,7 @@
         <sql:query dataSource="${bgGet}" var="reqCoordsF">
             <%= DB.coordsF()%>
         </sql:query>
-        
+
         <sql:query dataSource="${bgGet}" var="reqCoordsE">
             <%= DB.coordsE()%>
         </sql:query>
@@ -63,11 +64,11 @@
                 </c:if>
             </c:forEach>
                 ];
-                
+
                 var map = new google.maps.Map(document.getElementById('map'), {
                     center: {lat: -0.3031, lng: 36.08},
                     zoom: 6,
-                    mapTypeId: 'satellite'
+                    mapTypeId: 'roadmap'
                 });
 
                 var contentString = "Hi You!!!";
@@ -124,12 +125,12 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="index.jsp"><span style="color:#5cb85c;">FEWS</span> LOGO</a>
+                    <a class="navbar-brand" href="index.jsp"><span><img src="assets/img/favicon.png" style="height: 40px;width: 50px;"></span>FARMERS EPIDEMIC SYSTEM </a>
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav navbar-right">
                         <li>
                             <a class="page-scroll" href="backend/Search.jsp">SEARCH EPIDEMICS</a>
                         </li>
@@ -137,8 +138,6 @@
                             <a href="#page-top"></a>
                         </li>
 
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
 
                         <%
                             if (request.getSession().getAttribute("user") == null) {
@@ -271,6 +270,9 @@
 
             <!--service-->
             <div class="services" id=services" style="margin-top: 30px;">
+                <div class="services-grid">
+                    <div class="row"></div>
+                </div>
                 <div class="service-top">
                     <h3>Current Users</h3>
                 </div>
@@ -336,7 +338,34 @@
             </div>
         </div>
         <!-- Footer -->
-        <footer>
+        <footer style="min-height: 400px;">
+            <div class="container-fluid">
+                <div class="row" style="color: #f9f9f9;">
+                    <div class="col-md-4" style="padding-top: 60px;padding-bottom: 60px;text-align: center;">
+                        <div style="margin-left: 160px;height: 100px;width: 100px;border: 1px solid #527c03;border-radius: 100px;padding-top: 30px;background-color: #527c03;">
+                            <i class="fa fa-3x fa-users"></i>                                
+                        </div>
+                        <h3>Who</h3>
+                        <p>Farmers get in contact with other farmers near them and experts who are far, help fight off an Epidemic.</p>
+                    </div>
+
+                    <div class="col-md-4" style="padding-top: 60px;padding-bottom: 60px;text-align: center;">
+                        <div style="margin-left: 160px;height: 100px;width: 100px;border: 1px solid #527c03;border-radius: 100px;padding-top: 30px;background-color: #527c03;">
+                            <i class="fa fa-3x fa-envelope-o"></i>                             
+                        </div>
+                        <h3>Notification</h3>
+                        <p>Farmers and Experts get notified whenever they are online plus get email whenever a report is made.</p>
+                    </div>
+
+                    <div class="col-md-4" style="padding-top: 60px;padding-bottom: 60px;text-align: center;">
+                        <div style="margin-left: 160px;height: 100px;width: 100px;border: 1px solid #527c03;border-radius: 100px;padding-top: 30px;background-color: #527c03;">
+                            <i class="fa fa-3x fa-question"></i>        
+                        </div>
+                        <h3>Why</h3>
+                        <p>Agriculture being lead source of income in Kenya, there is a need to help Farmers with Epidemic problems.</p>
+                    </div>
+                </div><!--/row-->
+            </div><!--/container-->
             <div class="container text-center">
                 <p><a href="#">Copyright &copy; kukuSoft.co.ke 2017</a></p>
                 <p>Terms of Services Applied</p>

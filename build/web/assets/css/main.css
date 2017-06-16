@@ -3,6 +3,7 @@
     Created on : Apr 6, 2017, 2:58:57 PM
     Author     : Michael Mukolwe
 */
+
 @font-face {
     font-family: 'Montserrat-Regular';
     src:url(../fonts/Montserrat-Regular.ttf) format('truetype');
@@ -193,8 +194,14 @@ a #not:after{
 .services-grid {
     margin: 0em 0 2em;
 }
-.btn-default{
+.services-grid-proj{
+    min-height: 300px;
+    background: #2E2E2E;
 }
+.icon-block {
+    margin-bottom:50px
+}
+
 .hi-icon {
     display: inline-block;
     cursor: pointer;
@@ -226,7 +233,7 @@ a #not:after{
     display: block;
 }
 footer{
-    background-color: black;
+    background-color: #2E2E2E;
     margin-top: 0px;
 }
 footer a{
@@ -309,7 +316,7 @@ footer a{
 }
 
 .panel-signup #user-search{
-    
+
 }
 /*end*/
 
@@ -404,7 +411,7 @@ footer a{
     border-bottom-color: transparent;
 }
 .mdl-layout__tab {
-    
+
 }
 /*.mdl-shadow--tabs {
     box-shadow-: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.2); }*/
