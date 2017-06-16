@@ -10,12 +10,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Farmers Epidemic System Forget</title>
-        
+
         <!--css links-->
         <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        <link href="../assets/css/swiper.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link href="../assets/css/main.css" rel="stylesheet" type="text/css"/>
-        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="../assets/img/favicon.png" type="image/x-icon">
         <link rel="icon" href="../assets/img/favicon.png" type="image/x-icon">
     </head>
     <body>
@@ -25,6 +25,7 @@
             if (user_error == null) {
                 user_error = new Error_class();
             }
+            String emailForget = request.getParameter("signupSuccess");
         %>
         <nav class="navbar navbar-primary navbar-fixed-top" role="navigation">
             <div class="container">
@@ -36,20 +37,22 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="../index.jsp"><span style="color:#5cb85c;">FEWS</span> LOGO</a>
+                    <a class="navbar-brand" href="../index.jsp"><span><img src="../assets/img/favicon.png" style="height: 40px;width: 50px;"></span>FARMERS EPIDEMIC SYSTEM </a>
                 </div>
             </div><!-- /.container-fluid -->
         </nav>
         <!--end nav-->
         <!--main content-->
+        <%            if (emailForget == null) {
+        %>
         <div class="forget-panel">
             <div class="container">
                 <div class="login-brand">
-                    <h2 class="text-center">Forgot Password</h2>
-                    <p class="p-center">A link to reset your password will be sent to your email address<br>
+                    <h2 class="text-center">Forgot Password <i style="margin-left: 10px;font-size: 30px;" class="fa fa-gears"></i></h2>
+                    <p class="text-center">A link to reset your password will be sent to your email address<br>
                         associated with your sign-in Details;
                     </p>
-                    <p class="p-center"><span class="text-danger"><%= user_error.getErrorMessage()%></span></p>
+                    <p class="text-center"><span class="text-danger"><%= user_error.getErrorMessage()%></span></p>
 
                 </div>
                 <!--login form-->
@@ -66,11 +69,26 @@
                                 </button>
                             </div> <!-- /.form-group -->
                         </form>                    
-                        <p class="text-center">Farmer <a class="btn1" id="btn" href="SignUp.jsp">Create an Account</a> | &CenterDot; | Remember Password<a class="btn btn-sign1" id="btn"href="Login.jsp"> Log In</a></p>
+                        <p class="text-center">Farmer <a class="btn1" id="btn" href="SignUp.jsp">Create an Account</a> | &CenterDot; | Remember Password <a class="btn btn-sign1" id="btn"href="Login.jsp"> Log In</a></p>
                     </div>
                 </div>
             </div>
         </div>
+
+        <%} else {%>
+        <div class="forget-panel">
+            <div class="container">
+                <div class="login-brand">
+                    <i style="margin-left: 540px;" class="fa fa-5x fa-thumbs-up"></i>
+                    <hr>
+                    <h2 class="text-center">Reset Password</h2>
+                    <p class="text-center" style="margin-top: 50px;">A link to reset your password was sent to <b><%=emailForget%></b></p>
+                    <hr>
+                </div>
+            </div>
+        </div>
+        <%}%>
+
         <!--end main content-->
         <!-- Footer -->
         <footer>

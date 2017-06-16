@@ -52,9 +52,11 @@ public class Forget extends HttpServlet {
             //send mail function
             response.setContentType("text/html");
             PrintWriter out = response.getWriter();
+            String emailForget = request.getParameter("user-email");
+
             try {
-                String signupsucc = "/backend/Login.jsp";
-                String sign_succ = "Check your email for the reset code ...";
+                String signupsucc = "/backend/Forget.jsp?signupSuccess=" + emailForget;
+                String sign_succ = emailForget;
                 Success_class user_succ = new Success_class(sign_succ);
                 request.setAttribute("signupSuccess", user_succ);
 
