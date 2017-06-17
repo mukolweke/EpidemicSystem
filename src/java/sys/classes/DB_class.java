@@ -164,6 +164,50 @@ public class DB_class implements Serializable {
 
     }
 
+    //send email
+    public int sendEmail(String from, String to, int msg, String type, String blog_date) throws Exception {
+        newConn();
+        Statement stmt = connection.createStatement();
+        if (type.equals("post")) {
+            return stmt.executeUpdate("INSERT INTO email VALUES(null,'" + to + "','" + from + "','New Post'," + msg + ",0,'" + blog_date + "')");
+        } else {
+            return stmt.executeUpdate("INSERT INTO email VALUES(null,'" + to + "','" + from + "','New Message'," + msg + ",0,'" + blog_date + "')");
+
+        }
+    }
+    //get the message/post id
+    public String getEmailMsg(String user_email)throws SQLException, Exception{
+        newConn();
+        Statement stmt = connection.createStatement();
+        ResultSet rs1 = stmt.executeQuery("SELECT email_msg FROM email WHERE email_to= '" + user_email + "'");
+        rs1.next();
+        return rs1.getString("email_msg");
+    }
+    //count users email
+    public int countEmail(String user_email)throws SQLException, Exception{
+        newConn();
+        Statement stmt = connection.createStatement();
+        ResultSet rs1 = stmt.executeQuery("SELECT COUNT(email_id) AS email_count FROM email WHERE email_to= '" + user_email + "'");
+        rs1.next();
+        return rs1.getInt("email_count");
+    }
+    //update status
+    public int updateEmail(int postid)throws SQLException, Exception{
+        newConn();
+        Statement stmt = connection.createStatement();
+        return stmt.executeUpdate("UPDATE email SET email_status = 1 WHERE email_msg = " + postid);
+    }
+            //get nearby farmers
+    public String getFarmerNear(int userId) throws SQLException, Exception {
+        newConn();
+        Statement stmt = connection.createStatement();
+        String mail = getUserEmail(userId);
+        double lat = getLat(mail, "farmer");
+        ResultSet rs1 = stmt.executeQuery("SELECT email FROM farmer WHERE lat= " + lat + " AND farmer_id != " + userId);
+        rs1.next();
+        return rs1.getString("email");
+    }
+
     //get specific post
     public int getQuestion(int user_id, String notf_type, String blog_date) throws SQLException, Exception {
         newConn();
@@ -319,17 +363,7 @@ public class DB_class implements Serializable {
 
         return stmt.executeUpdate("UPDATE user SET auth_key = 4 WHERE email = '" + email + "'");
     }
-
-//    public int countNotifications(String user_email) throws SQLException, Exception {
-//        newConn();
-//
-//        int user_id = getUserId(user_email);
-//
-//        Statement stmt = connection.createStatement();
-//        ResultSet rs = stmt.executeQuery("SELECT COUNT(notification_id) AS totalNotification FROM notification WHERE notification_status= 1 AND user_id ='" + user_id + "'");
-//        rs.next();
-//        return rs.getInt("totalNotification");
-//    }
+//count farmers
     public int countFarmer() throws SQLException, Exception {
         int auth_key = 3;
         return countUser(auth_key);
@@ -470,13 +504,6 @@ public class DB_class implements Serializable {
         newConn();
         Statement stmt = connection.createStatement();
         return stmt.executeUpdate("UPDATE message SET msg_status = 1'");
-    }
-
-    //post an alert
-    public int postNotf(int id_frm, String type, int notf) throws SQLException, Exception {
-        newConn();
-        Statement stmt = connection.createStatement();
-        return stmt.executeUpdate("INSERT INTO notification VALUES (null, 0 ,'" + type + "'," + notf + "," + id_frm + ")");
     }
 
     //mapwork

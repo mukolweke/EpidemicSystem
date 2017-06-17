@@ -30,13 +30,12 @@
         <link href="../../assets/css/plugins/morris.css" rel="stylesheet">
         <link href="../../assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link href="../../assets/css/custom.css" rel="stylesheet" type="text/css"/>
-        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+        <link rel="shortcut icon" href="../../assets/img/favicon.png" type="image/x-icon"/>
         <link rel="icon" href="../../assets/img/favicon.png" type="image/x-icon"/>
     </head>
 
     <body onload="notify()">
         <%
-
             //create database object
             DB_class DB = new DB_class();
             Login_class user_ = (Login_class) session.getAttribute("user");
@@ -78,13 +77,14 @@
             int postCount = DB.countPost();
             int blogCount = DB.countBlogs();
             int msgCount = DB.countMsg(user_email);
-
+            int emailCount = DB.countEmail(user_email);
             //get map coordinates
             double lat = DB.getLat(user_email, "farmer");
             double lng = DB.getLng(user_email, "farmer");
             String addr = DB.getAddr(user_email, "farmer");
 
         %>
+
         <sql:setDataSource var='bgGet' driver='<%= DB.jstlDriver()%>' url='<%= DB.jstlUrl()%>' user='<%= DB.jstlUser()%>'  password='<%= DB.jstlPassword()%>'/>
 
         <sql:query dataSource="${bgGet}" var="reqUsers">
@@ -98,7 +98,8 @@
         <sql:query dataSource="${bgGet}" var="reqMsg">
             <%= DB.getAllMsg(user_email)%>
         </sql:query>
-
+        
+        
         <div id="wrapper">
             <!-- Navigation -->
             <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -110,7 +111,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="../../index.jsp"><span style="color:#5cb85c;">FEWS</span> Admin</a>
+                    <a class="navbar-brand" href="../../index.jsp"><span><img src="../../assets/img/favicon.png" style="height: 40px;width: 50px;"></span>FARMERS EPIDEMIC SYSTEM </a>
                 </div>
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
@@ -188,6 +189,9 @@
                             <ol class="breadcrumb">
                                 <li class="active">
                                     <i class="fa fa-dashboard"></i> Dashboard
+                                </li>
+                                <li>
+                                    <input id="countEmail" value="<%=emailCount%>" class="hidden"/>
                                 </li>
                             </ol>
                         </div>
@@ -293,7 +297,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <input type="hidden" name="blogdate" value="<%= (new java.util.Date().toLocaleString())%>"/>
+                                                <input type="hidden" name="blogdate" value="<%= java.time.LocalDate.now()%>"/>
                                             </div>              
                                             <div class="form-group mdl-shadow--4dp">
                                                 <textarea class="form-control" rows="3" maxlength="1000" name="blog-content" placeholder="Type in your post or content here"></textarea>
@@ -358,62 +362,66 @@
         <!-- /.container-fluid -->
 
         <!-- Placed at the end of the document so the pages load faster -->
-        <script src="https://maps.googleapis.com/maps/api/js?key= AIzaSyAdFsAprSk3Bpi5i59sD3KtMEs_Jp_V4z4&libraries=places&callback=initAutocomplete"
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdFsAprSk3Bpi5i59sD3KtMEs_Jp_V4z4&libraries=places&callback=initAutocomplete"
         async defer></script>
         <script type="text/javascript">
-            function initAutocomplete() {
-                var map = new google.maps.Map(document.getElementById('map'), {
-                    center: {lat:<%=lat%>, lng:<%=lng%>},
-                    zoom: 13,
-                    mapTypeId: 'roadmap'
-                });
+        function initAutocomplete() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat:<%=lat%>, lng:<%=lng%>},
+                zoom: 10,
+                mapTypeId: 'roadmap'
+            });
 
-                var marker = new google.maps.Marker({
-                    position: {
-                        lat: <%=lat%>, lng: <%=lng%>
-                    },
-                    label: "F",
-                    map: map
-                });
-            }
-            function notify() {
-                if (!window.Notification) {
-                    alert('Sorry, not supported');
-                } else {
-                    Notification.requestPermission(function (p) {
-                        if (p === 'denied') {
-                            document.getElementById("response").innerHTML = "Denied Notification";
-                        } else if (p === 'granted') {
-                            if (Notification.permission === 'default') {
-                                alert('allow notifications');
-                            } else {
+            var marker = new google.maps.Marker({
+                position: {
+                    lat: <%=lat%>, lng: <%=lng%>
+                },
+                label: "F",
+                map: map
+            });
+        }
+        function notify() {
+            if (!window.Notification) {
+                alert('Sorry, not supported');
+            } else {
+                Notification.requestPermission(function (p) {
+                    if (p === 'denied') {
+                        document.getElementById("response").innerHTML = "Denied Notification";
+                    } else if (p === 'granted') {
+                        if (Notification.permission === 'default') {
+                            alert('allow notifications');
+                        } else {
+                            if (document.getElementById("countEmail").value > 0) {
                                 notify = new Notification('Notification', {
-                                    body: 'You Have Messages...',
-                                    icon: '../assets/img/1.jpg',
-                                    tag: 'all'
+                                    body: 'New PostNotification...',
+                                    icon: '../../assets/img/1.jpg',
+                                    tag: <%=DB.getEmailMsg(user_email)%>
                                 });
 
                                 notify.onclick = function () {
-                                    window.location = '../Message.jsp?msg=' + this.tag;
+                                    window.location = '../ViewPost.jsp?post_id=' + this.tag;
                                 };
                             }
+                            if (document.getElementById("countMsg") > 0){
+                            }
                         }
-                    });
-                }
-                
-                if (document.getElementById("not").value !== "0") {
-                    document.getElementById("not").style.color = "#FF6666";
-                } else if (document.getElementById("not").value === "0") {
-                    document.getElementById("not").style.color = "yellow";
-                }
-
-                //check if account is confirmed
-                if (document.getElementById("acc").value === "0") {
-                    document.getElementById("alert_status").style.display = "block";
-                } else if (document.getElementById("acc").value === "1") {
-                    document.getElementById("alert_status").style.display = "none";
-                }
+                    }
+                });
             }
+
+            if (document.getElementById("not").value !== "0") {
+                document.getElementById("not").style.color = "#FF6666";
+            } else if (document.getElementById("not").value === "0") {
+                document.getElementById("not").style.color = "yellow";
+            }
+
+            //check if account is confirmed
+            if (document.getElementById("acc").value === "0") {
+                document.getElementById("alert_status").style.display = "block";
+            } else if (document.getElementById("acc").value === "1") {
+                document.getElementById("alert_status").style.display = "none";
+            }
+        }
         </script>
         <!--javascript files-->
         <script type="text/javascript" src="../../assets/js/jquery.js"></script>

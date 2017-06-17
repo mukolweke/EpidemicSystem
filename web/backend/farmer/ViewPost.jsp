@@ -43,15 +43,8 @@
 
     <body>
         <%
-
             //create database object
             DB_class DB = new DB_class();
-            Login_class user = (Login_class) session.getAttribute("user");
-            if (user == null) {
-                user = new Login_class();
-            }
-            String user_name = user.getUserEmail();
-//            int countNotification = DB.countNotifications(user_name);
             //check if session is active
             if (session.getAttribute("user") == null) {
                 response.sendRedirect("../Login.jsp");
@@ -66,13 +59,16 @@
 
             String post_id = request.getParameter("post_id");
             int postid = Integer.parseInt(post_id);
+            //email status
+            int updt = DB.updateEmail(postid);
+            System.out.println("updated " + updt);
             //doesnt go below count zero or beyond
             if (postid <= 0) {
                 postid = 1;
             } else if (postid > DB.countPost()) {
                 postid = 1;
             }
-
+            
             String date = request.getParameter("time");
             String comment = request.getParameter("blog-comment");
             int countComm = DB.countComment(postid);

@@ -162,10 +162,10 @@
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav side-nav">
                         <li id="side-link">
-                            <a href="FarmerDash.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                            <a href="farmer/FarmerDash.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                         </li>
                         <li id="side-link">
-                            <a href="SearchPage.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-search"></i> Search Epidemic</a>
+                            <a href="farmer/SearchPage.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-search"></i> Search Epidemic</a>
 
                         </li>
                         <li>
@@ -221,7 +221,7 @@
                                         <div class="container-fluid">
                                             <header><h4>${user.name}</h4></header>
                                             <p><span class="glyphicon glyphicon-calendar"></span> : ${user.reg_date}</p>
-                                            <p><span class="glyphicon glyphicon-map-marker"></span> : Location</p>
+                                            <p><span class="glyphicon glyphicon-map-marker"></span> : ${user.addr}</p>
                                             <hr>
                                             <p><span class="glyphicon glyphicon-phone"></span> : ${user.phone}</p>
                                             <p><span class="glyphicon glyphicon-envelope"></span> :${user.email}</p>

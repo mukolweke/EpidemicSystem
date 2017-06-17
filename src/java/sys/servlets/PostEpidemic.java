@@ -48,9 +48,8 @@ public class PostEpidemic extends HttpServlet {
                 double lng = dbase.getLng(username, "farmer");
                 int postQuerryStatus = dbase.postQuestion(user_id, blog_title, blog_desc, lat, lng, blog_date);
                 int post_id = dbase.getQuestion(user_id, blog_title, blog_date);
-                int postNotf = dbase.postNotf(user_id, "post", post_id);
-                System.out.println("id: "+postNotf);
-                if (postQuerryStatus == 1 && postNotf == 1) {
+                int sendMail = dbase.sendEmail(dbase.getUserEmail(user_id), dbase.getFarmerNear(user_id), post_id, "post",blog_date);
+                if (postQuerryStatus == 1 && sendMail == 1) {
                     String page_url = "/backend/farmer/FarmerDash.jsp";
                     String post_success = "Successfull Postings";
 
