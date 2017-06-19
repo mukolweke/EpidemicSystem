@@ -155,6 +155,7 @@ public class DB_class implements Serializable {
 
     }
 
+   
     //   post the question
     public int postQuestion(int user, String blog_title, String blog_desc, double lat, double lng, String blog_date) throws SQLException, Exception {
         newConn();

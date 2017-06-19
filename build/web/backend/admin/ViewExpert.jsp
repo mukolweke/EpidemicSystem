@@ -8,7 +8,8 @@
 <%@page import="java.util.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>        
-<%@taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%><!DOCTYPE html>
+<%@taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
+<!DOCTYPE html>
 <html lang="en">
 
     <head>
@@ -19,7 +20,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-
+        <title>FEWS &CenterDot;View Experts</title>
         <!-- Bootstrap Core CSS -->
         <link href="../../assets/css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom CSS -->
@@ -29,20 +30,21 @@
         <link href="../../assets/css/custom.css" rel="stylesheet" type="text/css"/>
         <link rel="shortcut icon" href="../../assets/img/favicon.png" type="image/x-icon">
         <link rel="icon" href="../../assets/img/favicon.png" type="image/x-icon">
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdFsAprSk3Bpi5i59sD3KtMEs_Jp_V4z4&libraries=places&callback=initAutocomplete"
-        async defer></script>
-        <script type="text/javascript">
-            function initAutocomplete() {
-                var autocomplete = new google.maps.places.Autocomplete(document.getElementById('user-location'));
-                google.maps.event.addListener(autocomplete, 'place_changed', function () {
-                    var place = autocomplete.getPlace();
-                    document.getElementById("lat").value = place.geometry.location.lat();
-                    document.getElementById("lng").value = place.geometry.location.lng();
 
-                });
-            }
-            ;
-        </script>
+        <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdFsAprSk3Bpi5i59sD3KtMEs_Jp_V4z4&libraries=places&callback=initAutocomplete"-->
+        async defer></script>
+        <!--        <script type="text/javascript">
+                    function initAutocomplete() {
+                        var autocomplete = new google.maps.places.Autocomplete(document.getElementById('user-location'));
+                        google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                            var place = autocomplete.getPlace();
+                            document.getElementById("lat").value = place.geometry.location.lat();
+                            document.getElementById("lng").value = place.geometry.location.lng();
+        
+                        });
+                    }
+                    ;
+                </script>-->
     </head>
     <body>
         <%
@@ -80,6 +82,52 @@
             <%= DB.getExpert()%>
         </sql:query>
 
+        <sql:query dataSource="${bgGet}" var="reqCoordsE">
+            <%= DB.coordsE()%>
+        </sql:query>
+        <script type="text/javascript">
+            function initAutocomplete() {
+//                expert location details
+                var locationExpert = [
+            <c:forEach items="${reqCoordsE.rows}" var="coordsE" varStatus="status">
+                    ['${coordsE.addr}',${coordsE.lat},${coordsE.lng}]
+                <c:if test="${!status.last}">
+                    ,
+                </c:if>
+            </c:forEach>
+                ];
+
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    center: {lat: -0.3031, lng: 36.08},
+                    zoom: 6,
+                    mapTypeId: 'roadmap'
+                });
+
+                var contentString = "Hi You!!!";
+                var infowindow = new google.maps.InfoWindow({
+                    content: contentString
+                });
+                var i;
+                //expert
+                for (i = 0; i < locationExpert.length; i++) {
+                    marker2 = new google.maps.Marker({
+                        position: new google.maps.LatLng(locationExpert[i][1], locationExpert[i][2]),
+                        label: "E",
+                        draggable: true,
+                        map: map
+                    });
+                    google.maps.event.addListener(marker2, 'click', (function (marker2, i) {
+                        return function () {
+                            infowindow.setContent(locationExpert[i][0] + ", Expert");
+                            infowindow.open(map, marker);
+                        };
+                    })(marker2, i));
+                }
+                marker2.addListener('click', function () {
+                    infowindow.open(map, marker2);
+                });
+            }
+        </script>
         <div id="wrapper">
 
             <!-- Navigation -->
@@ -97,94 +145,8 @@
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
-                        <ul class="dropdown-menu message-dropdown">
-                            <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>John Smith</strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>John Smith</strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>John Smith</strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="message-footer">
-                                <a href="#">Read All New Messages</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
-                        <ul class="dropdown-menu alert-dropdown">
-                            <li>
-                                <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#">View All</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%= user_.getUserEmail()%> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li>
-                                <a href="Profile.jsp?prf_id=<%=DB.getUserId(user_.getUserEmail())%>"><i class="fa fa-fw fa-user"></i> Profile</a>
-                            </li>
-                            <li>
-                                <a href="Settings.jsp"><i class="fa fa-fw fa-gear"></i> Settings</a>
-                            </li>
                             <li class="divider"></li>
                             <li>
                                 <a href="Logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
@@ -260,11 +222,17 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title"> View Expert Table</h3>
+                                    <h3 class="panel-title"> View Expert Table<span class="pull-right">
+                                            <form action="ReportServlet">
+                                                <input type="text" name="file_name" class="hidden" value="Experts Report"/>
+                                                <input type="submit" class="btn-success" value="Generate Experts report">
+                                            </form>
+                                        </span></h3>
+
                                 </div>
                                 <div class="panel-body">
-                                    <div id="map-canvas" style="height: 200px;">
-                                        <p class="help-block">Map work here</p>
+                                    <div style="margin-top:20px;width: 100%;height: 400px;">
+                                        <div id="map" style="height: 100%;width: 100%;"></div>
                                     </div>
                                     <hr/>
                                     <table style="margin-top: 50px;"class="table table-condensed table-hover">
@@ -314,20 +282,7 @@
             $(function () {
                 $('#myTab a:first').tab('show');
             });
-            function notify() {
-                if (document.getElementById("not").value !== "0") {
-                    document.getElementById("not").style.color = "#FF6666";
-                } else if (document.getElementById("not").value === "0") {
-                    document.getElementById("not").style.color = "yellow";
-                }
 
-                //check if account is confirmed
-                if (document.getElementById("acc").value === "0") {
-                    document.getElementById("alert_status").style.display = "block";
-                } else if (document.getElementById("acc").value === "1") {
-                    document.getElementById("alert_status").style.display = "none";
-                }
-            }
             function readURL(input) {
                 if (input.files && input.files[0]) {
                     var reader = new FileReader();

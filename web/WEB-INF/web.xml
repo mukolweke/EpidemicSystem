@@ -78,7 +78,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ReportServlet</servlet-name>
-        <url-pattern>/ReportServlet</url-pattern>
+        <url-pattern>/backend/admin/ReportServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

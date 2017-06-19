@@ -99,7 +99,7 @@
                         draggable: true,
                         map: map
                     });
-                    google.maps.event.addListener(marker2, 'click', (function (marker, i) {
+                    google.maps.event.addListener(marker2, 'click', (function (marker2, i) {
                         return function () {
                             infowindow.setContent(locationExpert[i][0] + ", Expert");
                             infowindow.open(map, marker);
