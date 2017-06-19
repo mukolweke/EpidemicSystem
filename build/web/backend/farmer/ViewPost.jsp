@@ -68,7 +68,9 @@
             } else if (postid > DB.countPost()) {
                 postid = 1;
             }
-            
+            int accStatus = DB.getAccountStatus(user_email, DB.getAuthKey(user_email));
+            int msgCount = DB.countMsg(user_email);
+            int emailCount = DB.countEmail(user_email);
             String date = request.getParameter("time");
             String comment = request.getParameter("blog-comment");
             int countComm = DB.countComment(postid);
@@ -95,6 +97,9 @@
         </sql:query>
         <sql:query dataSource="${bgGet}" var="getComment">
             <%= DB.getComment(postid)%>
+        </sql:query>
+        <sql:query dataSource="${bgGet}" var="reqMsg">
+            <%= DB.getAllMsg(user_email)%>
         </sql:query>
         <script type="text/javascript">
             function initAutocomplete() {
@@ -127,42 +132,57 @@
                     <a class="navbar-brand" href="../../index.jsp"><span style="color:#5cb85c;">FEWS</span> Admin</a>
                 </div>
                 <!-- Top Menu Items -->
+                <input type="number" class="hidden" value="<%=msgCount%>" id="countMsg"/>
+                <input type="number" class="hidden" value="<%=emailCount%>" id="countEmail"/>
                 <ul class="nav navbar-right top-nav">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope" id="fa-msg"> <%=msgCount%> </i> <b class="caret"></b></a>
                         <ul class="dropdown-menu message-dropdown">
+                            <%if (msgCount == 0) {%>
+                            <li class="divider"></li>
+                            <li>
                             <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>John Smith</strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                <p class="text-capitalize text-center">No Messages</p>
+                            </li>
+                            <%} else {%>
+                            <c:forEach var="msg" items="${reqMsg.rows}">
+                                <li class="message-preview">
+                                    <a href="../Message.jsp?msg=${msg.msg_id}">
+                                        <div class="media">
+                                            <span class="pull-left">
+                                                <i class="fa fa-envelope fa-2x"></i>
+                                            </span>
+                                            <div class="media-body">
+                                                <h5 class="media-heading"><strong></strong>
+                                                </h5>
+                                                <p>${msg.message}...</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>
-                            </li>
-                            
+                                    </a>
+                                </li>
+                            </c:forEach>
                             <li class="message-footer">
-                                <a href="#">Read All New Messages</a>
+                                <a href="../Message.jsp?msg=allMsgs">Read All New Messages</a>
                             </li>
+                            <%}%>
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
-                        <ul class="dropdown-menu alert-dropdown">
-                            <li>
-                                <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
-                            </li>
-                            
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-at" id="fa-em"> <%=emailCount%></i> <b class="caret"></b></a>
+                        <ul class="dropdown-menu message-dropdown">
+                            <%if (emailCount == 0) {%>
                             <li class="divider"></li>
                             <li>
-                                <a href="#">View All</a>
+                            <li class="message-footer">
+                                <p class="text-capitalize text-center">No Email</p>
                             </li>
+                            <%} else {%>
+                            <li class="divider"></li>
+                            <li>
+                            <li class="message-footer">
+                                <a href="../Message.jsp?msg=allEmails">Read All Email</a>
+                            </li>
+                            <%}%>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -172,7 +192,7 @@
                                 <a href="../ViewProfile.jsp?prf_id=<%=DB.getUserId(user_email)%>"><i class="fa fa-fw fa-user"></i> Profile</a>
                             </li>
                             <li>
-                                <a href="Settings.jsp"><i class="fa fa-fw fa-gear"></i> Settings</a>
+                                <a href="../ViewSettings.jsp"><i class="fa fa-fw fa-gear"></i> Settings</a>
                             </li>
                             <li class="divider"></li>
                             <li>
@@ -221,9 +241,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <!--check if account is confirmed to view message or not-->
-                            <input type="number" class="hidden" value="" id='acc'/>
+                            <input type="number" class="hidden" value="<%=accStatus%>" id='acc'/>
                             <!--confirmation message-->
-                            <div class=" alert alert-warning mdl-shadow--2dp" id="alert_status" >A confirmation email was sent to <strong><%=user_.getUserEmail()%></strong>. Please verify your account!</div>
+                            <div class="alert alert-warning" id="alert_status" >A confirmation email was sent to <strong><%=user_.getUserEmail()%></strong>. Please verify your account!</div>
                         </div>
                     </div>
                     <div class="row">
@@ -250,7 +270,7 @@
                                                                     <div class="mdl-card mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
                                                                         <div class="mdl-card__supporting-text">
                                                                             <p style="line-height: 2.5;"><c:out value="${post.post_desc}"/> <a href="../ViewProfile.jsp?prf_id=${post.user_id}">[ View User Profile ]</a></p>
-                                                                            
+
                                                                         </div>
                                                                     </div>
                                                                 </section>
@@ -280,7 +300,7 @@
                                                                             <form action="ViewPost.jsp?post_id=${post.post_id}" method="post">
                                                                                 <input type="hidden" name="post_id" value="${post.post_id}"/>
                                                                                 <input type="hidden" name="user_id" value="${post.user_id}"/>
-                                                                                <input type="hidden" name="time" value="<%=new Date()%>"/>
+                                                                                <input type="hidden" name="time" value="<%=java.time.LocalDate.now()%>"/>
                                                                                 <div class="form-group ">
                                                                                     <input class="form-control" name="blog-comment" style="height: 70px;"placeholder="Type in your post or content here"/>
                                                                                 </div>
@@ -373,5 +393,6 @@
         <script type="text/javascript" src="../../assets/js/jquery.js"></script>
         <script type="text/javascript" src="../../assets/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../../assets/js/custom.js"></script>
+        <script type="text/javascript" src="../../assets/js/paginate.js"></script>
     </body>
 </html>

@@ -27,7 +27,7 @@
         <link href="../../assets/css/plugins/morris.css" rel="stylesheet">
         <link href="../../assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link href="../../assets/css/custom.css" rel="stylesheet" type="text/css"/>
-        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="../../assets/img/favicon.png" type="image/x-icon">
         <link rel="icon" href="../../assets/img/favicon.png" type="image/x-icon">
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdFsAprSk3Bpi5i59sD3KtMEs_Jp_V4z4&libraries=places&callback=initAutocomplete"
         async defer></script>
@@ -232,7 +232,7 @@
                 <!-- /.navbar-collapse -->
             </nav>
 
-            <div id="page-wrapper">
+            <div id="page-wrapper" style="min-height: 700px;">
 
                 <div class="container-fluid">
 

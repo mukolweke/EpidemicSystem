@@ -347,7 +347,7 @@
                 <!-- /.navbar-collapse -->
             </nav>
 
-            <div id="page-wrapper">
+            <div id="page-wrapper" style="min-height: 700px;">
 
                 <div class="container-fluid">
 

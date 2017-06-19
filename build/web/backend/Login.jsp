@@ -14,7 +14,7 @@
         <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="../assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link href="../assets/css/main.css" rel="stylesheet" type="text/css"/>
-        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="../assets/img/favicon.png" type="image/x-icon">
         <link rel="icon" href="../assets/img/favicon.png" type="image/x-icon">
     </head>
     <body>
@@ -68,23 +68,20 @@
                     <div class="panel-body">
                         <form class="form account-form" method="POST" action="<%=response.encodeUrl("Login")%>">
                             <div class="form-group">
-                                <input type="text" name="user-email" class="form-control" id="user-email" placeholder="Email / Username" tabindex="1">
+                                <input type="text" name="user-email" autocomplete="off" class="form-control" id="user-email" placeholder="Email ... " tabindex="1">
                             </div> <!-- /.form-group -->
 
                             <div class="form-group">
-                                <!--have a collapse panel with one email filed form for the forget pass-->
-                                <input type="password" name="user-password" class="form-control" placeholder="Password" id="user-password" tabindex="2">
+                                <input type="password" name="user-password"  autocomplete="off"  class="form-control" placeholder="Password ..." id="user-password" tabindex="2">
                             </div> <!-- /.form-group -->
-                            <div class="form-group" >
-                                <label for="rememberme" style="margin-bottom: 40px;"><input type="checkbox" id="rememberme" name="rememberme" style="margin-right: 10px;" value="remeber">Remember me </label><span class="pull-right"><a href="Forget.jsp" class="btn" id="btn">Forgot Password ?</a></span>
-                            </div>
-                            <div class="form-group">
+                            
+                            <div class="form-group" style="margin-top: 40px;">
                                 <button type="submit" class="btn btn-success btn-block btn-lg" tabindex="4">
                                     Log In <span class="glyphicon glyphicon-log-in" style="margin-left: 10px;"></span></i>
                                 </button>
                             </div> <!-- /.form-group -->
                         </form>                    
-                        <p>Don't Have an account (FARMER) ? <a class="btn-sign1" id="btn"href="SignUp.jsp">Create an Account</a></p>
+                            <span>Don't Have an account {Farmer} <a href=SignUp.jsp" class="btn" id="btn">Create Account</a></span> <span class="pull-right"><a href="Forget.jsp" class="btn" id="btn">Forgot Password ?</a></span>
                     </div>
                 </div>
                 <%

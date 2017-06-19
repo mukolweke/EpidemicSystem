@@ -32,6 +32,10 @@
         <servlet-name>AddExpert</servlet-name>
         <servlet-class>sys.servlets.AddExpert</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ReportServlet</servlet-name>
+        <servlet-class>sys.servlets.ReportServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SignUp</servlet-name>
         <url-pattern>/backend/SignUp</url-pattern>
@@ -71,6 +75,10 @@
     <servlet-mapping>
         <servlet-name>AddExpert</servlet-name>
         <url-pattern>/backend/admin/ExpertPage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReportServlet</servlet-name>
+        <url-pattern>/ReportServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

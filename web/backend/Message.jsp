@@ -44,7 +44,7 @@
                 user_ = new Login_class();
             }
             String user_email = user_.getUserEmail();
-//            int accStatus = DB.getAccountStatus(user_email, DB.getAuthKey(user_email));
+            int accStatus = DB.getAccountStatus(user_email, DB.getAuthKey(user_email));
 
             Sign_class user_details = (Sign_class) request.getSession().getAttribute("user_details");
             if (user_details == null) {
@@ -60,7 +60,7 @@
                 response.sendRedirect("../Login.jsp");
             }
             //get the counts
-
+            int emailCount = DB.countEmail(user_email);
             int msgCount = DB.countMsg(user_email);
             String msgtyp = request.getParameter("msg");
             int msgid = 0;
@@ -102,13 +102,22 @@
                     <a class="navbar-brand" href="../../index.jsp"><span style="color:#5cb85c;">FEWS</span> Admin</a>
                 </div>
                 <!-- Top Menu Items -->
+                <input type="number" class="hidden" value="<%=msgCount%>" id="countMsg"/>
+                <input type="number" class="hidden" value="<%=emailCount%>" id="countEmail"/>
                 <ul class="nav navbar-right top-nav">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope" id="fa-msg"> <%=msgCount%> </i> <b class="caret"></b></a>
                         <ul class="dropdown-menu message-dropdown">
+                            <%if (msgCount == 0) {%>
+                            <li class="divider"></li>
+                            <li>
+                            <li class="message-preview">
+                                <p class="text-capitalize text-center">No Messages</p>
+                            </li>
+                            <%} else {%>
                             <c:forEach var="msg" items="${reqMsg.rows}">
                                 <li class="message-preview">
-                                    <a href="Message.jsp?msg=${msg.msg_id}">
+                                    <a href="../Message.jsp?msg=${msg.msg_id}">
                                         <div class="media">
                                             <span class="pull-left">
                                                 <i class="fa fa-envelope fa-2x"></i>
@@ -122,20 +131,38 @@
                                     </a>
                                 </li>
                             </c:forEach>
-
                             <li class="message-footer">
-                                <a href="Message.jsp?msg=all">Read All New Messages</a>
+                                <a href="../Message.jsp?msg=allMsgs">Read All New Messages</a>
                             </li>
+                            <%}%>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-at" id="fa-em"> <%=emailCount%></i> <b class="caret"></b></a>
+                        <ul class="dropdown-menu message-dropdown">
+                            <%if (emailCount == 0) {%>
+                            <li class="divider"></li>
+                            <li>
+                            <li class="message-footer">
+                                <p class="text-capitalize text-center">No Email</p>
+                            </li>
+                            <%} else {%>
+                            <li class="divider"></li>
+                            <li>
+                            <li class="message-footer">
+                                <a href="../Message.jsp?msg=allEmails">Read All Email</a>
+                            </li>
+                            <%}%>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%= user_.getUserEmail()%> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="Profile.jsp?prf_id=<%=DB.getUserId(user_email)%>"><i class="fa fa-fw fa-user"></i> Profile</a>
+                                <a href="../ViewProfile.jsp?prf_id=<%=DB.getUserId(user_email)%>"><i class="fa fa-fw fa-user"></i> Profile</a>
                             </li>
                             <li>
-                                <a href="ViewSettings.jsp"><i class="fa fa-fw fa-gear"></i> Settings</a>
+                                <a href="../ViewSettings.jsp"><i class="fa fa-fw fa-gear"></i> Settings</a>
                             </li>
                             <li class="divider"></li>
                             <li>
@@ -162,7 +189,15 @@
                 </div>
                 <!-- /.navbar-collapse -->
             </nav>
-
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-md-12">
+                    <!--check if account is confirmed to view message or not-->
+                    <input type="number" class="hidden" value="<%=accStatus%>" id='acc'/>
+                    <!--confirmation message-->
+                    <div class="alert alert-warning" id="alert_status" >A confirmation email was sent to <strong><%=user_.getUserEmail()%></strong>. Please verify your account!</div>
+                </div>
+            </div>
             <div id="page-wrapper" >
                 <div class="container-fluid">
                     <div class="row" style="padding-left: 0px;">
@@ -177,7 +212,6 @@
                                             <i style="margin-left: 40px;" class="fa fa-gear"></i>
                                         </li>
                                     </c:forEach>
-
                                 </ul>
                             </div>
                         </div>

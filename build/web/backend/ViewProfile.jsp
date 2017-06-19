@@ -66,8 +66,8 @@
             int farmCount = DB.countFarmer();
             int postCount = DB.countPost();
             int blogCount = DB.countBlogs();
-//            int msgCount = DB.countMsg(user_email);
-
+            int msgCount = DB.countMsg(user_email);
+            int emailCount = DB.countEmail(user_email);
             //get map coordinates
             double lat = DB.getLat(user_email, "");
             double lng = DB.getLng(user_email, "");
@@ -88,7 +88,9 @@
             <%= DB.user_Details(user_email)%>
         </sql:query>
 
-
+        <sql:query dataSource="${bgGet}" var="reqMsg">
+            <%= DB.getAllMsg(user_email)%>
+        </sql:query>
         <div id="wrapper">
             <!-- Navigation -->
             <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -100,45 +102,60 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="../../index.jsp"><span style="color:#5cb85c;">FEWS</span> Admin</a>
+                    <a class="navbar-brand" href="../index.jsp"><span><img src="../assets/img/favicon.png" style="height: 40px;width: 50px;"></span>FARMERS EPIDEMIC SYSTEM </a>
                 </div>
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
                     <% if (DB.getAuthKey(user_.getUserEmail().toString()) == 1) {%>
                     <%} else {%>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope" id="fa-msg"> <%=msgCount%> </i> <b class="caret"></b></a>
                         <ul class="dropdown-menu message-dropdown">
+                            <%if (msgCount == 0) {%>
+                            <li class="divider"></li>
+                            <li>
                             <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>John Smith</strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                <p class="text-capitalize text-center">No Messages</p>
+                            </li>
+                            <%} else {%>
+                            <c:forEach var="msg" items="${reqMsg.rows}">
+                                <li class="message-preview">
+                                    <a href="../Message.jsp?msg=${msg.msg_id}">
+                                        <div class="media">
+                                            <span class="pull-left">
+                                                <i class="fa fa-envelope fa-2x"></i>
+                                            </span>
+                                            <div class="media-body">
+                                                <h5 class="media-heading"><strong></strong>
+                                                </h5>
+                                                <p>${msg.message}...</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>
-                            </li>
+                                    </a>
+                                </li>
+                            </c:forEach>
                             <li class="message-footer">
-                                <a href="#">Read All New Messages</a>
+                                <a href="../Message.jsp?msg=allMsgs">Read All New Messages</a>
                             </li>
+                            <%}%>
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
-                        <ul class="dropdown-menu alert-dropdown">
-                            <li>
-                                <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
-                            </li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-at" id="fa-em"> <%=emailCount%></i> <b class="caret"></b></a>
+                        <ul class="dropdown-menu message-dropdown">
+                            <%if (emailCount == 0) {%>
                             <li class="divider"></li>
                             <li>
-                                <a href="#">View All</a>
+                            <li class="message-footer">
+                                <p class="text-capitalize text-center">No Email</p>
                             </li>
+                            <%} else {%>
+                            <li class="divider"></li>
+                            <li>
+                            <li class="message-footer">
+                                <a href="../Message.jsp?msg=allEmails">Read All Email</a>
+                            </li>
+                            <%}%>
                         </ul>
                     </li>
                     <%}%>
@@ -146,7 +163,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%= user_.getUserEmail()%> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="Profile.jsp?prf_id=<%=DB.getUserId(user_email)%>"><i class="fa fa-fw fa-user"></i> Profile</a>
+                                <a href="ViewProfile.jsp?prf_id=<%=DB.getUserId(user_email)%>"><i class="fa fa-fw fa-user"></i> Profile</a>
                             </li>
                             <li>
                                 <a href="ViewSettings.jsp"><i class="fa fa-fw fa-gear"></i> Settings</a>
@@ -158,9 +175,35 @@
                         </ul>
                     </li>
                 </ul>
-                <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav side-nav">
+                        <%if (DB.getAuthKey(user_email) == 2) {%>
+
+                        <li>
+                            <a href="ExpertDash.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="SearchPage.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-search"></i> Search Epidemic</a>
+
+                        </li>
+                        <li>
+                            <a href="BlogPage.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-book"></i>  Blogs</a>
+                        </li>
+                        <li>
+                            <a href="Mapping.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-map-marker"></i>  Mapping</a>
+                        </li>
+                        <li>
+                            <div class="panel-body" style="height: 250px;">
+                                <div id="map" style="height: 100%;width: 100%;"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div style="margin-top: 300px;padding-left: 10px;"><p><a href="#">Copyright &copy; 2017</a></p>
+                                <p style="color: #3c3c3c;">Terms of Services Applied</p></div>
+                        </li>
+
+                        <%} else if (DB.getAuthKey(user_email) == 3) {%>
+
                         <li id="side-link">
                             <a href="farmer/FarmerDash.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                         </li>
@@ -172,12 +215,14 @@
                             <div style="margin-top: 380px;padding-left: 10px;"><p><a href="#">Copyright &copy; 2017</a></p>
                                 <p style="color: #3c3c3c;">Terms of Services Applied</p></div>
                         </li>
+
+                        <%}%>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
             </nav>
 
-            <div id="page-wrapper">
+            <div id="page-wrapper" style="min-height: 680px;">
 
                 <div class="container-fluid">
 
@@ -189,104 +234,20 @@
                             </h1>
                         </div>
                     </div><!-- /.row -->
-                </div>
-                <div class="row">
-                    <%
-                        int u_id = DB.getUserId(user_email);
-                        //get map coordinates
-    //                    double lat = db.getLat(user_email, "");
-    //                    double lng = db.getLng(user_email, "");
-    //                    String addr = db.getAddr(user_email, "");
 
-                        if (u_id == user_id) {
-                            String email = user_email;
-                            int postCountUser = DB.countPostUser(user_email);
-                    %>
-
-                    <sql:query dataSource="${bgGet}" var="reqUsers">
-                        <%= DB.user_Details(email)%>
-                    </sql:query>
-
-                    <sql:query dataSource="${bgGet}" var="reqPosts">
-                        <%= DB.user_Posts(email)%>
-                    </sql:query>
-                    <div class="container" style="">
-                        <div class="row" >
-                            <div class="col-md-3">
-                                <section class="section--center prof--center mdl-grid mdl-grid--no-spacing" style="margin-top: 10px;width: 100%;">
-                                    <div class="" style="margin-top: 10px;height: 200px;width: 250px;padding-left: 20px;">
-                                        <img id="blah" src="../assets/img/1.jpg" style="height: 200px;width: 200px;" class="img-thumbnail" alt="Profile image" />
-                                    </div>
-                                    <c:forEach var="user" items="${reqUsers.rows}">
-                                        <div class="container-fluid">
-                                            <header><h4>${user.name}</h4></header>
-                                            <p><span class="glyphicon glyphicon-calendar"></span> : ${user.reg_date}</p>
-                                            <p><span class="glyphicon glyphicon-map-marker"></span> : ${user.addr}</p>
-                                            <hr>
-                                            <p><span class="glyphicon glyphicon-phone"></span> : ${user.phone}</p>
-                                            <p><span class="glyphicon glyphicon-envelope"></span> :${user.email}</p>
-                                            <form action="" method="">
-                                                <!--submit user id-->
-                                                <div class="form-group">
-                                                    <a class="btn btn-primary" style="border-radius: 0px; width: 100%;"href="ViewSettings.jsp?user_email=<%=user_.getUserEmail()%>">EDIT PROFILE</a>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </c:forEach>
-                                </section>
-                            </div> 
-                            <div class="col-md-8">
-                                <!--check if account is confirmed to view message or not-->
-                                <input type="number" class="hidden" value="" id='acc'/>
-                                <!--confirmation message-->
-                                <div class="alert alert-warning mdl-shadow--2dp" id="alert_status" >A confirmation email was sent to <strong><%=user_.getUserEmail()%></strong>. Please verify your account!</div>
-                                <div class="panel-body" style="height: 200px;">
-                                    <div id="map" style="width: 100%;height: 100%;"></div>
-                                </div>
-                                <div class="panel panel-default" style = "margin-top: 20px;border-radius: 0px;box-shadow: 20px;"> 
-                                    <div class="panel-heading" style="background-color: transparent;">
-                                        <h2 class="panel-title" style="font-size: 20px;">Epidemic Post</h2>
-                                    </div>
-                                    <div class="" id="mypost">
-                                        <%if (postCountUser != 0) {%>
-                                        <c:forEach var="post" items="${reqPosts.rows}">
-                                            <div class="container-fluid item" style="border-top: 1px solid rgba(0, 0, 0, 0.1);">
-
-                                                <div class="mdl-card mdl-cell mdl-cell--12-col-desktop mdl-cell--9-col-tablet mdl-cell--4-col-phone">
-                                                    <div class="mdl-card__supporting-text">
-                                                        <h4>${post.post_title} <span style="margin-left: 70px;"class="h3_span fa fa-calendar"> <c:out value="${post.reg_date}"/></span></h4>
-
-                                                        <p><c:out value="${post.post_desc}"/> <a href="ViewPost.jsp?post_id=${post.post_id}" class="mdl-button">[Read more...] </a></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </c:forEach>
-                                        <hr>
-                                        <div class="paginate"></div>
-                                        <%} else {%>
-                                        <div class="section--center alert alert-info mdl-grid mdl-grid--no-spacing mdl-shadow--2dp" style="border-top: 1px solid rgba(0, 0, 0, 0.1);height: 100px;">
-                                            <p style="margin-left: 50px;margin-top: 40px;">You haven't posted any Epidemic Reports...</p>
-                                        </div>
-                                        <%}%>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <%} else {
-                            String email = DB.getUserEmail(user_id);
-                            int email_frm = DB.getUserId(user_email);
-                            int email_to = user_id;
-                            int postCountUser = DB.countPostUser(email);
-                            String msg = request.getParameter("msg-content");
-                            if (msg != null) {
-                                DB.postMsg(email_frm, email_to, msg);
-                            }
+                    <div class="row">
+                        <%
+                            int u_id = DB.getUserId(user_email);
                             //get map coordinates
-                            //                    double lat_ = DB.getLat(email, "farmer");
-                            //                    double lng_ = DB.getLng(email, "farmer");
-                            //                    String addr_ = DB.getAddr(email, "farmer");
+                            //                    double lat = db.getLat(user_email, "");
+                            //                    double lng = db.getLng(user_email, "");
+                            //                    String addr = db.getAddr(user_email, "");
+
+                            if (u_id == user_id) {
+                                String email = user_email;
+                                int postCountUser = DB.countPostUser(user_email);
                         %>
+
                         <sql:query dataSource="${bgGet}" var="reqUsers">
                             <%= DB.user_Details(email)%>
                         </sql:query>
@@ -302,36 +263,28 @@
                                             <img id="blah" src="../assets/img/1.jpg" style="height: 200px;width: 200px;" class="img-thumbnail" alt="Profile image" />
                                         </div>
                                         <c:forEach var="user" items="${reqUsers.rows}">
-                                            <div class="panel" style="padding-left: 20px;">
-                                                <div class="panel-body">
-                                                    <header><h4>${user.name}</h4></header>
-                                                    <p><span class="glyphicon glyphicon-calendar"></span> : ${user.reg_date}</p>
-                                                    <p><span class="glyphicon glyphicon-map-marker"></span> : ${user.addr}</p>
-                                                    <hr>
-                                                    <p><span class="glyphicon glyphicon-phone"></span> : ${user.phone}</p>
-                                                    <p><span class="glyphicon glyphicon-envelope"></span> :${user.email}</p>
+                                            <div class="container-fluid">
+                                                <header><h4>${user.name}</h4></header>
+                                                <p><span class="glyphicon glyphicon-calendar"></span> : ${user.reg_date}</p>
+                                                <p><span class="glyphicon glyphicon-map-marker"></span> : ${user.addr}</p>
+                                                <hr>
+                                                <p><span class="glyphicon glyphicon-phone"></span> : ${user.phone}</p>
+                                                <p><span class="glyphicon glyphicon-envelope"></span> :${user.email}</p>
+                                                <form action="" method="">
+                                                    <!--submit user id-->
                                                     <div class="form-group">
-                                                        <a class="btn btn-success" style="border-radius: 0px; height: 30px;width: 100%;" data-toggle="collapse" data-parent="#accordion" href="#collapseMsg">SEND MESSAGE</a>
-                                                    </div> 
-                                                    <div id="collapseMsg" class="panel-collapse collapse">
-                                                        <div class="">
-                                                            <p class="help-block">Message Form</p>
-                                                            <form action="ViewProfile.jsp?prf_id=<%=user_id%>" method="post">
-                                                                <div class="form-group">
-                                                                    <textarea class="form-control" rows="3" style="width: 100%;" maxlength="1000" name="msg-content" required></textarea>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <input type="submit" value="SEND" style="border-radius: 0px; width: 100%;"class="btn btn-success"/>
-                                                                </div>
-                                                            </form>
-                                                        </div>
+                                                        <a class="btn btn-primary" style="border-radius: 0px; width: 100%;"href="ViewSettings.jsp?user_email=<%=user_.getUserEmail()%>">EDIT PROFILE</a>
                                                     </div>
-                                                </div>
+                                                </form>
                                             </div>
                                         </c:forEach>
                                     </section>
                                 </div> 
                                 <div class="col-md-8">
+                                    <!--check if account is confirmed to view message or not-->
+                                    <input type="number" class="hidden" value="" id='acc'/>
+                                    <!--confirmation message-->
+                                    <div class="alert alert-warning mdl-shadow--2dp" id="alert_status" >A confirmation email was sent to <strong><%=user_.getUserEmail()%></strong>. Please verify your account!</div>
                                     <div class="panel-body" style="height: 200px;">
                                         <div id="map" style="width: 100%;height: 100%;"></div>
                                     </div>
@@ -356,19 +309,112 @@
                                             <hr>
                                             <div class="paginate"></div>
                                             <%} else {%>
-                                            <section class="section--center alert alert-info mdl-grid mdl-grid--no-spacing mdl-shadow--2dp" style="border-top: 1px solid rgba(0, 0, 0, 0.1);height: 100px;">
+                                            <div class="section--center alert alert-info mdl-grid mdl-grid--no-spacing mdl-shadow--2dp" style="border-top: 1px solid rgba(0, 0, 0, 0.1);height: 100px;">
                                                 <p style="margin-left: 50px;margin-top: 40px;">You haven't posted any Epidemic Reports...</p>
-                                            </section>
+                                            </div>
                                             <%}%>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
+                            <%} else {
+                                String email = DB.getUserEmail(user_id);
+                                int email_frm = DB.getUserId(user_email);
+                                int email_to = user_id;
+                                int postCountUser = DB.countPostUser(email);
+                                String msg = request.getParameter("msg-content");
+                                if (msg != null) {
+                                    DB.postMsg(email_frm, email_to, msg);
+                                }
+                                //get map coordinates
+                                //                    double lat_ = DB.getLat(email, "farmer");
+                                //                    double lng_ = DB.getLng(email, "farmer");
+                                //                    String addr_ = DB.getAddr(email, "farmer");
+%>
+                            <sql:query dataSource="${bgGet}" var="reqUsers">
+                                <%= DB.user_Details(email)%>
+                            </sql:query>
+
+                            <sql:query dataSource="${bgGet}" var="reqPosts">
+                                <%= DB.user_Posts(email)%>
+                            </sql:query>
+                            <div class="container" style="">
+                                <div class="row" >
+                                    <div class="col-md-3">
+                                        <section class="section--center prof--center mdl-grid mdl-grid--no-spacing" style="margin-top: 10px;width: 100%;">
+                                            <div class="" style="margin-top: 10px;height: 200px;width: 250px;padding-left: 20px;">
+                                                <img id="blah" src="../assets/img/1.jpg" style="height: 200px;width: 200px;" class="img-thumbnail" alt="Profile image" />
+                                            </div>
+                                            <c:forEach var="user" items="${reqUsers.rows}">
+                                                <div class="panel" style="padding-left: 20px;">
+                                                    <div class="panel-body">
+                                                        <header><h4>${user.name}</h4></header>
+                                                        <p><span class="glyphicon glyphicon-calendar"></span> : ${user.reg_date}</p>
+                                                        <p><span class="glyphicon glyphicon-map-marker"></span> : ${user.addr}</p>
+                                                        <hr>
+                                                        <p><span class="glyphicon glyphicon-phone"></span> : ${user.phone}</p>
+                                                        <p><span class="glyphicon glyphicon-envelope"></span> :${user.email}</p>
+                                                        <div class="form-group">
+                                                            <a class="btn btn-success" style="border-radius: 0px; height: 30px;width: 100%;" data-toggle="collapse" data-parent="#accordion" href="#collapseMsg">SEND MESSAGE</a>
+                                                        </div> 
+                                                        <div id="collapseMsg" class="panel-collapse collapse">
+                                                            <div class="">
+                                                                <p class="help-block">Message Form</p>
+                                                                <form action="ViewProfile.jsp?prf_id=<%=user_id%>" method="post">
+                                                                    <div class="form-group">
+                                                                        <textarea class="form-control" rows="3" style="width: 100%;" maxlength="1000" name="msg-content" required></textarea>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <input type="submit" value="SEND" style="border-radius: 0px; width: 100%;"class="btn btn-success"/>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </c:forEach>
+                                        </section>
+                                    </div> 
+                                    <div class="col-md-8">
+                                        <div class="panel-body" style="height: 200px;">
+                                            <div id="map" style="width: 100%;height: 100%;"></div>
+                                        </div>
+                                        <div class="panel panel-default" style = "margin-top: 20px;border-radius: 0px;box-shadow: 20px;"> 
+                                            <div class="panel-heading" style="background-color: transparent;">
+                                                <h2 class="panel-title" style="font-size: 20px;">Epidemic Post</h2>
+                                            </div>
+                                            <div class="" id="mypost">
+                                                <%if (postCountUser != 0) {%>
+                                                <c:forEach var="post" items="${reqPosts.rows}">
+                                                    <div class="container-fluid item" style="border-top: 1px solid rgba(0, 0, 0, 0.1);">
+
+                                                        <div class="mdl-card mdl-cell mdl-cell--12-col-desktop mdl-cell--9-col-tablet mdl-cell--4-col-phone">
+                                                            <div class="mdl-card__supporting-text">
+                                                                <h4>${post.post_title} <span style="margin-left: 70px;"class="h3_span fa fa-calendar"> <c:out value="${post.reg_date}"/></span></h4>
+
+                                                                <p><c:out value="${post.post_desc}"/> <a href="ViewPost.jsp?post_id=${post.post_id}" class="mdl-button">[Read more...] </a></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </c:forEach>
+                                                <hr>
+                                                <div class="paginate"></div>
+                                                <%} else {%>
+                                                <section class="section--center alert alert-info mdl-grid mdl-grid--no-spacing mdl-shadow--2dp" style="border-top: 1px solid rgba(0, 0, 0, 0.1);height: 100px;">
+                                                    <p style="margin-left: 50px;margin-top: 40px;">You haven't posted any Epidemic Reports...</p>
+                                                </section>
+                                                <%}%>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                        <%}%>
                     </div>
-                    <%}%>
+                    <!-- /.row -->
                 </div>
-                <!-- /.row -->
             </div>
             <!-- /.container-fluid -->
 

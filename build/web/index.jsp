@@ -119,11 +119,11 @@
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <button type="button" style="border:1px solid black;" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
+                        <span style="border:1px solid black;" class="icon-bar"></span>
+                        <span style="border:1px solid black;" class="icon-bar"></span>
+                        <span style="border:1px solid black;" class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="index.jsp"><span><img src="assets/img/favicon.png" style="height: 40px;width: 50px;"></span>FARMERS EPIDEMIC SYSTEM </a>
                 </div>
@@ -132,7 +132,7 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a class="page-scroll" href="backend/Search.jsp">SEARCH EPIDEMICS</a>
+                            <a class="page-scroll" href="backend/Search.jsp"><span class="glyphicon glyphicon-search" style="margin-right: 5px;"></span>SEARCH EPIDEMICS</a>
                         </li>
                         <li class="hidden">
                             <a href="#page-top"></a>
@@ -164,8 +164,6 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
                                 <li role="presentation"><a role="menuitem" tabindex="-1" href="backend/admin/AdminDash.jsp"><span class="glyphicon glyphicon-dashboard" style="margin-right: 20px;"></span>DASHBOARD</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="backend/admin/profile.jsp"><span class="glyphicon glyphicon-user" style="margin-right:  20px;"></span>PROFILE</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="backend/admin/messages.jsp"><span class="glyphicon glyphicon-envelope" style="margin-right: 20px;"></span>MESSAGES</a></li>
                                 <li role="presentation" class="divider"></li>
                                 <li role="presentation"><a role="menuitem" tabindex="-1" href="backend/admin/Logout"><span class="glyphicon glyphicon-log-out" style="margin-right: 20px;"></span> LOGOUT</a></li>
                             </ul>
@@ -185,8 +183,7 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
                                 <li role="presentation"><a role="menuitem" tabindex="-1" href="backend/expert/ExpertDash.jsp"><span class="glyphicon glyphicon-dashboard" style="margin-right: 20px;"></span>DASHBOARD</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="backend/expert/profile.jsp"><span class="glyphicon glyphicon-user" style="margin-right:  20px;"></span>PROFILE</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="backend/expert/messages.jsp"><span class="glyphicon glyphicon-envelope" style="margin-right: 20px;"></span>MESSAGES</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="backend/ViewProfile.jsp?prf_id=<%= DB.getUserId(user.getUserEmail())%>"><span class="glyphicon glyphicon-user" style="margin-right:  20px;"></span>PROFILE</a></li>
                                 <li role="presentation" class="divider"></li>
                                 <li role="presentation"><a role="menuitem" tabindex="-1" href="backend/expert/Logout"><span class="glyphicon glyphicon-log-out" style="margin-right: 20px;"></span> LOGOUT</a></li>
                             </ul>
@@ -206,8 +203,7 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
                                 <li role="presentation"><a role="menuitem" tabindex="-1" href="backend/farmer/FarmerDash.jsp"><span class="glyphicon glyphicon-dashboard" style="margin-right: 20px;"></span>DASHBOARD</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="backend/farmer/profile.jsp"><span class="glyphicon glyphicon-user" style="margin-right:  20px;"></span>PROFILE</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="backend/farmer/messages.jsp"><span class="glyphicon glyphicon-envelope" style="margin-right: 20px;"></span>MESSAGES</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="backend/ViewProfile.jsp?prf_id=<%= DB.getUserId(user.getUserEmail())%>"><span class="glyphicon glyphicon-user" style="margin-right:  20px;"></span>PROFILE</a></li>
                                 <li role="presentation" class="divider"></li>
                                 <li role="presentation"><a role="menuitem" tabindex="-1" href="backend/farmer/Logout"><span class="glyphicon glyphicon-log-out" style="margin-right: 20px;"></span> LOGOUT</a></li>
                             </ul>

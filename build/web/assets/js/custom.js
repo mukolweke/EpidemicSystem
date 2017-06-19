@@ -40,7 +40,8 @@ function initAutocomplete() {
         document.getElementById("lat").value = place.geometry.location.lat();
         document.getElementById("lng").value = place.geometry.location.lng();
     });
-};
+}
+;
 function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();

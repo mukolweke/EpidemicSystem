@@ -30,7 +30,7 @@
         <link href="../../assets/css/plugins/morris.css" rel="stylesheet"/>
         <link href="../../assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
         <link href="../../assets/css/custom.css" rel="stylesheet"/>
-        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+        <link rel="shortcut icon" href="../../assets/img/favicon.png" type="image/x-icon"/>
         <link rel="icon" href="../../assets/img/favicon.png" type="image/x-icon"/>
     </head>
 

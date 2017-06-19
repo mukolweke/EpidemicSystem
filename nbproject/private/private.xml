@@ -3,13 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/A:/www/4th%20project/MyProject/FarmersEpidemicSystem/web/backend/farmer/SearchPage.jsp</file>
+            <file>file:/A:/www/4th%20project/MyProject/FarmersEpidemicSystem/src/java/sys/servlets/SignUp.java</file>
             <file>file:/A:/www/4th%20project/MyProject/FarmersEpidemicSystem/web/backend/farmer/FarmerDash.jsp</file>
-            <file>file:/A:/www/4th%20project/MyProject/FarmersEpidemicSystem/web/backend/farmer/ViewPost.jsp</file>
-            <file>file:/A:/www/4th%20project/MyProject/FarmersEpidemicSystem/web/index.jsp</file>
-            <file>file:/A:/www/4th%20project/MyProject/FarmersEpidemicSystem/web/backend/ViewProfile.jsp</file>
-            <file>file:/A:/www/4th%20project/MyProject/FarmersEpidemicSystem/src/java/sys/classes/DB_class.java</file>
-            <file>file:/A:/www/4th%20project/MyProject/FarmersEpidemicSystem/src/java/sys/servlets/PostEpidemic.java</file>
+            <file>file:/A:/www/4th%20project/MyProject/FarmersEpidemicSystem/src/java/sys/servlets/Login.java</file>
         </group>
     </open-files>
 </project-private>

@@ -72,17 +72,26 @@
             if (user_sucess == null) {
                 user_sucess = new Success_class();
             }
+            //get the counts
+            int exCount = db.countExperts();
+            int farmCount = db.countFarmer();
+            int postCount = db.countPost();
+            int blogCount = db.countBlogs();
+            int msgCount = db.countMsg(user_email);
+            int emailCount = db.countEmail(user_email);
             //get map coordinates
-            double lat = db.getLat(user_email, "farmer");
-            double lng = db.getLng(user_email, "farmer");
-            String addr = db.getAddr(user_email, "farmer");
+            double lat = db.getLat(user_email, "");
+            double lng = db.getLng(user_email, "");
+            String addr = db.getAddr(user_email, "");
         %>
         <sql:setDataSource var='bgGet' driver='<%= db.jstlDriver()%>' url='<%= db.jstlUrl()%>' user='<%= db.jstlUser()%>'  password='<%= db.jstlPassword()%>'/>
 
         <sql:query dataSource="${bgGet}" var="reqUsers">
             <%= db.user_Details(user_mail)%>
         </sql:query> 
-
+        <sql:query dataSource="${bgGet}" var="reqMsg">
+            <%= db.getAllMsg(user_email)%>
+        </sql:query>
         <div id="wrapper">
             <!-- Navigation -->
             <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -94,47 +103,63 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="../../index.jsp"><span style="color:#5cb85c;">FEWS</span> Admin</a>
+                    <a class="navbar-brand" href="../index.jsp"><span><img src="../assets/img/favicon.png" style="height: 40px;width: 50px;"></span>FARMERS EPIDEMIC SYSTEM </a>
                 </div>
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
+                    <% if (db.getAuthKey(user.getUserEmail().toString()) == 1) {%>
+                    <%} else {%>
                     <li class="dropdown">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope" id="fa-msg"> <%=msgCount%> </i> <b class="caret"></b></a>
                         <ul class="dropdown-menu message-dropdown">
-                            <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>John Smith</strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="message-footer">
-                                <a href="#">Read All New Messages</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
-                        <ul class="dropdown-menu alert-dropdown">
-                            <li>
-                                <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
-                            </li>
+                            <%if (msgCount == 0) {%>
                             <li class="divider"></li>
                             <li>
-                                <a href="#">View All</a>
+                            <li class="message-preview">
+                                <p class="text-capitalize text-center">No Messages</p>
                             </li>
+                            <%} else {%>
+                            <c:forEach var="msg" items="${reqMsg.rows}">
+                                <li class="message-preview">
+                                    <a href="../Message.jsp?msg=${msg.msg_id}">
+                                        <div class="media">
+                                            <span class="pull-left">
+                                                <i class="fa fa-envelope fa-2x"></i>
+                                            </span>
+                                            <div class="media-body">
+                                                <h5 class="media-heading"><strong></strong>
+                                                </h5>
+                                                <p>${msg.message}...</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </c:forEach>
+                            <li class="message-footer">
+                                <a href="../Message.jsp?msg=allMsgs">Read All New Messages</a>
+                            </li>
+                            <%}%>
                         </ul>
                     </li>
-
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-at" id="fa-em"> <%=emailCount%></i> <b class="caret"></b></a>
+                        <ul class="dropdown-menu message-dropdown">
+                            <%if (emailCount == 0) {%>
+                            <li class="divider"></li>
+                            <li>
+                            <li class="message-footer">
+                                <p class="text-capitalize text-center">No Email</p>
+                            </li>
+                            <%} else {%>
+                            <li class="divider"></li>
+                            <li>
+                            <li class="message-footer">
+                                <a href="../Message.jsp?msg=allEmails">Read All Email</a>
+                            </li>
+                            <%}%>
+                        </ul>
+                    </li>
+                    <%}%>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%= user.getUserEmail()%> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -151,9 +176,30 @@
                         </ul>
                     </li>
                 </ul>
-                <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav side-nav">
+                        <%if (db.getAuthKey(user_email) == 2) {%>
+
+                        <li>
+                            <a href="ExpertDash.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="SearchPage.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-search"></i> Search Epidemic</a>
+
+                        </li>
+                        <li>
+                            <a href="BlogPage.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-book"></i>  Blogs</a>
+                        </li>
+                        <li>
+                            <a href="Mapping.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-map-marker"></i>  Mapping</a>
+                        </li>
+                        <li>
+                            <div style="margin-top: 300px;padding-left: 10px;"><p><a href="#">Copyright &copy; 2017</a></p>
+                                <p style="color: #3c3c3c;">Terms of Services Applied</p></div>
+                        </li>
+
+                        <%} else if (db.getAuthKey(user_email) == 3) {%>
+
                         <li id="side-link">
                             <a href="farmer/FarmerDash.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                         </li>
@@ -165,6 +211,8 @@
                             <div style="margin-top: 380px;padding-left: 10px;"><p><a href="#">Copyright &copy; 2017</a></p>
                                 <p style="color: #3c3c3c;">Terms of Services Applied</p></div>
                         </li>
+
+                        <%}%>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
@@ -252,7 +300,7 @@
                                                                     <div class="row">
                                                                         <div class="col-xs-6 col-md-7">
                                                                             <a href="#" type="file"class="thumbnail">
-                                                                                <img src="../../assets/img/1.jpg"alt="...">
+                                                                                <img src="../assets/img/1.jpg"alt="...">
                                                                             </a>
                                                                         </div>
                                                                     </div>
@@ -338,21 +386,6 @@
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdFsAprSk3Bpi5i59sD3KtMEs_Jp_V4z4&libraries=places&callback=initAutocomplete"
         async defer></script>
         <script type="text/javascript">
-            function initAutocomplete() {
-                var map = new google.maps.Map(document.getElementById('map'), {
-                    center: {lat:<%=lat%>, lng:<%=lng%>},
-                    zoom: 13,
-                    mapTypeId: 'roadmap'
-                });
-
-                var marker = new google.maps.Marker({
-                    position: {
-                        lat: <%=lat%>, lng: <%=lng%>
-                    },
-                    label: "F",
-                    map: map
-                });
-            }
             function notify() {
                 if (document.getElementById("not").value !== "0") {
                     document.getElementById("not").style.color = "#FF6666";

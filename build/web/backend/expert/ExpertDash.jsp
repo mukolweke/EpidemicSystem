@@ -29,11 +29,11 @@
         <link href="../../assets/css/plugins/morris.css" rel="stylesheet">
         <link href="../../assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link href="../../assets/css/custom.css" rel="stylesheet" type="text/css"/>
-        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="../../assets/img/favicon.png" type="image/x-icon">
         <link rel="icon" href="../../assets/img/favicon.png" type="image/x-icon">
     </head>
 
-    <body>
+    <body onload="notifyStatus()">
         <%
 
             //create database object
@@ -54,6 +54,12 @@
             int farmCount = DB.countFarmer();
             int postCount = DB.countPost();
             int blogCount = DB.countBlogs();
+            int msgCount = DB.countMsg(user_email);
+            int emailCount = DB.countEmail(user_email);
+            //get map coordinates
+            double lat = DB.getLat(user_email, "expert");
+            double lng = DB.getLng(user_email, "expert");
+            String addr = DB.getAddr(user_email, "expert");
 
         %>
         <sql:setDataSource var='bgGet' driver='<%= DB.jstlDriver()%>' url='<%= DB.jstlUrl()%>' user='<%= DB.jstlUser()%>'  password='<%= DB.jstlPassword()%>'/>
@@ -70,8 +76,11 @@
             <%= DB.postPosted()%>
         </sql:query>
 
+        <sql:query dataSource="${bgGet}" var="reqMsg">
+            <%= DB.getAllMsg(user_email)%>
+        </sql:query>
 
-        <div id="wrapper">
+        <div id="wrapper" >
 
             <!-- Navigation -->
             <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -83,98 +92,68 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="../../index.jsp"><span style="color:#5cb85c;">FEWS</span> Admin</a>
+                    <a class="navbar-brand" href="../../index.jsp"><span><img src="../../assets/img/favicon.png" style="height: 40px;width: 50px;"></span>FARMERS EPIDEMIC SYSTEM </a>
                 </div>
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope" id="fa-msg"> <%=msgCount%> </i> <b class="caret"></b></a>
                         <ul class="dropdown-menu message-dropdown">
+                            <%if (msgCount == 0) {%>
+                            <li class="divider"></li>
+                            <li>
                             <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>John Smith</strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                        </div>
-                                    </div>
-                                </a>
+                                <p class="text-capitalize text-center">No Messages</p>
                             </li>
-                            <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>John Smith</strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                            <%} else {%>
+                            <c:forEach var="msg" items="${reqMsg.rows}">
+                                <li class="message-preview">
+                                    <a href="../Message.jsp?msg=${msg.msg_id}">
+                                        <div class="media">
+                                            <span class="pull-left">
+                                                <i class="fa fa-envelope fa-2x"></i>
+                                            </span>
+                                            <div class="media-body">
+                                                <h5 class="media-heading"><strong></strong>
+                                                </h5>
+                                                <p>${msg.message}...</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>John Smith</strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
+                                    </a>
+                                </li>
+                            </c:forEach>
                             <li class="message-footer">
-                                <a href="#">Read All New Messages</a>
+                                <a href="../Message.jsp?msg=allMsgs">Read All New Messages</a>
                             </li>
+                            <%}%>
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
-                        <ul class="dropdown-menu alert-dropdown">
-                            <li>
-                                <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
-                            </li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-at" id="fa-em"> <%=emailCount%></i> <b class="caret"></b></a>
+                        <ul class="dropdown-menu message-dropdown">
+                            <%if (emailCount == 0) {%>
                             <li class="divider"></li>
                             <li>
-                                <a href="#">View All</a>
+                            <li class="message-footer">
+                                <p class="text-capitalize text-center">No Email</p>
                             </li>
+                            <%} else {%>
+                            <li class="divider"></li>
+                            <li>
+                            <li class="message-footer">
+                                <a href="../Message.jsp?msg=allEmails">Read All Email</a>
+                            </li>
+                            <%}%>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%= user_.getUserEmail()%> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="Profile.jsp?prf_id=<%=DB.getUserId(user_email)%>"><i class="fa fa-fw fa-user"></i> Profile</a>
+                                <a href="../ViewProfile.jsp?prf_id=<%=DB.getUserId(user_email)%>"><i class="fa fa-fw fa-user"></i> Profile</a>
                             </li>
                             <li>
-                                <a href="Settings.jsp"><i class="fa fa-fw fa-gear"></i> Settings</a>
+                                <a href="../ViewSettings.jsp"><i class="fa fa-fw fa-gear"></i> Settings</a>
                             </li>
                             <li class="divider"></li>
                             <li>
@@ -200,7 +179,12 @@
                             <a href="Mapping.jsp" style="color:#5cb85c;"><i class="fa fa-fw fa-map-marker"></i>  Mapping</a>
                         </li>
                         <li>
-                            <div style="margin-top: 280px;padding-left: 10px;"><p><a href="#">Copyright &copy; 2017</a></p>
+                            <div class="panel-body" style="height: 250px;">
+                                <div id="map" style="height: 100%;width: 100%;"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div style="margin-top: 300px;padding-left: 10px;"><p><a href="#">Copyright &copy; 2017</a></p>
                                 <p style="color: #3c3c3c;">Terms of Services Applied</p></div>
                         </li>
                     </ul>
@@ -208,7 +192,7 @@
                 <!-- /.navbar-collapse -->
             </nav>
 
-            <div id="page-wrapper">
+            <div id="page-wrapper" style="min-height: 700px;">
 
                 <div class="container-fluid">
 
@@ -374,7 +358,45 @@
             <!-- /#page-wrapper -->
         </div>
         <!-- /#wrapper -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdFsAprSk3Bpi5i59sD3KtMEs_Jp_V4z4&libraries=places&callback=initAutocomplete"
+        async defer></script>
+        <script type="text/javascript">
+        function initAutocomplete() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat:<%=lat%>, lng:<%=lng%>},
+                zoom: 10,
+                mapTypeId: 'roadmap'
+            });
 
+            var marker = new google.maps.Marker({
+                position: {
+                    lat: <%=lat%>, lng: <%=lng%>
+                },
+                label: "F",
+                map: map
+            });
+        }
+        function notifyStatus() {
+            //check if messages are available
+            if (document.getElementById("countMsg").value !== "0") {
+                document.getElementById("fa-msg").style.color = "#FF6666";
+            } else if (document.getElementById("countMsg").value === "0") {
+                document.getElementById("fa-msg").style.color = "#67b168";
+            }
+            if (document.getElementById("countEmail").value !== "0") {
+                document.getElementById("fa-em").style.color = "#FF6666";
+            } else if (document.getElementById("countEmail").value === "0") {
+                document.getElementById("fa-em").style.color = "#67b168";
+            }
+            //check if account is confirmed
+            if (document.getElementById("acc").value === "0") {
+                document.getElementById("alert_status").style.display = "block";
+            } else if (document.getElementById("acc").value === "1") {
+                document.getElementById("alert_status").style.display = "none";
+            }
+        }
+        </script>
         <script type="text/javascript" src="../../assets/js/jquery.js"></script>
         <script type="text/javascript" src="../../assets/js/custom.js"></script>
         <script type="text/javascript" src="../../assets/js/paginate.js"></script>
