@@ -207,7 +207,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="../../index.jsp">FEWS Admin</a>
+                    <a class="navbar-brand" href="../../index.jsp"><span><img src="../../assets/img/favicon.png" style="height: 40px;width: 50px;"></span>FARMERS &CenterDot; EPIDEMIC &CenterDot; SYSTEM </a>
                 </div>
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
@@ -215,12 +215,6 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>  <%= user.getUserEmail()%> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li>
-                                <a href="Profile.jsp?prf_id=<%=DB.getUserId(user.getUserEmail())%>"><i class="fa fa-fw fa-user"></i> Profile</a>
-                            </li>
-                            <li>
-                                <a href="Settings.jsp"><i class="fa fa-fw fa-gear"></i> Settings</a>
-                            </li>
                             <li class="divider"></li>
                             <li>
                                 <a href="Logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>

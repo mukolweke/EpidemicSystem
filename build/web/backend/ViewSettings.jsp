@@ -105,10 +105,11 @@
                     </button>
                     <a class="navbar-brand" href="../index.jsp"><span><img src="../assets/img/favicon.png" style="height: 40px;width: 50px;"></span>FARMERS EPIDEMIC SYSTEM </a>
                 </div>
-                <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
                     <% if (db.getAuthKey(user.getUserEmail().toString()) == 1) {%>
                     <%} else {%>
+                    <input type="number" class="hidden" value="<%=msgCount%>" id="countMsg"/>
+                    <input type="number" class="hidden" value="<%=emailCount%>" id="countEmail"/>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope" id="fa-msg"> <%=msgCount%> </i> <b class="caret"></b></a>
                         <ul class="dropdown-menu message-dropdown">
@@ -121,7 +122,7 @@
                             <%} else {%>
                             <c:forEach var="msg" items="${reqMsg.rows}">
                                 <li class="message-preview">
-                                    <a href="../Message.jsp?msg=${msg.msg_id}">
+                                    <a href="../backend/Message.jsp?msg=${msg.msg_id}">
                                         <div class="media">
                                             <span class="pull-left">
                                                 <i class="fa fa-envelope fa-2x"></i>
@@ -136,7 +137,7 @@
                                 </li>
                             </c:forEach>
                             <li class="message-footer">
-                                <a href="../Message.jsp?msg=allMsgs">Read All New Messages</a>
+                                <a href="../backend/Message.jsp?msg=allMsgs">Read All New Messages</a>
                             </li>
                             <%}%>
                         </ul>
@@ -154,17 +155,24 @@
                             <li class="divider"></li>
                             <li>
                             <li class="message-footer">
-                                <a href="../Message.jsp?msg=allEmails">Read All Email</a>
+                                <a href="../backend/Message.jsp?msg=allEmails">Read All Email</a>
                             </li>
                             <%}%>
                         </ul>
                     </li>
                     <%}%>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%= user.getUserEmail()%> <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%= user_.getUserEmail()%> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
+                            <% if (DB.getAuthKey(user_.getUserEmail().toString()) == 1) {%>
+                            <li class="divider"></li>
                             <li>
-                                <a href="ViewProfile.jsp?prf_id=<%=db.getUserId(user_email)%>"><i class="fa fa-fw fa-user"></i> Profile</a>
+                                <a href="Logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                            </li>
+                            <%} else {%>
+
+                            <li>
+                                <a href="ViewProfile.jsp?prf_id=<%=DB.getUserId(user_email)%>"><i class="fa fa-fw fa-user"></i> Profile</a>
                             </li>
                             <li>
                                 <a href="ViewSettings.jsp"><i class="fa fa-fw fa-gear"></i> Settings</a>
@@ -173,6 +181,7 @@
                             <li>
                                 <a href="Logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                             </li>
+                            <%}%>
                         </ul>
                     </li>
                 </ul>

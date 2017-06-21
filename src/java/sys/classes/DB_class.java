@@ -200,6 +200,7 @@ public class DB_class implements Serializable {
     }
             //get nearby farmers
     public String getFarmerNear(int userId) throws SQLException, Exception {
+        
         newConn();
         Statement stmt = connection.createStatement();
         String mail = getUserEmail(userId);

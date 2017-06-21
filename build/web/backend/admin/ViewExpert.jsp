@@ -11,9 +11,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
-
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,7 +29,7 @@
         <link rel="shortcut icon" href="../../assets/img/favicon.png" type="image/x-icon">
         <link rel="icon" href="../../assets/img/favicon.png" type="image/x-icon">
 
-        <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdFsAprSk3Bpi5i59sD3KtMEs_Jp_V4z4&libraries=places&callback=initAutocomplete"-->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdFsAprSk3Bpi5i59sD3KtMEs_Jp_V4z4&libraries=places&callback=initAutocomplete"
         async defer></script>
         <!--        <script type="text/javascript">
                     function initAutocomplete() {
@@ -140,7 +138,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="../../index.jsp">FEWS Admin</a>
+                    <a class="navbar-brand" href="../../index.jsp"><span><img src="../../assets/img/favicon.png" style="height: 40px;width: 50px;"></span>FARMERS &CenterDot; EPIDEMIC &CenterDot; SYSTEM </a>
                 </div>
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
@@ -222,16 +220,17 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title"> View Expert Table<span class="pull-right">
+                                    <h3 class="panel-title"> View Expert Table
+                                        <span class="pull-right">
                                             <form action="ReportServlet">
                                                 <input type="text" name="file_name" class="hidden" value="Experts Report"/>
                                                 <input type="submit" class="btn-success" value="Generate Experts report">
                                             </form>
-                                        </span></h3>
-
+                                        </span>
+                                    </h3>
                                 </div>
                                 <div class="panel-body">
-                                    <div style="margin-top:20px;width: 100%;height: 400px;">
+                                    <div style="margin-top:20px;width: 100%;height: 300px;">
                                         <div id="map" style="height: 100%;width: 100%;"></div>
                                     </div>
                                     <hr/>
@@ -255,8 +254,8 @@
                                                 <td>${expert.addr}</td>
                                                 <td>
                                                     <ul class="" style="list-style-type:none">
-                                                        <li style="display:inline;"><a class="btn btn-default" href="profile.jsp?prf=${expert.email}">View</a></li>
-                                                        <li style="display:inline;"><a class="btn btn-danger" href="ExpertPage.jsp?upd=${expert.email}">Delete</a></li>
+                                                        <li style="display:inline;"><a class="btn btn-default" href="../ViewProfile.jsp?prf_em=${expert.email}&prf_id=0">View</a></li>
+                                                        <li style="display:inline;"><a class="btn btn-danger" href="ViewExpert.jsp?upd=${expert.email}">Delete</a></li>
                                                     </ul>
                                                 </td>
                                             </tr>
@@ -283,6 +282,9 @@
                 $('#myTab a:first').tab('show');
             });
 
+            function deactivate(){
+                db.deactivateAccount(userEmail);
+            }
             function readURL(input) {
                 if (input.files && input.files[0]) {
                     var reader = new FileReader();

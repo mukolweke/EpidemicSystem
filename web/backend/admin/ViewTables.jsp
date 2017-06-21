@@ -40,7 +40,6 @@
             //create database object
             DB_class DB = new DB_class();
 
-            //            int countNotification = DB.countNotifications(user_name);
             //check if session is active
             if (session.getAttribute("user") == null) {
                 response.sendRedirect("../Login.jsp");
@@ -76,7 +75,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="../../index.jsp">FEWS Admin</a>
+                    <a class="navbar-brand" href="../../index.jsp"><span><img src="../../assets/img/favicon.png" style="height: 40px;width: 50px;"></span>FARMERS &CenterDot; EPIDEMIC &CenterDot; SYSTEM </a>
                 </div>
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">

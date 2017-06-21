@@ -19,7 +19,7 @@
         <link href="../../assets/css/material.css" rel="stylesheet" type="text/css"/>
         <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="../../assets/css/main.css" rel="stylesheet" type="text/css"/>
-        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="../../assets/img/favicon.png" type="image/x-icon">
         <link rel="icon" href="../../assets/img/favicon.png" type="image/x-icon"/>
         <script src="https://maps.googleapis.com/maps/api/js?key= AIzaSyAdFsAprSk3Bpi5i59sD3KtMEs_Jp_V4z4&libraries=places&callback=initAutocomplete"
         async defer></script>
@@ -39,7 +39,6 @@
                 user = new Login_class();
             }
             String user_name = user.getUserEmail();
-//            int countNotification = DB.countNotifications(user_name);
             //check if session is active
             if (session.getAttribute("user") == null) {
                 response.sendRedirect("../Login.jsp");
@@ -117,7 +116,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="../../index.jsp"><span style="color:#5cb85c;">FEWS</span> LOGO</a>
+                    <a class="navbar-brand" href="../../index.jsp"><span><img src="../../assets/img/favicon.png" style="height: 40px;width: 50px;"></span>FARMERS &CenterDot; EPIDEMIC &CenterDot; SYSTEM </a>
                     </div>
 
                     <div class="collapse navbar-collapse" id="">
@@ -133,8 +132,6 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
                                 <li role="presentation"><a role="menuitem" tabindex="-1" href="AdminDash.jsp"><span class="glyphicon glyphicon-dashboard" style="margin-right: 20px;"></span>DASHBOARD</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="profile.jsp"><span class="glyphicon glyphicon-user" style="margin-right:  20px;"></span>PROFILE</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="messages.jsp"><span class="glyphicon glyphicon-envelope" style="margin-right: 20px;"></span>MESSAGES</a></li>
                                 <li role="presentation" class="divider"></li>
                                 <li role="presentation"><a role="menuitem" tabindex="-1" href="Logout"><span class="glyphicon glyphicon-log-out" style="margin-right: 20px;"></span> LOGOUT</a></li>
                             </ul>
@@ -214,8 +211,6 @@
                                                                 </a>
                                                             </div>
                                                             <div class="col-md-8">
-
-
                                                                 <p>${comments.comment_desc}</p>
                                                             </div>
                                                         </div>
@@ -253,23 +248,6 @@
             </div>
         </footer>
 
-        <!-- Placed at the end of the document so the pages load faster -->
-        <script type="text/javascript">
-            function notify() {
-                if (document.getElementById("not").value !== "0") {
-                    document.getElementById("not").style.color = "#FF6666";
-                } else if (document.getElementById("not").value === "0") {
-                    document.getElementById("not").style.color = "yellow";
-                }
-
-                //check if account is confirmed
-                if (document.getElementById("acc").value === "0") {
-                    document.getElementById("alert_status").style.display = "block";
-                } else if (document.getElementById("acc").value === "1") {
-                    document.getElementById("alert_status").style.display = "none";
-                }
-            }
-        </script>
         <script type="text/javascript" src="../../assets/js/jquery.js"></script>
         <script type="text/javascript" src="../../assets/js/custom.js"></script>
         <script type="text/javascript" src="../../assets/js/paginate.js"></script>

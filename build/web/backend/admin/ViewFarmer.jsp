@@ -28,7 +28,7 @@
         <link href="../../assets/css/plugins/morris.css" rel="stylesheet">
         <link href="../../assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link href="../../assets/css/custom.css" rel="stylesheet" type="text/css"/>
-        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="../../assets/img/favicon.png" type="image/x-icon">
         <link rel="icon" href="../../assets/img/favicon.png" type="image/x-icon">
     </head>
 
@@ -43,8 +43,7 @@
             }
             if (request.getParameter("upd") != null) {
                 DB.deactivateAccount(request.getParameter("upd"));
-            }//            int countNotification = DB.countNotifications(user_name);
-            //check if session is active
+            }            //check if session is active
             if (session.getAttribute("user") == null) {
                 response.sendRedirect("../Login.jsp");
             }
@@ -73,99 +72,13 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="../../index.jsp">FEWS Admin</a>
+                    <a class="navbar-brand" href="../../index.jsp"><span><img src="../../assets/img/favicon.png" style="height: 40px;width: 50px;"></span>FARMERS &CenterDot; EPIDEMIC &CenterDot; SYSTEM </a>
                 </div>
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
-                        <ul class="dropdown-menu message-dropdown">
-                            <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>John Smith</strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>John Smith</strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>John Smith</strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="message-footer">
-                                <a href="#">Read All New Messages</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
-                        <ul class="dropdown-menu alert-dropdown">
-                            <li>
-                                <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#">View All</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%= user.getUserEmail()%> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li>
-                                <a href="Profile.jsp?prf_id=<%=DB.getUserId(user.getUserEmail())%>"><i class="fa fa-fw fa-user"></i> Profile</a>
-                            </li>
-                            <li>
-                                <a href="Settings.jsp"><i class="fa fa-fw fa-gear"></i> Settings</a>
-                            </li>
                             <li class="divider"></li>
                             <li>
                                 <a href="Logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
@@ -214,9 +127,7 @@
             </nav>
 
             <div id="page-wrapper">
-
                 <div class="container-fluid">
-
                     <!-- Page Heading -->
                     <div class="row">
                         <div class="col-lg-12">
@@ -241,7 +152,14 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">View Farmers Table</h3>
+                                    <h3 class="panel-title">View Farmers Table
+                                        <span class="pull-right">
+                                            <form action="ReportServlet">
+                                                <input type="text" name="file_name" class="hidden" value="Farmers Report"/>
+                                                <input type="submit" class="btn-success" value="Generate Farmers report">
+                                            </form>
+                                        </span>
+                                    </h3>
                                 </div>
                                 <div class="panel-body">
                                     <div id="map-canvas" style="height: 200px;">
@@ -257,35 +175,22 @@
                                             <th>LOCATION</th>
                                             <th>ACTION</th>
                                         </tr>
-                                        <c:forEach var="expert" items="${reqFarmer.rows}">
+                                        <c:forEach var="farmer" items="${reqFarmer.rows}">
                                             <tr>
-                                                <td>${expert.farmer_id}</td>
-                                                <td>${expert.name}</td>
-                                                <td>${expert.email}</td>		
-                                                <td>${expert.phone}</td>
-                                                <td>${expert.addr}</td>
+                                                <td>${farmer.farmer_id}</td>
+                                                <td>${farmer.name}</td>
+                                                <td>${farmer.email}</td>		
+                                                <td>${farmer.phone}</td>
+                                                <td>${farmer.addr}</td>
                                                 <td>
                                                     <ul class="" style="list-style-type:none">
-                                                        <li style="display:inline;"><a class="btn btn-default" href="profile.jsp?prf=${expert.email}">View</a></li>
-                                                        <li style="display:inline;"><a class="btn btn-danger" href="FarmerPage.jsp.jsp?upd=${expert.email}">Delete</a></li>
+                                                        <li style="display:inline;"><a class="btn btn-default" href="../ViewProfile.jsp?prf_em=${farmer.email}&prf_id=0">View</a></li>
+                                                        <li style="display:inline;"><a class="btn btn-danger" href="ViewFarmer.jsp?upd=${farmer.email}">Delete</a></li>
                                                     </ul>
                                                 </td>
                                             </tr>
                                         </c:forEach>
                                     </table>
-                                    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-sm">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    ...
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -298,7 +203,7 @@
         </div>
         <!-- /#wrapper -->
         <!-- Placed at the end of the document so the pages load faster -->
-        <script src="https://maps.googleapis.com/maps/api/js?key= AIzaSyAdFsAprSk3Bpi5i59sD3KtMEs_Jp_V4z4&libraries=places&callback=initAutocomplete"
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdFsAprSk3Bpi5i59sD3KtMEs_Jp_V4z4&libraries=places&callback=initAutocomplete"
         async defer></script>
         <script type="text/javascript">
             function initAutocomplete() {
@@ -317,20 +222,6 @@
                 });
             }
 
-            function notify() {
-                if (document.getElementById("not").value !== "0") {
-                    document.getElementById("not").style.color = "#FF6666";
-                } else if (document.getElementById("not").value === "0") {
-                    document.getElementById("not").style.color = "yellow";
-                }
-
-                //check if account is confirmed
-                if (document.getElementById("acc").value === "0") {
-                    document.getElementById("alert_status").style.display = "block";
-                } else if (document.getElementById("acc").value === "1") {
-                    document.getElementById("alert_status").style.display = "none";
-                }
-            }
             function readURL(input) {
                 if (input.files && input.files[0]) {
                     var reader = new FileReader();
