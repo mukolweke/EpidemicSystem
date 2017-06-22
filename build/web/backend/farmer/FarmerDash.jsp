@@ -8,7 +8,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>        
 <%@taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 <%@page import="sys.classes.*" %>
+
 <!DOCTYPE html>
+
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -38,7 +40,6 @@
                 user_ = new Login_class();
             }
             String user_email = user_.getUserEmail();
-            int accStatus = DB.getAccountStatus(user_email, DB.getAuthKey(user_email));
 
             Sign_class user_details = (Sign_class) request.getSession().getAttribute("user_details");
             if (user_details == null) {
@@ -65,8 +66,10 @@
             if (session.getAttribute("user") == null) {
                 response.sendRedirect("../Login.jsp");
             }
+            int accStatus = DB.getAccountStatus(user_email, DB.getAuthKey(user_email));
 
             //get the counts
+            
             int exCount = DB.countExperts();
             int farmCount = DB.countFarmer();
             int postCount = DB.countPost();
@@ -367,9 +370,10 @@
                                         <hr>
                                         <div class="paginate"></div>
                                         <%} else {%>
-                                        <section class="section--center alert alert-info mdl-grid mdl-grid--no-spacing mdl-shadow--2dp" style="border-top: 1px solid rgba(0, 0, 0, 0.1);height: 100px;">
-                                            <p style="margin-left: 50px;margin-top: 40px;">There are no Epidemic Posts Posted as yet...</p>
-                                        </section>
+                                        <div class="alert alert-info alert-dismissable">
+                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                            <i class="fa fa-info-circle"></i>  No Post yet to be posted !!!
+                                        </div>
                                         <%}%>
                                     </div>
                                 </div>
@@ -386,75 +390,75 @@
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdFsAprSk3Bpi5i59sD3KtMEs_Jp_V4z4&libraries=places&callback=initAutocomplete"
         async defer></script>
         <script type="text/javascript">
-            function initAutocomplete() {
-                var map = new google.maps.Map(document.getElementById('map'), {
-                    center: {lat:<%=lat%>, lng:<%=lng%>},
-                    zoom: 10,
-                    mapTypeId: 'roadmap'
-                });
+        function initAutocomplete() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat:<%=lat%>, lng:<%=lng%>},
+                zoom: 10,
+                mapTypeId: 'roadmap'
+            });
 
-                var marker = new google.maps.Marker({
-                    position: {
-                        lat: <%=lat%>, lng: <%=lng%>
-                    },
-                    label: "F",
-                    map: map
-                });
-            }
-            function notify() {
-                if (!window.Notification) {
-                     document.getElementById("response").innerHTML = "Browser not supported";
-                } else {
-                    Notification.requestPermission(function (p) {
-                        if (p === 'denied') {
-                            document.getElementById("response").innerHTML = "Denied Notification";
-                        } else if (p === 'granted') {
-                            if (Notification.permission === 'default') {
-                                alert('allow notifications');
-                            } else {
-                                if (document.getElementById("countEmail").value > 0) {
-                                    notify = new Notification('Notification', {
-                                        body: 'New PostNotification...',
-                                        icon: '../../assets/img/1.jpg',
-                                        tag: <%=DB.getEmailMsg(user_email)%>
-                                    });
+            var marker = new google.maps.Marker({
+                position: {
+                    lat: <%=lat%>, lng: <%=lng%>
+                },
+                label: "F",
+                map: map
+            });
+        }
+        function notify() {
+            if (!window.Notification) {
+                document.getElementById("response").innerHTML = "Browser not supported";
+            } else {
+                Notification.requestPermission(function (p) {
+                    if (p === 'denied') {
+                        document.getElementById("response").innerHTML = "Denied Notification";
+                    } else if (p === 'granted') {
+                        if (Notification.permission === 'default') {
+                            alert('allow notifications');
+                        } else {
+                            if (document.getElementById("countEmail").value > 0) {
+                                notify = new Notification('Notification', {
+                                    body: 'New PostNotification...',
+                                    icon: '../../assets/img/1.jpg',
+                                    tag: <%=DB.getEmailMsg(user_email)%>
+                                });
 
-                                    notify.onclick = function () {
-                                        window.location = '../ViewPost.jsp?post_id=' + this.tag;
-                                    };
-                                }
-                                if (document.getElementById("countMsg") > 0) {
-                                }
+                                notify.onclick = function () {
+                                    window.location = '../ViewPost.jsp?post_id=' + this.tag;
+                                };
+                            }
+                            if (document.getElementById("countMsg") > 0) {
                             }
                         }
-                    });
-                }
+                    }
+                });
             }
+        }
 
-            function notifyStatus() {
-                //check if messages are available
-                if (document.getElementById("countMsg").value !== "0") {
-                    document.getElementById("fa-msg").style.color = "#FF6666";
-                } else if (document.getElementById("countMsg").value === "0") {
-                    document.getElementById("fa-msg").style.color = "#67b168";
-                }
-                if (document.getElementById("countEmail").value !== "0") {
-                    document.getElementById("fa-em").style.color = "#FF6666";
-                } else if (document.getElementById("countEmail").value === "0") {
-                    document.getElementById("fa-em").style.color = "#67b168";
-                }
-                //check if account is confirmed
-                if (document.getElementById("acc").value === "0") {
-                    document.getElementById("alert_status").style.display = "block";
-                } else if (document.getElementById("acc").value === "1") {
-                    document.getElementById("alert_status").style.display = "none";
-                }
+        function notifyStatus() {
+            //check if messages are available
+            if (document.getElementById("countMsg").value !== "0") {
+                document.getElementById("fa-msg").style.color = "#FF6666";
+            } else if (document.getElementById("countMsg").value === "0") {
+                document.getElementById("fa-msg").style.color = "#67b168";
             }
+            if (document.getElementById("countEmail").value !== "0") {
+                document.getElementById("fa-em").style.color = "#FF6666";
+            } else if (document.getElementById("countEmail").value === "0") {
+                document.getElementById("fa-em").style.color = "#67b168";
+            }
+            //check if account is confirmed
+            if (document.getElementById("acc").value === "0") {
+                document.getElementById("alert_status").style.display = "block";
+            } else if (document.getElementById("acc").value === "1") {
+                document.getElementById("alert_status").style.display = "none";
+            }
+        }
         </script>
         <!--javascript files-->
         <script type="text/javascript" src="../../assets/js/jquery.js"></script>
         <script type="text/javascript" src="../../assets/js/bootstrap.min.js"></script>
-        <!--<script type="text/javascript" src="../../assets/js/custom.js"></script>-->
+        <script type="text/javascript" src="../../assets/js/custom.js"></script>
         <script type="text/javascript" src="../../assets/js/paginate.js"></script>
     </body>
 </html>
