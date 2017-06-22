@@ -2,16 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/A:/www/4th%20project/MyProject/FarmersEpidemicSystem/web/backend/admin/ViewFarmer.jsp</file>
-            <file>file:/A:/www/4th%20project/MyProject/FarmersEpidemicSystem/web/backend/ViewSettings.jsp</file>
-            <file>file:/A:/www/4th%20project/MyProject/FarmersEpidemicSystem/web/backend/expert/ExpertDash.jsp</file>
-            <file>file:/A:/www/4th%20project/MyProject/FarmersEpidemicSystem/web/backend/admin/ViewExpert.jsp</file>
-            <file>file:/A:/www/4th%20project/MyProject/FarmersEpidemicSystem/web/backend/admin/ViewCharts.jsp</file>
-            <file>file:/A:/www/4th%20project/MyProject/FarmersEpidemicSystem/web/backend/farmer/FarmerDash.jsp</file>
-            <file>file:/A:/www/4th%20project/MyProject/FarmersEpidemicSystem/web/backend/admin/ViewTables.jsp</file>
-            <file>file:/A:/www/4th%20project/MyProject/FarmersEpidemicSystem/web/backend/ViewProfile.jsp</file>
-            <file>file:/A:/www/4th%20project/MyProject/FarmersEpidemicSystem/src/java/sys/classes/DB_class.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

@@ -37,8 +37,8 @@ public class ReportServlet extends HttpServlet {
                 .getAttribute("javax.servlet.context.tempdir");
         final String temperotyFilePath = tempDirectory.getAbsolutePath();
 
-        String file = request.getParameter("file_name");
-        String fileName = file + ".pdf";
+        String type = request.getParameter("type");
+        String fileName = type+ "Report.pdf";
         response.setContentType("application/pdf");
         response.setHeader("Cache-Control", "no-cache");
         response.setHeader("Cache-Control", "max-age=0");
@@ -46,8 +46,7 @@ public class ReportServlet extends HttpServlet {
                 + "filename=" + fileName);
 
         try {
-
-            CreatePdf.createPDF(temperotyFilePath + "\\" + fileName,file);
+            CreatePdf.createPDF(temperotyFilePath + "\\" + fileName,type);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             baos = convertPDFToByteArrayOutputStream(
                     temperotyFilePath + "\\" + fileName);

@@ -224,7 +224,15 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default" style="height: 450px;">
-                                <div class="panel-heading" style="height: 30px;">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">View Farmers Mapping
+                                        <span class="pull-right">
+                                            <form action="ReportServlet">
+                                                <input type="text" name="type" class="hidden" value="Farmers"/>
+                                                <input type="submit" class="btn-success" value="Generate Farmers report">
+                                            </form>
+                                        </span>
+                                    </h3>
                                 </div>
                                 <div class="panel-body">
 

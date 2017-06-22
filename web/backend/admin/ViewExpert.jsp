@@ -223,7 +223,7 @@
                                     <h3 class="panel-title"> View Expert Table
                                         <span class="pull-right">
                                             <form action="ReportServlet">
-                                                <input type="text" name="file_name" class="hidden" value="Experts Report"/>
+                                                <input type="text" name="type" class="hidden" value="Experts"/>
                                                 <input type="submit" class="btn-success" value="Generate Experts report">
                                             </form>
                                         </span>

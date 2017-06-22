@@ -155,7 +155,7 @@
                                     <h3 class="panel-title">View Farmers Table
                                         <span class="pull-right">
                                             <form action="ReportServlet">
-                                                <input type="text" name="file_name" class="hidden" value="Farmers Report"/>
+                                                <input type="text" name="type" class="hidden" value="Farmers"/>
                                                 <input type="submit" class="btn-success" value="Generate Farmers report">
                                             </form>
                                         </span>
